@@ -1,0 +1,7 @@
+PowerSynth GUI: all QT/GUI related files, including pics/figs you draw for the tool. 
+
+'fig' are hand-made figures, generally in png/svg/eps, etc
+'pic' are pictures like photos or screenshots, generally in jpg/png
+'misc' should contain other resources such as icons, etc
+
+each QT design project should be self-contained in its own folder
