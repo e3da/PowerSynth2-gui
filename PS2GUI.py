@@ -162,7 +162,8 @@ class PS2GUI():
             UI.setupUi(editConstraints)
             self.setWindow(editConstraints)
             
-            self.pathToWorkFolder=os.path.dirname(self.macro_script_path)             
+            self.pathToWorkFolder=os.path.dirname(self.macro_script_path)
+            os.chdir(self.pathToWorkFolder)         
 
             with open(self.macro_script_path, 'r') as file:
                 for line in file:
@@ -348,7 +349,7 @@ class PS2GUI():
 
             self.device_dict, self.lead_list = generateLayout(self.pathToLayoutScript, self.pathToBondwireSetup, self.pathToLayerStack, self.pathToConstraints, int(self.reliabilityAwareness))
 
-            self.displayLayerStack()
+            #self.displayLayerStack()
 
         ui.btn_open_layer_stack.pressed.connect(getLayerStack)
         ui.btn_open_layout.pressed.connect(getLayoutScript)
@@ -402,7 +403,7 @@ class PS2GUI():
 
         ui.btn_continue.pressed.connect(continue_UI)
         ui.btn_continue.setToolTip("Click to continue once you have edited the layer_stack file.")
-
+        
         displayLayerStack.show()
 
     def editConstraints(self):

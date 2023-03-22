@@ -25,7 +25,7 @@ def showSolutionBrowser(self):
 
         i = 1
         
-        while os.path.exists(self.pathToFigs + f"initial_layout_I{i}.png"):
+        while os.path.exists(os.path.join(self.pathToFigs, f"initial_layout_I{i}.png")):
             graphics = QtWidgets.QGraphicsView()
 
             ui.tabWidget.insertTab(i-1, graphics, f"Layer {i}")
@@ -93,8 +93,8 @@ def showSolutionBrowser(self):
             if self.option==1:
                 display_initial_layout()
             else:
-                while os.path.exists(self.pathToFigs + f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png"):
-                    pix = QtGui.QPixmap(self.pathToFigs + f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png")
+                while os.path.exists(os.path.join(self.pathToFigs, self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png")):
+                    pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png"))
                     #pix = pix.scaledToWidth(500)
                     item = QtWidgets.QGraphicsPixmapItem(pix)
                     scene = QtWidgets.QGraphicsScene()
@@ -102,7 +102,7 @@ def showSolutionBrowser(self):
                     ui.tabWidget.widget(i-1).setScene(scene)
                     i += 1
                 if i > 2:
-                    pix = QtGui.QPixmap(self.pathToFigs + f"Mode_{self.layoutMode}/layout_all_layers_{event.ind[0]}.png")
+                    pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_all_layers_{event.ind[0]}.png"))
                     #pix = pix.scaledToWidth(500)
                     item = QtWidgets.QGraphicsPixmapItem(pix)
                     scene = QtWidgets.QGraphicsScene()
@@ -129,8 +129,8 @@ def showSolutionBrowser(self):
 
         def display_initial_layout():
             i = 1
-            while os.path.exists(self.pathToFigs + f"initial_layout_I{i}.png"):
-                pix = QtGui.QPixmap(self.pathToFigs + f"initial_layout_I{i}.png")
+            while os.path.exists(os.path.join(self.pathToFigs, f"initial_layout_I{i}.png")):
+                pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"initial_layout_I{i}.png"))
                 #pix = pix.scaledToWidth(575)
                 item = QtWidgets.QGraphicsPixmapItem(pix)
                 scene = QtWidgets.QGraphicsScene()
@@ -138,7 +138,7 @@ def showSolutionBrowser(self):
                 ui.tabWidget.widget(i-1).setScene(scene)
                 i += 1
             if i > 2:
-                pix = QtGui.QPixmap(self.pathToFigs + f"initial_layout_all_layers.png")
+                pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"initial_layout_all_layers.png"))
                 #pix = pix.scaledToWidth(650)
                 item = QtWidgets.QGraphicsPixmapItem(pix)
                 scene = QtWidgets.QGraphicsScene()
