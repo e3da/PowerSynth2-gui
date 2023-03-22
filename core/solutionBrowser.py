@@ -184,6 +184,18 @@ def showSolutionBrowser(self):
             ui.lineEdit_size_w.setMaximumWidth(50)
             ui.lineEdit_size_h.setMaximumWidth(50)
 
+        def show_info_messagebox(info):
+            msg = QtWidgets.QMessageBox()
+            msg.setIcon(QtWidgets.QMessageBox.Information)
+
+            msg.setText(info)
+            
+            msg.setWindowTitle("Information")
+            
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            
+            return msg.exec_()
+
         def export_selected():
             #return
 
@@ -199,16 +211,16 @@ def showSolutionBrowser(self):
                     self.floorPlan[1]=feature.length
                     
                     break
-            if self.core.cmd.structure_3D.solutions:
-                
+            if self.core.cmd.structure_3D.solutions:                
                 export_solution_layout_attributes(sol_path=self.pathToSolutions, solutions=[self.core.cmd.structure_3D.solutions[self.solution_ind]], size=[float(self.floorPlan[0]), float(self.floorPlan[1])])
+                show_info_messagebox(f"Layout #{self.solution_ind} exported")
             else:
-                print("Error: Something went wrong.")
+                show_info_messagebox("Error: Something went wrong.")
             
         def export_all():
             if self.core.cmd.structure_3D.solutions:
                 export_solution_layout_attributes(sol_path=self.pathToSolutions, solutions=self.core.cmd.structure_3D.solutions, size=[float(self.floorPlan[0]), float(self.floorPlan[1])])
-            
+            show_info_messagebox(f"All {len(self.core.cmd.structure_3D.solutions)} Layouts exported")
 
         def close_GUI():
             solutionBrowser.close()
@@ -223,4 +235,5 @@ def showSolutionBrowser(self):
         ui.btn_exit.setToolTip("Close and exit the GUI.")
         ui.btn_initial_layout.setToolTip("Display initial layout.")
 
+        display_initial_layout()
         solutionBrowser.show()

@@ -132,7 +132,7 @@ class PS2GUI():
                 return
 
         def runPowerSynth():
-            #'''
+            
             if not os.path.exists(ui.lineEdit_4.text()) or not ui.lineEdit_4.text().endswith(".txt"):
                 popup = QtWidgets.QMessageBox()
                 popup.setWindowTitle("Error:")
@@ -141,26 +141,6 @@ class PS2GUI():
                 return
 
             self.macro_script_path = ui.lineEdit_4.text()
-            
-            #'''
-
-            self.currentWindow.close()
-            self.currentWindow = None
-
-            def solutionBrowser():
-                self.currentWindow.close()
-                self.currentWindow = None
-
-                self.core = PS2Core(self.macro_script_path)
-                self.core.run()
-
-                showSolutionBrowser(self)
-
-
-            editConstraints = QtWidgets.QDialog()
-            UI = UI_edit_constraints()
-            UI.setupUi(editConstraints)
-            self.setWindow(editConstraints)
             
             self.pathToWorkFolder=os.path.dirname(self.macro_script_path)
             os.chdir(self.pathToWorkFolder)         
@@ -185,11 +165,33 @@ class PS2GUI():
                         self.floorPlan[1] = line.split()[1].split(",")[1]
                     if line.startswith("Layout_Mode: "):
                         self.layoutMode = line.split()[1]
-            
+
+            self.currentWindow.close()
+            self.currentWindow = None
+
+            self.core = PS2Core(self.macro_script_path)
+            self.core.run()
+
+            showSolutionBrowser(self)
+
+            """
+            def solutionBrowser():
+                self.currentWindow.close()
+                self.currentWindow = None
+
+                self.core = PS2Core(self.macro_script_path)
+                self.core.run()
+
+                showSolutionBrowser(self)
+
+            editConstraints = QtWidgets.QDialog()
+            UI = UI_edit_constraints()
+            UI.setupUi(editConstraints)
+            self.setWindow(editConstraints)       
             
             if int(self.reliabilityAwareness) == 0:
                 UI.tabWidget.removeTab(5)
-
+            
             # Fill out the constraints from the given constraint file
             with open(self.pathToConstraints, 'r') as csvfile:
                 csvreader = csv.reader(csvfile)
@@ -228,7 +230,7 @@ class PS2GUI():
                         else:
                             tableWidgets[k].setVerticalHeaderItem(rowcount-1, textedit)
                     rowcount += 1
-
+            
             def continue_UI():
                 with open(self.pathToConstraints, 'w') as csvfile:
                     csvwriter = csv.writer(csvfile)
@@ -252,6 +254,8 @@ class PS2GUI():
             UI.btn_continue.setToolTip("Click to run PowerSynth once you have edited the constraints.")
 
             editConstraints.show()
+
+            """
 
 
         ui.btn_create_project.pressed.connect(runPowerSynth)
@@ -350,7 +354,7 @@ class PS2GUI():
 
             self.device_dict, self.lead_list = generateLayout(self.pathToLayoutScript, self.pathToBondwireSetup, self.pathToLayerStack, self.pathToConstraints, int(self.reliabilityAwareness))
 
-            #self.displayLayerStack()
+            self.displayLayerStack()
 
         ui.btn_open_layer_stack.pressed.connect(getLayerStack)
         ui.btn_open_layout.pressed.connect(getLayoutScript)
