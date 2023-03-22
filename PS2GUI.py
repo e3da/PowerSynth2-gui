@@ -325,7 +325,7 @@ class PS2GUI():
                 popup.exec_()
                 return
             
-            if ui.lineEdit_bondwire.text()!='None':
+            if len(ui.lineEdit_bondwire.text()):
                 if not os.path.exists(ui.lineEdit_bondwire.text()) or not ui.lineEdit_bondwire.text().endswith(".txt"):
                     
                         popup = QtWidgets.QMessageBox()
@@ -341,6 +341,7 @@ class PS2GUI():
             self.reliabilityAwareness = "0" if ui.combo_reliability_constraints.currentText() == "no constraints" else "1" if ui.combo_reliability_constraints.currentText() == "worst case consideration" else "2"
 
             self.pathToWorkFolder = os.path.dirname(self.pathToLayoutScript)
+            os.chdir(self.pathToWorkFolder)
 
             #default paths are relative to work folder
             self.pathToConstraints = "./constraint.csv"
