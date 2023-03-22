@@ -162,25 +162,19 @@ class PS2GUI():
             UI.setupUi(editConstraints)
             self.setWindow(editConstraints)
             
-            macro_dir=os.path.dirname(self.macro_script_path)
-            
-             
+            self.pathToWorkFolder=os.path.dirname(self.macro_script_path)             
 
             with open(self.macro_script_path, 'r') as file:
                 for line in file:
                     if line.startswith("Constraint_file: "):
-                        self.pathToConstraints = line.split()[1]
-                        if self.pathToConstraints.startswith("./"):
-                            self.pathToConstraints = self.pathToConstraints.replace("./", self.macro_script_path.rsplit("/", 1)[0] + "/")
+                        self.pathToConstraints = os.path.abspath(line.split()[1])
+
                     if line.startswith("Fig_dir: "):
-                        self.pathToWorkFolder = line.split()[1].rsplit('/', 1)[0] + "/"
-                        self.pathToFigs = line.split()[1] + "/"
-                        if self.pathToFigs.startswith("./"):
-                            self.pathToFigs = self.pathToFigs.replace("./", self.macro_script_path.rsplit("/", 1)[0] + "/")
+                        self.pathToFigs = os.path.abspath(line.split()[1])
+
                     if line.startswith("Solution_dir: "):
-                        self.pathToSolutions = line.split()[1] + "/"
-                        if self.pathToSolutions.startswith("./"):
-                            self.pathToSolutions = self.pathToSolutions.replace("./", self.macro_script_path.rsplit("/", 1)[0] + "/")
+                        self.pathToSolutions = os.path.abspath(line.split()[1])
+
                     if line.startswith("Option: "):
                         self.option = int(line.split()[1])
                     if line.startswith("Reliability-awareness: "):
@@ -330,9 +324,7 @@ class PS2GUI():
                 popup.exec_()
                 return
             
-            if ui.lineEdit_bondwire.text()=='None':
-                pass
-            else:
+            if ui.lineEdit_bondwire.text()!='None':
                 if not os.path.exists(ui.lineEdit_bondwire.text()) or not ui.lineEdit_bondwire.text().endswith(".txt"):
                     
                         popup = QtWidgets.QMessageBox()
@@ -347,17 +339,14 @@ class PS2GUI():
 			
             self.reliabilityAwareness = "0" if ui.combo_reliability_constraints.currentText() == "no constraints" else "1" if ui.combo_reliability_constraints.currentText() == "worst case consideration" else "2"
 
-            newPath = self.pathToLayoutScript.split("/")
-            newPath.pop(-1)
-            
-            self.pathToWorkFolder = "/".join(newPath) + "/"
-            #print(newPath,self.pathToWorkFolder)
-            os.chdir(self.pathToWorkFolder)
-            self.pathToConstraints = self.pathToWorkFolder + "constraint.csv"
-            self.pathToFigs = self.pathToWorkFolder + "Figs/"
-            self.pathToSolutions = self.pathToWorkFolder + "Solutions/"
+            self.pathToWorkFolder = os.path.dirname(self.pathToLayoutScript)
 
-            self.device_dict, self.lead_list = generateLayout(self.pathToLayoutScript, self.pathToBondwireSetup, self.pathToLayerStack, self.pathToConstraints, int(self.reliabilityAwareness),settings)
+            #default paths are relative to work folder
+            self.pathToConstraints = "./constraint.csv"
+            self.pathToFigs = "./Figs"
+            self.pathToSolutions = "./Solutions"
+
+            self.device_dict, self.lead_list = generateLayout(self.pathToLayoutScript, self.pathToBondwireSetup, self.pathToLayerStack, self.pathToConstraints, int(self.reliabilityAwareness))
 
             self.displayLayerStack()
 
@@ -780,21 +769,17 @@ class PS2GUI():
         ui.btn_remove_device.setToolTip("Remove the last row of the device power table.")
 
         thermalSetup.show()
-    
-        
-        ui2.btn_open_settings.pressed.connect(getSettingsInfo2)
-        ui2.btn_continue.pressed.connect(proceed)
-        settings.show()
+
         #self.currentWindow.close()
         #self.currentWindow = None
     def runPowerSynth(self):
 
         self.currentWindow.close()
         self.currentWindow = None
-        macroPath = self.pathToLayoutScript.split("/")
-        macroPath.pop(-1)
-        macroPath = "/".join(macroPath) + "/macro_script.txt"
-        self.macro_script_path = macroPath
+
+        self.pathToWorkFolder = os.path.dirname(self.pathToLayoutScript)
+        self.macro_script_path = os.path.join(self.pathToWorkFolder, "macro_script.txt")
+
         with open(self.macro_script_path, "w") as file:
             createMacro(file, self)
 

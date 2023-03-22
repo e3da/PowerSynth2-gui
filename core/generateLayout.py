@@ -5,7 +5,7 @@ from core.engine.InputParser.input_script import script_translator
 from core.engine.InputParser.input_script_up import script_translator as script_translator_up
 
 
-def generateLayout(layout_script, bondwire_setup, layer_stack_file, constraint_file, i_v_constraint,settings):
+def generateLayout(layout_script, bondwire_setup, layer_stack_file, constraint_file, i_v_constraint):
     
     layer_stack = LayerStack()
     layer_stack.import_layer_stack_from_csv(layer_stack_file)
