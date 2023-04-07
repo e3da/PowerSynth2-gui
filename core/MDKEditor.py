@@ -1,6 +1,3 @@
-"""
-This is the main code of PCM
-"""
 
 import sys, csv
 import os
@@ -67,7 +64,11 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         Return true if value is numerical value with allowed special characters
         :return:True or False
         """
-        return value.replace('.', '').replace('-', '').replace('+', '').replace('E', '').replace('e', '').isnumeric()
+        try: 
+            float(value) 
+            return True 
+        except ValueError: 
+            return False
 
     def check_same(self, name):
         """
@@ -96,7 +97,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         filename, ok = QFileDialog.getOpenFileName(parent=self, caption='Select Open File', filter='CSV Files (*.csv)')
         if not filename:
             return
-        with open(filename) as data:
+        with open(filename, newline='') as data:
             reader = csv.DictReader(data)
             for row in reader:
                 p_rat = None
@@ -125,10 +126,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                 pmea = row['rel_permeab']
                 cte = row['thermal_expansion_coeffcient']
                 data = MaterialProperties(name=row['name'], thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                          spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                          density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                          young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                          type=row['type'], melting_temp=melt)
+                        spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
+                        density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
+                        young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
+                        type=row['type'], melting_temp=melt)
                 EditLibrary.mat_lib.append(data)
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
@@ -146,19 +147,19 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         filename, ok = QFileDialog.getSaveFileName(parent=self, caption='Select Save File', filter='CSV Files (*.csv)')
         if not filename:
             return
-        with open(filename, 'wb') as csvFile:
+        with open(filename, 'w') as csvFile:
             header = ["name", "thermal_cond", "thermal_cond_liq", "spec_heat_cap",
-                      "spec_heat_cap_liq", "density", "density_liq", "electrical_res",
-                      "rel_permit", "rel_permeab", "q3d_id", "young_modulus", "poissons_ratios",
-                      "thermal_expansion_coeffcient", "type",
-                      "melting_temp"]
+                    "spec_heat_cap_liq", "density", "density_liq", "electrical_res",
+                    "rel_permit", "rel_permeab", "q3d_id", "young_modulus", "poissons_ratios",
+                    "thermal_expansion_coeffcient", "type",
+                    "melting_temp"]
             writer = csv.DictWriter(csvFile, fieldnames=header)
             writer.writeheader()
             for row in rows:
                 data={'name':None, 'thermal_cond':None, 'thermal_cond_liq':None, 'spec_heat_cap':None,
-                      'spec_heat_cap_liq':None, 'density':None, 'density_liq':None, 'electrical_res':None,
-                      'rel_permit':None, 'rel_permeab':None, 'q3d_id':None, 'young_modulus':None, 'poissons_ratios':None,
-                      'thermal_expansion_coeffcient':None, 'type':None, 'melting_temp':None}
+                        'spec_heat_cap_liq':None, 'density':None, 'density_liq':None, 'electrical_res':None,
+                        'rel_permit':None, 'rel_permeab':None, 'q3d_id':None, 'young_modulus':None, 'poissons_ratios':None,
+                        'thermal_expansion_coeffcient':None, 'type':None, 'melting_temp':None}
                 data['name'] = row.name
                 data['thermal_cond'] = row.thermal_cond_so
                 data['thermal_cond_liq'] = row.thermal_cond_liq
@@ -245,7 +246,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         """
         path_parent = os. path. dirname(os. getcwd())
         material_lib=os.path.join(path_parent,'tech_lib/Material/Materials.csv')
-        
+
         if os.path.exists(material_lib):
             with open(material_lib) as data:
                 reader = csv.DictReader(data)
@@ -276,10 +277,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     pmea = row['rel_permeab']
                     cte = row['thermal_expansion_coeffcient']
                     data = MaterialProperties(name=row['name'], thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                            spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                            density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                            young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                            type=row['type'], melting_temp=melt)
+                            spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
+                            density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
+                            young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
+                            type=row['type'], melting_temp=melt)
                     EditLibrary.mat_lib.append(data)
         else:
             print("Please Import the Material.csv file from tech_lib")
@@ -437,19 +438,18 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         rows = EditLibrary.mat_lib
         with open("Materials.csv", 'w') as csvFile:
             header = ['name', 'thermal_cond', 'thermal_cond_liq', 'spec_heat_cap',
-                      'spec_heat_cap_liq', 'density', 'density_liq', 'electrical_res',
-                      'rel_permit', 'rel_permeab', 'q3d_id', 'young_modulus', 'poissons_ratios',
-                      'thermal_expansion_coeffcient', 'type',
-                      'melting_temp']
-            #header=[i.encode('utf_8') for i in header]
-            
+                    'spec_heat_cap_liq', 'density', 'density_liq', 'electrical_res',
+                    'rel_permit', 'rel_permeab', 'q3d_id', 'young_modulus', 'poissons_ratios',
+                    'thermal_expansion_coeffcient', 'type',
+                    'melting_temp']
+
             writer = csv.DictWriter(csvFile, fieldnames=header)
             writer.writeheader()
             for row in rows:
                 data={'name':None, 'thermal_cond':None, 'thermal_cond_liq':None, 'spec_heat_cap':None,
-                      'spec_heat_cap_liq':None, 'density':None, 'density_liq':None, 'electrical_res':None,
-                      'rel_permit':None, 'rel_permeab':None, 'q3d_id':None, 'young_modulus':None, 'poissons_ratios':None,
-                      'thermal_expansion_coeffcient':None, 'type':None, 'melting_temp':None}
+                        'spec_heat_cap_liq':None, 'density':None, 'density_liq':None, 'electrical_res':None,
+                        'rel_permit':None, 'rel_permeab':None, 'q3d_id':None, 'young_modulus':None, 'poissons_ratios':None,
+                        'thermal_expansion_coeffcient':None, 'type':None, 'melting_temp':None}
                 data['name'] = row.name
                 data['thermal_cond'] = row.thermal_cond_so
                 data['thermal_cond_liq'] = row.thermal_cond_liq
@@ -481,7 +481,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         rows = EditLibrary.mat_lib
         text = self.comboBox.currentText()
         item = self.SearchItem.text()
-        value2 = item.encode("utf-8")
+        value2 = item
         if text == 'Name':
             row_id = 0
             for row in rows:
@@ -742,10 +742,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             pmea = row['rel_permeab']
             cte = row['thermal_expansion_coeffcient']
             data = MaterialProperties(name=row['name'], thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                      spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                      density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                      young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                      type=row['type'], melting_temp=melt)
+                    spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
+                    density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
+                    young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
+                    type=row['type'], melting_temp=melt)
             EditLibrary.mat_lib.append(data)
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
@@ -755,13 +755,12 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
-    def add_all(self):
+    def add_material(self, type):
         """
         Add blank line to tableWidget
         :return: Nothing
         """
         name = None
-        type = None
         y_mdl = None
         p_rat = None
         th_cond = None
@@ -776,12 +775,20 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         pmea = None
         cte = None
         data = MaterialProperties(name=name, thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                  spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                  density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                  young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                  type=type, melting_temp=melt)
+                spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
+                density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
+                young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
+                type=type, melting_temp=melt)
         EditLibrary.mat_lib.append(data)
         self.ok()
+
+    def add_all(self):
+        """
+        Add blank line to tableWidget
+        :return: Nothing
+        """
+        type = None
+        self.add_material(type)
 
     def clone_all(self):
         """
@@ -815,7 +822,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         num = self.tableWidget.currentRow()
-        name = self.tableWidget.item(num,0).text().encode('utf-8')
+        name = self.tableWidget.item(num,0).text()
         widget = self.tableWidget.cellWidget(num, 1)
         type = widget.currentText()
         y_mdl = self.tableWidget.item(num, 2).text()
@@ -883,19 +890,19 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                 if num == id2:
                     row.name = name
                     row.type = type
-                    row.young_modulus = y_mdl.encode('utf-8')
-                    row.poisson_ratio = p_rat.encode('utf-8')
-                    row.melting_temp = melt.encode('utf-8')
-                    row.density_so = dens.encode('utf-8')
-                    row.density_liq = densL.encode('utf-8')
-                    row.thermal_cond_so = th_cond.encode('utf-8')
-                    row.thermal_cond_liq = th_condL.encode('utf-8')
-                    row.spec_heat_cap_so = sp_cap.encode('utf-8')
-                    row.spec_heat_cap_liq = sp_capL.encode('utf-8')
-                    row.electrical_res = e_res.encode('utf-8')
-                    row.rel_permit = pmit.encode('utf-8')
-                    row.rel_permeab = pmea.encode('utf-8')
-                    row.thermal_expansion_coefficient = tm_co.encode('utf-8')
+                    row.young_modulus = y_mdl
+                    row.poisson_ratio = p_rat
+                    row.melting_temp = melt
+                    row.density_so = dens
+                    row.density_liq = densL
+                    row.thermal_cond_so = th_cond
+                    row.thermal_cond_liq = th_condL
+                    row.spec_heat_cap_so = sp_cap
+                    row.spec_heat_cap_liq = sp_capL
+                    row.electrical_res = e_res
+                    row.rel_permit = pmit
+                    row.rel_permeab = pmea
+                    row.thermal_expansion_coefficient = tm_co
                 id2 += 1
             EditLibrary.mat_lib = rows
             msg = QMessageBox()
@@ -926,7 +933,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         for row in rows:
             if value == num:
                 name = row.name
-                name = name.encode('utf-8')
+                name = name
             num += 1
         rows.pop(value)
         EditLibrary.mat_lib = rows
@@ -938,33 +945,34 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
+    def clone_material(self,type):
+        """
+        Create clone material in tableWidget
+        :return: Nothing
+        """
+        value = self.tableWidget_2.currentRow()
+        rows = EditLibrary.mat_lib
+        num = 0
+        id2 = 0
+        for i,row in rows:
+            if row.type == type:
+                if value == num:
+                    EditLibrary.pcm_num = id2
+                num += 1
+            id2 += 1
+        item = rows[EditLibrary.pcm_num]
+        clone = deepcopy(item)
+        clone.name = clone.name + ' copy'
+        rows.append(item)
+        self.ok()
+
     def add_pcm(self):
         """
         Add blank line to tableWidget_2
         :return: Nothing
         """
-        name = None
         type = "PCM"
-        y_mdl = None
-        p_rat = None
-        th_cond = None
-        th_condL = None
-        dens = None
-        densL = None
-        spec = None
-        specL = None
-        melt = None
-        e_res = None
-        pmit = None
-        pmea = None
-        cte = None
-        data = MaterialProperties(name=name, thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                  spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                  density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                  young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                  type=type, melting_temp=melt)
-        EditLibrary.mat_lib.append(data)
-        self.ok()
+        self.add_material(type)
 
     def clone_pcm(self):
         """
@@ -1003,7 +1011,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         num = self.tableWidget_2.currentRow()
-        name = self.tableWidget_2.item(num, 0).text().encode('utf-8')
+        name = self.tableWidget_2.item(num, 0).text()
         y_mdl = self.tableWidget_2.item(num, 1).text()
         p_rat = self.tableWidget_2.item(num, 2).text()
         tm_co = self.tableWidget_2.item(num, 3).text()
@@ -1058,16 +1066,16 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                 if row.type == 'PCM':
                     if num == number:
                         row.name = name
-                        row.young_modulus = y_mdl.encode('utf-8')
-                        row.poisson_ratio = p_rat.encode('utf-8')
-                        row.melting_temp = melt.encode('utf-8')
-                        row.density_so = dens.encode('utf-8')
-                        row.density_liq = densL.encode('utf-8')
-                        row.thermal_cond_so = th_cond.encode('utf-8')
-                        row.thermal_cond_liq = th_condL.encode('utf-8')
-                        row.spec_heat_cap_so = sp_cap.encode('utf-8')
-                        row.spec_heat_cap_liq = sp_capL.encode('utf-8')
-                        row.thermal_expansion_coefficient = tm_co.encode('utf-8')
+                        row.young_modulus = y_mdl
+                        row.poisson_ratio = p_rat
+                        row.melting_temp = melt
+                        row.density_so = dens
+                        row.density_liq = densL
+                        row.thermal_cond_so = th_cond
+                        row.thermal_cond_liq = th_condL
+                        row.spec_heat_cap_so = sp_cap
+                        row.spec_heat_cap_liq = sp_capL
+                        row.thermal_expansion_coefficient = tm_co
                     number += 1
                 id2 += 1
             EditLibrary.mat_lib = rows
@@ -1118,28 +1126,8 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         Add blank line to tableWidget_3
         :return: Nothing
         """
-        name = None
         type = "Conductor"
-        y_mdl = None
-        p_rat = None
-        th_cond = None
-        th_condL = None
-        dens = None
-        densL = None
-        spec = None
-        specL = None
-        melt = None
-        e_res = None
-        pmit = None
-        pmea = None
-        cte = None
-        data = MaterialProperties(name=name, thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                  spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                  density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                  young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                  type=type, melting_temp=melt)
-        EditLibrary.mat_lib.append(data)
-        self.ok()
+        self.add_material(type)
 
     def clone_conductor(self):
         """
@@ -1177,7 +1165,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         num = self.tableWidget_3.currentRow()
-        name = self.tableWidget_3.item(num, 0).text().encode('utf-8')
+        name = self.tableWidget_3.item(num, 0).text()
         y_mdl = self.tableWidget_3.item(num, 1).text()
         p_rat = self.tableWidget_3.item(num, 2).text()
         dens = self.tableWidget_3.item(num, 3).text()
@@ -1229,15 +1217,15 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     if num == number:
                         EditLibrary.con_num = id2
                         row.name = name
-                        row.young_modulus = y_mdl.encode('utf-8')
-                        row.poisson_ratio = p_rat.encode('utf-8')
-                        row.density_so = dens.encode('utf-8')
-                        row.thermal_cond_so = th_cond.encode('utf-8')
-                        row.spec_heat_cap_so = sp_cap.encode('utf-8')
-                        row.electrical_res = e_res.encode('utf-8')
-                        row.rel_permit = pmit.encode('utf-8')
-                        row.rel_permeab = pmea.encode('utf-8')
-                        row.thermal_expansion_coefficient = tm_co.encode('utf-8')
+                        row.young_modulus = y_mdl
+                        row.poisson_ratio = p_rat
+                        row.density_so = dens
+                        row.thermal_cond_so = th_cond
+                        row.spec_heat_cap_so = sp_cap
+                        row.electrical_res = e_res
+                        row.rel_permit = pmit
+                        row.rel_permeab = pmea
+                        row.thermal_expansion_coefficient = tm_co
                         print(row)
                     number += 1
                 id2 += 1
@@ -1290,28 +1278,8 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         Add blank line to tableWidget_4
         :return: Nothing
         """
-        name = None
         type = "Insulator"
-        y_mdl = None
-        p_rat = None
-        th_cond = None
-        th_condL = None
-        dens = None
-        densL = None
-        spec = None
-        specL = None
-        melt = None
-        e_res = None
-        pmit = None
-        pmea = None
-        cte = None
-        data = MaterialProperties(name=name, thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                  spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                  density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                  young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                  type=type, melting_temp=melt)
-        EditLibrary.mat_lib.append(data)
-        self.ok()
+        self.add_material(type)
 
     def clone_insulator(self):
         """
@@ -1350,7 +1318,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         num = self.tableWidget_4.currentRow()
-        name = self.tableWidget_4.item(num, 0).text().encode('utf-8')
+        name = self.tableWidget_4.item(num, 0).text()
         y_mdl = self.tableWidget_4.item(num, 1).text()
         p_rat = self.tableWidget_4.item(num, 2).text()
         dens = self.tableWidget_4.item(num, 3).text()
@@ -1403,15 +1371,15 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     if value == number:
                         EditLibrary.ins_num = id2
                         row.name = name
-                        row.young_modulus = y_mdl.encode('utf-8')
-                        row.poisson_ratio = p_rat.encode('utf-8')
-                        row.density_so = dens.encode('utf-8')
-                        row.thermal_cond_so = th_cond.encode('utf-8')
-                        row.spec_heat_cap_so = sp_cap.encode('utf-8')
-                        row.electrical_res = e_res.encode('utf-8')
-                        row.rel_permit = pmit.encode('utf-8')
-                        row.rel_permeab = pmea.encode('utf-8')
-                        row.thermal_expansion_coefficient = tm_co.encode('utf-8')
+                        row.young_modulus = y_mdl
+                        row.poisson_ratio = p_rat
+                        row.density_so = dens
+                        row.thermal_cond_so = th_cond
+                        row.spec_heat_cap_so = sp_cap
+                        row.electrical_res = e_res
+                        row.rel_permit = pmit
+                        row.rel_permeab = pmea
+                        row.thermal_expansion_coefficient = tm_co
                     number += 1
                 id2 += 1
             EditLibrary.mat_lib = rows
@@ -1464,28 +1432,8 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         Add blank line to tableWidget_5
         :return: Nothing
         """
-        name = None
         type = "Semiconductor"
-        y_mdl = None
-        p_rat = None
-        th_cond = None
-        th_condL = None
-        dens = None
-        densL = None
-        spec = None
-        specL = None
-        melt = None
-        e_res = None
-        pmit = None
-        pmea = None
-        cte = None
-        data = MaterialProperties(name=name, thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                                  spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                                  density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                                  young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                                  type=type, melting_temp=melt)
-        EditLibrary.mat_lib.append(data)
-        self.ok()
+        self.add_material(type)
 
     def clone_semiconductor(self):
         """
@@ -1524,7 +1472,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         num = self.tableWidget_5.currentRow()
-        name = self.tableWidget_5.item(num, 0).text().encode('utf-8')
+        name = self.tableWidget_5.item(num, 0).text()
         y_mdl = self.tableWidget_5.item(num, 1).text()
         p_rat = self.tableWidget_5.item(num, 2).text()
         dens = self.tableWidget_5.item(num, 3).text()
@@ -1576,15 +1524,15 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     if num == num2:
                         EditLibrary.sem_num = id2
                         row.name = name
-                        row.young_modulus = y_mdl.encode('utf-8')
-                        row.poisson_ratio = p_rat.encode('utf-8')
-                        row.density_so = dens.encode('utf-8')
-                        row.thermal_cond_so = th_cond.encode('utf-8')
-                        row.spec_heat_cap_so = sp_cap.encode('utf-8')
-                        row.electrical_res = e_res.encode('utf-8')
-                        row.rel_permit = pmit.encode('utf-8')
-                        row.rel_permeab = pmea.encode('utf-8')
-                        row.thermal_expansion_coefficient = tm_co.encode('utf-8')
+                        row.young_modulus = y_mdl
+                        row.poisson_ratio = p_rat
+                        row.density_so = dens
+                        row.thermal_cond_so = th_cond
+                        row.spec_heat_cap_so = sp_cap
+                        row.electrical_res = e_res
+                        row.rel_permit = pmit
+                        row.rel_permeab = pmea
+                        row.thermal_expansion_coefficient = tm_co
                         print(row)
                     num2 += 1
                 id2 += 1

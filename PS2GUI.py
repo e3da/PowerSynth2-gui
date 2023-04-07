@@ -174,90 +174,6 @@ class PS2GUI():
 
             showSolutionBrowser(self)
 
-            """
-            def solutionBrowser():
-                self.currentWindow.close()
-                self.currentWindow = None
-
-                self.core = PS2Core(self.macro_script_path)
-                self.core.run()
-
-                showSolutionBrowser(self)
-
-            editConstraints = QtWidgets.QDialog()
-            UI = UI_edit_constraints()
-            UI.setupUi(editConstraints)
-            self.setWindow(editConstraints)       
-            
-            if int(self.reliabilityAwareness) == 0:
-                UI.tabWidget.removeTab(5)
-            
-            # Fill out the constraints from the given constraint file
-            with open(self.pathToConstraints, 'r') as csvfile:
-                csvreader = csv.reader(csvfile)
-
-                tableWidgets = [UI.tableWidget, UI.tableWidget_2, UI.tableWidget_3, UI.tableWidget_4, UI.tableWidget_5]
-                k = -1
-                DONE = False
-                for row in csvreader:
-                    if DONE:  # Saves voltage specification and such
-                        self.extraConstraints.append(row)
-                        continue
-                    try:
-                        float(row[-1])
-                    except ValueError:    # This is a header line
-                        if k > 3:
-                            self.extraConstraints.append(row)
-                            DONE = True
-                            continue
-                        UI.tabWidget.setTabText(k+1, row[0])
-                        for _ in range(len(row) - 5):
-                            tableWidgets[k+1].insertColumn(tableWidgets[k+1].columnCount())
-                        for header_index in range(len(row) - 1):
-                            textedit = textedit = QtWidgets.QTableWidgetItem()
-                            textedit.setText(row[header_index + 1])
-                            tableWidgets[k+1].setHorizontalHeaderItem(header_index, textedit)
-                        rowcount = 0
-                        k += 1
-                    if rowcount + 1 > 5:
-                        tableWidgets[k].insertRow(tableWidgets[k].rowCount())
-                    
-                    for j, val in enumerate(row):
-                        textedit = QtWidgets.QTableWidgetItem()
-                        textedit.setText(val)
-                        if j:
-                            tableWidgets[k].setItem(rowcount-1, j-1, textedit)
-                        else:
-                            tableWidgets[k].setVerticalHeaderItem(rowcount-1, textedit)
-                    rowcount += 1
-            
-            def continue_UI():
-                with open(self.pathToConstraints, 'w') as csvfile:
-                    csvwriter = csv.writer(csvfile)
-
-                    for k, tableWidget in enumerate([UI.tableWidget, UI.tableWidget_2, UI.tableWidget_3, UI.tableWidget_4, UI.tableWidget_5]):
-                        l = [UI.tabWidget.tabText(k)]
-                        for i in range(tableWidget.columnCount()):
-                            l.append(tableWidget.horizontalHeaderItem(i).text())
-                        csvwriter.writerow(l)
-                        for i in range(tableWidget.rowCount()):
-                            row = [tableWidget.verticalHeaderItem(i).text()]
-                            for j in range(tableWidget.columnCount()):
-                                row.append(tableWidget.item(i, j).text())
-                            csvwriter.writerow(row)
-                    for row in self.extraConstraints:
-                        csvwriter.writerow(row)
-
-                solutionBrowser()
-
-            UI.btn_continue.pressed.connect(continue_UI)
-            UI.btn_continue.setToolTip("Click to run PowerSynth once you have edited the constraints.")
-
-            editConstraints.show()
-
-            """
-
-
         ui.btn_create_project.pressed.connect(runPowerSynth)
         ui.btn_cancel.pressed.connect(self.openingWindow)
         ui.btn_open_settings_2.pressed.connect(getSettingsInfo)
@@ -375,7 +291,7 @@ class PS2GUI():
         ui.setupUi(displayLayerStack)
         self.setWindow(displayLayerStack)
 
-        with open(self.pathToLayerStack, 'r') as csvfile:
+        with open(self.pathToLayerStack, 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
 
             for i, row in enumerate(csvreader):
@@ -392,7 +308,7 @@ class PS2GUI():
                                 self.floorPlan=[row[3],row[4]]
 
         def continue_UI():
-            with open(self.pathToLayerStack, 'w') as csvfile:
+            with open(self.pathToLayerStack, 'w', newline='') as csvfile:
                 csvwriter = csv.writer(csvfile)
 
                 csvwriter.writerow(["ID", "Name" , "Origin" , "Width" , "Length" , "Thickness" , "Material" , "Type" , "Electrical"])
@@ -422,7 +338,7 @@ class PS2GUI():
             ui.tabWidget.removeTab(5)
 
         # Fill out the constraints from the given constraint file
-        with open(self.pathToConstraints, 'r') as csvfile:
+        with open(self.pathToConstraints, 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
 
             tableWidgets = [ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, ui.tableWidget_5]
@@ -462,7 +378,7 @@ class PS2GUI():
 
         def continue_UI():
             
-            with open(self.pathToConstraints, 'w') as csvfile:
+            with open(self.pathToConstraints, 'w', newline='') as csvfile:
                     csvwriter = csv.writer(csvfile)
 
                     for k, tableWidget in enumerate([ui.tableWidget, ui.tableWidget_2, ui.tableWidget_3, ui.tableWidget_4, ui.tableWidget_5]):
