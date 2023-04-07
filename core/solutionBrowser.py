@@ -50,12 +50,11 @@ def showSolutionBrowser(self):
             for sol in self.core.cmd.structure_3D.solutions:
                 for key in sol.parameters:
                     perf_metrices.append(key)
-            if len(perf_metrices)==2:
+            if len(perf_metrices)>1:
                 axes.set_xlabel(perf_metrices[0])
                 axes.set_ylabel(perf_metrices[1])
             else:
                 axes.set_xlabel(perf_metrices[0])
-                axes.set_ylabel('None')
         else:
             axes.set_xlabel("Solution Index")
             axes.set_ylabel("Solution Index")
@@ -66,7 +65,7 @@ def showSolutionBrowser(self):
                 data_y.append(sol.solution_id)
             else:
                 data_x.append(sol.parameters[perf_metrices[0]])
-                if (len(sol.parameters)>=2):
+                if (len(sol.parameters)>1):
                     data_y.append(sol.parameters[perf_metrices[1]])
                 else:
                     data_y.append(sol.solution_id)
@@ -164,12 +163,11 @@ def showSolutionBrowser(self):
         
 
         if self.option:
-            if len(perf_metrices)==2:
+            if len(perf_metrices)>1:
                 ui.x_label.setText(perf_metrices[0])
                 ui.y_label.setText(perf_metrices[1])
             else:
                 ui.x_label.setText(perf_metrices[0])
-                ui.y_label.setText('None')
 
             # FIXME Currently hardcoding the units.
             ui.label_units1.setText("nH")
