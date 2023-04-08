@@ -92,7 +92,7 @@ def showSolutionBrowser(self):
             if self.option==1:
                 display_initial_layout()
             else:
-                while os.path.exists(os.path.join(self.pathToFigs, self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png")):
+                while os.path.exists(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png")):
                     pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png"))
                     #pix = pix.scaledToWidth(500)
                     item = QtWidgets.QGraphicsPixmapItem(pix)
