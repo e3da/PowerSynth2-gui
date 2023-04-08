@@ -439,6 +439,8 @@ class PS2GUI():
         optimizationSetup.setFixedHeight(410)
         optimizationSetup.setFixedWidth(400)
         ui.btn_run_powersynth.setEnabled(False)
+        ui.seed.setText("0")
+
         def floorplan_assignment():
             if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
                 ui.floor_plan_x.setEnabled(False)

@@ -3,7 +3,7 @@ from io import TextIOWrapper
 def createMacro(file: TextIOWrapper, self):
     file.write("# Input scripts:" + "\n")
     file.write("Layout_script: " + self.pathToLayoutScript + "\n")
-    if self.pathToBondwireSetup!='None':
+    if self.pathToBondwireSetup is not None and len(self.pathToBondwireSetup):
         file.write("Connectivity_script: " + self.pathToBondwireSetup + "\n")
     #else:
         #file.write("Model_char: " + self.pathToBondwireSetup + "\n")
