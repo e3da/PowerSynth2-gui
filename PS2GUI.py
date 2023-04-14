@@ -8,20 +8,34 @@ import webbrowser
 from PySide2 import QtWidgets
 from matplotlib.figure import Figure
 from core.PS2Core import PS2Core
-from gui.QT.py.openingWindow import Ui_Dialog as UI_opening_window
-from gui.QT.py.runMacro import Ui_Dialog as UI_run_macro
-from gui.QT.py.editMaterials import Ui_Dialog as UI_edit_materials
-from gui.QT.py.editLayout import Ui_Macro_Input_Paths as UI_edit_layout
-from gui.QT.py.layerStack import Ui_Dialog as UI_layer_stack
-from gui.QT.py.editConstraints import Ui_Dialog as UI_edit_constraints
+from gui.qt.py.openingWindow import Ui_Dialog as UI_opening_window
+from gui.qt.py.runMacro import Ui_Dialog as UI_run_macro
+from gui.qt.py.editMaterials import Ui_Dialog as UI_edit_materials
+from gui.qt.py.editLayout import Ui_Macro_Input_Paths as UI_edit_layout
+from gui.qt.py.layerStack import Ui_Dialog as UI_layer_stack
+from gui.qt.py.editConstraints import Ui_Dialog as UI_edit_constraints
 from gui.core.MDKEditor import EditLibrary
 from gui.core.generateLayout import generateLayout
-from gui.QT.py.optimizationSetup import Ui_Dialog as UI_optimization_setup
-from gui.QT.py.electricalSetup import Ui_Dialog as UI_electrical_setup
-from gui.QT.py.thermalSetup import Ui_Dialog as UI_thermal_setup
-from gui.QT.py.runOptions import Ui_Dialog as UI_run_options
+from gui.qt.py.optimizationSetup import Ui_Dialog as UI_optimization_setup
+from gui.qt.py.electricalSetup import Ui_Dialog as UI_electrical_setup
+from gui.qt.py.thermalSetup import Ui_Dialog as UI_thermal_setup
+from gui.qt.py.runOptions import Ui_Dialog as UI_run_options
 from gui.core.solutionBrowser import showSolutionBrowser
 from gui.core.createMacro import createMacro
+
+def RunPSCore(gui):
+    try:
+        gui.core = PS2Core(gui.macro_script_path)
+        gui.core.run()
+        showSolutionBrowser(gui)
+        return 0
+    except Exception as e:
+        print(str(e))
+        popup = QtWidgets.QMessageBox()
+        popup.setWindowTitle("Error:")
+        popup.setText("PowerSynth excution failed :(. Plesae check your macro file.")
+        popup.exec_()
+    return 1
 
 class PS2GUI():
     '''GUI Class -- Stores Important Information for the GUI'''
@@ -91,41 +105,44 @@ class PS2GUI():
             try: 
                 webbrowser.open_new("https://e3da.csce.uark.edu/release/PowerSynth/manual/PowerSynth_v2.0.pdf")
             except:
-                print("Weblink to Manual doesn't exist! Please look inside the package for PowerSynth_v2.0.pdf")
+                print("Failed to open manual! Please look inside the package for PowerSynth_v2.0.pdf")
         
-        def startProject():
+        def web():
+            try: 
+                webbrowser.open_new("https://e3da.csce.uark.edu/release/PowerSynth/")
+            except:
+                print("Failed to open website! Please open e3da.csce.uark.edu in your browser.")
+
+        def create_macro():
             self.editMaterials()
 
-        def runProject():
+        def run_macro():
             self.runMacro()
 
         ui.open_manual.pressed.connect(manual)
-        ui.start_project.pressed.connect(startProject)
-        ui.runProject.pressed.connect(runProject)
+        ui.open_web.pressed.connect(web)
+        ui.create_macro.pressed.connect(create_macro)
+        ui.run_macro.pressed.connect(run_macro)
 
         ui.open_manual.setToolTip("Opens the user manual for PowerSynth in default browser.")
-        ui.start_project.setToolTip("Start a new project if you have a layout but no macro script.")
-        ui.runProject.setToolTip("Run a project if you already have a macro script to run.")
+        ui.open_web.setToolTip("Opens the Release Website for PowerSynth in default browser.")
+        ui.create_macro.setToolTip("Create a new macro file.")
+        ui.run_macro.setToolTip("Run a PowerSynth backend on the macro script.")
 
         openingWindow.show()
 
     def runMacro(self):
         '''Opens Window to directly run PowerSynth
-           User must provide paths to settings.info/macro_script.txt
+           User must provide paths to macro_script.txt
         '''
         runMacro = QtWidgets.QDialog()
         ui = UI_run_macro()
         ui.setupUi(runMacro)
         self.setWindow(runMacro)
 
-        def getSettingsInfo():
-            
-            ui.lineEdit_3.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open settings.info', os.getenv('HOME'))[0])
-            
-
         def getMacroScript():
             if self.macro_script_path==None:
-                ui.lineEdit_4.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open macro_script.txt', os.getenv('HOME'))[0])
+                ui.lineEdit_4.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open macro_script.txt', os.getcwd())[0])
             else:
                 ui.lineEdit_4.setText(self.macro_script_path)
                 self.currentWindow.close()
@@ -141,6 +158,9 @@ class PS2GUI():
                 return
 
             self.macro_script_path = ui.lineEdit_4.text()
+
+            self.currentWindow.close()
+            self.currentWindow = None
             
             self.pathToWorkFolder=os.path.dirname(self.macro_script_path)
             os.chdir(self.pathToWorkFolder)         
@@ -166,22 +186,14 @@ class PS2GUI():
                     if line.startswith("Layout_Mode: "):
                         self.layoutMode = line.split()[1]
 
-            self.currentWindow.close()
-            self.currentWindow = None
-
-            self.core = PS2Core(self.macro_script_path)
-            self.core.run()
-
-            showSolutionBrowser(self)
+            RunPSCore(self)
 
         ui.btn_create_project.pressed.connect(runPowerSynth)
         ui.btn_cancel.pressed.connect(self.openingWindow)
-        ui.btn_open_settings_2.pressed.connect(getSettingsInfo)
         ui.btn_open_macro.pressed.connect(getMacroScript)
 
         ui.btn_cancel.setToolTip("Return to opening window.")
         ui.btn_create_project.setToolTip("Click once you have entered correct paths.")
-        ui.btn_open_settings_2.setToolTip("Open file explorer for settings.info file.")
         ui.btn_open_macro.setToolTip("Open file explorer for macro_script.txt file.")
 
         runMacro.show()
@@ -220,13 +232,13 @@ class PS2GUI():
         self.setWindow(editLayout)
 
         def getLayerStack():
-            ui.lineEdit_layer.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layer_stack', os.getenv('HOME'))[0])
+            ui.lineEdit_layer.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layer_stack', os.getcwd())[0])
 
         def getLayoutScript():
-            ui.lineEdit_layout.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layout_script', os.getenv('HOME'))[0])
+            ui.lineEdit_layout.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layout_script', os.getcwd())[0])
 
         def getBondwire():
-            ui.lineEdit_bondwire.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open bondwire_script', os.getenv('HOME'))[0])
+            ui.lineEdit_bondwire.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open Connectivity_script', os.getcwd())[0])
 
         def createLayout():
 
@@ -537,9 +549,6 @@ class PS2GUI():
 
         optimizationSetup.show()
 
-    
-
-
 
     def electricalSetup(self):
         '''Creates window for the electrical setup'''
@@ -548,10 +557,10 @@ class PS2GUI():
         ui.setupUi(electricalSetup)
 
         def getParasiticModel():
-            ui.parasitic_textedit.setText(QtWidgets.QFileDialog.getOpenFileName(electricalSetup, 'Open parasitic_model', os.getenv('HOME'))[0])
+            ui.parasitic_textedit.setText(QtWidgets.QFileDialog.getOpenFileName(electricalSetup, 'Open parasitic_model', os.getcwd())[0])
 
         def getTraceOri():
-            ui.trace_textedit.setText(QtWidgets.QFileDialog.getOpenFileName(electricalSetup, 'Open trace_orientation', os.getenv('HOME'))[0])
+            ui.trace_textedit.setText(QtWidgets.QFileDialog.getOpenFileName(electricalSetup, 'Open trace_orientation', os.getcwd())[0])
 
         def continue_UI():
             # SAVE VALUES HERE
@@ -707,12 +716,7 @@ class PS2GUI():
         with open(self.macro_script_path, "w") as file:
             createMacro(file, self)
 
-        
-        self.core = PS2Core(self.macro_script_path)
-        self.core.run()
-
-        showSolutionBrowser(self)
-
+        RunPSCore(self)
 
     def run(self):
         '''Main Function to run the GUI'''

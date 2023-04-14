@@ -5,7 +5,7 @@ import matplotlib
 
 matplotlib.use('Qt5Agg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from gui.QT.py.solutionBrowser import Ui_CornerStitch_Dialog as UI_solution_browser
+from gui.qt.py.solutionBrowser import Ui_CornerStitch_Dialog as UI_solution_browser
 from core.CmdRun.cmd_layout_handler import export_solution_layout_attributes
 import matplotlib.pyplot as plt
 

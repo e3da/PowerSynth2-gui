@@ -4,7 +4,7 @@ import os
 from PySide2.QtGui import *
 from PySide2 import QtCore, QtGui
 from gui.core.StructureCode import MaterialProperties
-from gui.QT.py.Edit_Library import *
+from gui.qt.py.Edit_Library import *
 from operator import itemgetter
 from copy import deepcopy
 from PySide2.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox, QApplication, QComboBox, QFileDialog
