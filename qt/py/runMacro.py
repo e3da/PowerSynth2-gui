@@ -17,41 +17,9 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(497, 147)
+        Dialog.resize(503, 147)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = QLabel(Dialog)
-        self.label.setObjectName(u"label")
-
-        self.verticalLayout.addWidget(self.label)
-
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.label_3 = QLabel(Dialog)
-        self.label_3.setObjectName(u"label_3")
-
-        self.horizontalLayout_3.addWidget(self.label_3)
-
-        self.lineEdit_3 = QLineEdit(Dialog)
-        self.lineEdit_3.setObjectName(u"lineEdit_3")
-
-        self.horizontalLayout_3.addWidget(self.lineEdit_3)
-
-        self.btn_open_settings_2 = QPushButton(Dialog)
-        self.btn_open_settings_2.setObjectName(u"btn_open_settings_2")
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(10)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_open_settings_2.sizePolicy().hasHeightForWidth())
-        self.btn_open_settings_2.setSizePolicy(sizePolicy)
-        self.btn_open_settings_2.setMinimumSize(QSize(0, 0))
-        self.btn_open_settings_2.setMaximumSize(QSize(55, 16777215))
-
-        self.horizontalLayout_3.addWidget(self.btn_open_settings_2)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
-
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.label_4 = QLabel(Dialog)
@@ -66,6 +34,9 @@ class Ui_Dialog(object):
 
         self.btn_open_macro = QPushButton(Dialog)
         self.btn_open_macro.setObjectName(u"btn_open_macro")
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(10)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_open_macro.sizePolicy().hasHeightForWidth())
         self.btn_open_macro.setSizePolicy(sizePolicy)
         self.btn_open_macro.setMinimumSize(QSize(0, 0))
@@ -103,10 +74,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Run Project", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-weight:600;\">Please provide the paths to the settings.info and macro_script.txt files.</span></p></body></html>", None))
-        self.label_3.setText(QCoreApplication.translate("Dialog", u"Path to settings.info", None))
-        self.btn_open_settings_2.setText(QCoreApplication.translate("Dialog", u"Open", None))
-        self.label_4.setText(QCoreApplication.translate("Dialog", u"Path to macro_script.txt", None))
+        self.label_4.setText(QCoreApplication.translate("Dialog", u"macro_script.txt", None))
         self.btn_open_macro.setText(QCoreApplication.translate("Dialog", u"Open", None))
         self.btn_create_project.setText(QCoreApplication.translate("Dialog", u"Run Project", None))
         self.btn_cancel.setText(QCoreApplication.translate("Dialog", u"Cancel", None))

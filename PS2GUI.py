@@ -10,7 +10,6 @@ from matplotlib.figure import Figure
 from core.PS2Core import PS2Core
 from gui.qt.py.openingWindow import Ui_Dialog as UI_opening_window
 from gui.qt.py.runMacro import Ui_Dialog as UI_run_macro
-from gui.qt.py.editMaterials import Ui_Dialog as UI_edit_materials
 from gui.qt.py.editLayout import Ui_Macro_Input_Paths as UI_edit_layout
 from gui.qt.py.layerStack import Ui_Dialog as UI_layer_stack
 from gui.qt.py.editConstraints import Ui_Dialog as UI_edit_constraints
@@ -114,7 +113,7 @@ class PS2GUI():
                 print("Failed to open website! Please open e3da.csce.uark.edu in your browser.")
 
         def create_macro():
-            self.editMaterials()
+            self.editLayout()
 
         def run_macro():
             self.runMacro()
@@ -205,22 +204,6 @@ class PS2GUI():
         ui.setupUi(editMaterials)
         self.setWindow(editMaterials)
 
-        # Connect to MDK Editor
-        def openMDK():
-            ui = EditLibrary()
-            self.currentWindow.close()
-            self.currentWindow = None
-            ui.continue_ui = self.editLayout
-            
-        
-        def continueProject():
-            self.editLayout()
-        
-        ui.btn_edit_materials.clicked.connect(openMDK)
-        ui.btn_default_materials.clicked.connect(continueProject)
-
-        ui.btn_edit_materials.setToolTip("Open MDKEditor to create custom list of materials.")
-        ui.btn_default_materials.setToolTip("Click to use the default materials list.")
 
         editMaterials.show()
 
@@ -284,11 +267,13 @@ class PS2GUI():
 
             self.displayLayerStack()
 
+        ui.btn_edit_materials.clicked.connect(EditLibrary)
         ui.btn_open_layer_stack.clicked.connect(getLayerStack)
         ui.btn_open_layout.clicked.connect(getLayoutScript)
         ui.btn_open_bondwire.clicked.connect(getBondwire)
         ui.btn_create_project.clicked.connect(createLayout)
 
+        ui.btn_edit_materials.setToolTip("Open MDKEditor to create custom list of materials.")
         ui.btn_open_layer_stack.setToolTip("Open file explorer for layer_stack.csv file.")
         ui.btn_open_bondwire.setToolTip("Open file explorer for bondwire_setup.txt file.")
         ui.btn_open_layout.setToolTip("Open file explorer for layout_script.txt file.")

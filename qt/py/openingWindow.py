@@ -39,6 +39,10 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.label_4)
 
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
         self.label.setAlignment(Qt.AlignCenter)
@@ -89,8 +93,8 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"PowerSynth", None))
         self.label_2.setText("")
         self.label_3.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:600; font-style:italic;\">Welcome to PowerSynth 2!</span></p></body></html>", None))
-        self.label_4.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"center\"><span style=\" font-weight:700; font-style:italic;\">Developed by E</span><span style=\" font-weight:700; font-style:italic; vertical-align:super;\">3</span><span style=\" font-weight:700; font-style:italic;\">DA and MSCAD Labs</span></p></body></html>", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"center\">Click on Create a Macro to start a new project</p><p align=\"center\">or click on Run a Macro to run a pre-existing macro_script.</p></body></html>", None))
+        self.label_4.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:700; font-style:italic;\">Developed by </span><span style=\" font-size:10pt; font-weight:700;\">E</span><span style=\" font-size:10pt; font-weight:700; vertical-align:super;\">3</span><span style=\" font-size:10pt; font-weight:700;\">DA</span><span style=\" font-size:10pt; font-weight:700; font-style:italic;\"> and </span><span style=\" font-size:10pt; font-weight:700;\">MSCAD</span><span style=\" font-size:10pt; font-weight:700; font-style:italic;\"> Labs</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"center\">Click on Create a Macro to start a new project<br/>or click on Run a Macro to run a pre-existing macro_script.</p></body></html>", None))
         self.open_web.setText(QCoreApplication.translate("Dialog", u"Open Website", None))
         self.open_manual.setText(QCoreApplication.translate("Dialog", u"Open Manual", None))
         self.create_macro.setText(QCoreApplication.translate("Dialog", u"Create a Macro", None))

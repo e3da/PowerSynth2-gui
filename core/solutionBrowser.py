@@ -36,11 +36,22 @@ def showSolutionBrowser(gui):
             ui.tabWidget.insertTab(i-1, graphics, "All Layers")
 
         # Solutions Graph
-        #gui.core.cmd.solutionsFigure.set_size_inches(5, 4)
-        axes = gui.core.cmd.solutionsFigure.gca()
+        fig=gui.core.cmd.solutionsFigure
+        dpi=fig.get_dpi()
+        fw,fh=fig.get_size_inches()
+        fw=fw*dpi
+        fh=fh*dpi
+        #print("DEBUG: ",dpi,fw,fh)
+        view=ui.grview_sols_browser
+        view.setFixedSize(fw, fh);
+        view.setSceneRect(0, 0, fw, fh);
+        view.fitInView(0, 0, fw, fh, QtCore.Qt.KeepAspectRatio);
+        view.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        view.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        #gui.core.cmd.solutionsFigure.set_size_inches(ui.grview_sols_browser.width()/dpi,ui.grview_sols_browser.height()/dpi)
+
+        axes = fig.gca()
         axes.set_title("Solution Space")
-        #fig=Figure()
-        #ax=fig.add_subplot(111)
         #canvas_sol_browser = FigureCanvas(fig)
 
         data_x=[]

@@ -20,11 +20,6 @@ class Ui_Macro_Input_Paths(object):
         Macro_Input_Paths.resize(547, 319)
         self.gridLayout = QGridLayout(Macro_Input_Paths)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.btn_get_settings = QPushButton(Macro_Input_Paths)
-        self.btn_get_settings.setObjectName(u"btn_get_settings")
-
-        self.gridLayout.addWidget(self.btn_get_settings, 0, 0, 1, 1)
-
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.label_4 = QLabel(Macro_Input_Paths)
@@ -50,31 +45,7 @@ class Ui_Macro_Input_Paths(object):
         self.horizontalLayout_4.addWidget(self.btn_open_layer_stack)
 
 
-        self.gridLayout.addLayout(self.horizontalLayout_4, 1, 0, 1, 1)
-
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label_2 = QLabel(Macro_Input_Paths)
-        self.label_2.setObjectName(u"label_2")
-
-        self.horizontalLayout_2.addWidget(self.label_2)
-
-        self.lineEdit_layout = QLineEdit(Macro_Input_Paths)
-        self.lineEdit_layout.setObjectName(u"lineEdit_layout")
-
-        self.horizontalLayout_2.addWidget(self.lineEdit_layout)
-
-        self.btn_open_layout = QPushButton(Macro_Input_Paths)
-        self.btn_open_layout.setObjectName(u"btn_open_layout")
-        sizePolicy.setHeightForWidth(self.btn_open_layout.sizePolicy().hasHeightForWidth())
-        self.btn_open_layout.setSizePolicy(sizePolicy)
-        self.btn_open_layout.setMinimumSize(QSize(0, 0))
-        self.btn_open_layout.setMaximumSize(QSize(85, 16777215))
-
-        self.horizontalLayout_2.addWidget(self.btn_open_layout)
-
-
-        self.gridLayout.addLayout(self.horizontalLayout_2, 2, 0, 1, 1)
+        self.gridLayout.addLayout(self.horizontalLayout_4, 0, 0, 1, 1)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -98,7 +69,31 @@ class Ui_Macro_Input_Paths(object):
         self.horizontalLayout_6.addWidget(self.btn_open_bondwire)
 
 
-        self.gridLayout.addLayout(self.horizontalLayout_6, 3, 0, 1, 1)
+        self.gridLayout.addLayout(self.horizontalLayout_6, 2, 0, 1, 1)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.label_2 = QLabel(Macro_Input_Paths)
+        self.label_2.setObjectName(u"label_2")
+
+        self.horizontalLayout_2.addWidget(self.label_2)
+
+        self.lineEdit_layout = QLineEdit(Macro_Input_Paths)
+        self.lineEdit_layout.setObjectName(u"lineEdit_layout")
+
+        self.horizontalLayout_2.addWidget(self.lineEdit_layout)
+
+        self.btn_open_layout = QPushButton(Macro_Input_Paths)
+        self.btn_open_layout.setObjectName(u"btn_open_layout")
+        sizePolicy.setHeightForWidth(self.btn_open_layout.sizePolicy().hasHeightForWidth())
+        self.btn_open_layout.setSizePolicy(sizePolicy)
+        self.btn_open_layout.setMinimumSize(QSize(0, 0))
+        self.btn_open_layout.setMaximumSize(QSize(85, 16777215))
+
+        self.horizontalLayout_2.addWidget(self.btn_open_layout)
+
+
+        self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -120,10 +115,15 @@ class Ui_Macro_Input_Paths(object):
         self.horizontalLayout.addWidget(self.combo_reliability_constraints)
 
 
-        self.gridLayout.addLayout(self.horizontalLayout, 4, 0, 1, 1)
+        self.gridLayout.addLayout(self.horizontalLayout, 3, 0, 1, 1)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.pushButton = QPushButton(Macro_Input_Paths)
+        self.pushButton.setObjectName(u"pushButton")
+
+        self.horizontalLayout_5.addWidget(self.pushButton)
+
         self.horizontalSpacer_2 = QSpacerItem(420, 20, QSizePolicy.Maximum, QSizePolicy.Minimum)
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_2)
@@ -137,7 +137,7 @@ class Ui_Macro_Input_Paths(object):
         self.horizontalLayout_5.addWidget(self.btn_create_project)
 
 
-        self.gridLayout.addLayout(self.horizontalLayout_5, 5, 0, 1, 1)
+        self.gridLayout.addLayout(self.horizontalLayout_5, 4, 0, 1, 1)
 
 
         self.retranslateUi(Macro_Input_Paths)
@@ -147,18 +147,18 @@ class Ui_Macro_Input_Paths(object):
 
     def retranslateUi(self, Macro_Input_Paths):
         Macro_Input_Paths.setWindowTitle(QCoreApplication.translate("Macro_Input_Paths", u"Initial Structure and Layout", None))
-        self.btn_get_settings.setText(QCoreApplication.translate("Macro_Input_Paths", u"Get Settings.info File", None))
-        self.label_4.setText(QCoreApplication.translate("Macro_Input_Paths", u"Path to layer_stack", None))
+        self.label_4.setText(QCoreApplication.translate("Macro_Input_Paths", u"layer_stack", None))
         self.btn_open_layer_stack.setText(QCoreApplication.translate("Macro_Input_Paths", u"Open File", None))
-        self.label_2.setText(QCoreApplication.translate("Macro_Input_Paths", u"Path to layout_script", None))
-        self.btn_open_layout.setText(QCoreApplication.translate("Macro_Input_Paths", u"Open File", None))
-        self.label_5.setText(QCoreApplication.translate("Macro_Input_Paths", u"Path to Connectivity_script", None))
+        self.label_5.setText(QCoreApplication.translate("Macro_Input_Paths", u"Connectivity_script", None))
         self.btn_open_bondwire.setText(QCoreApplication.translate("Macro_Input_Paths", u"Open File", None))
+        self.label_2.setText(QCoreApplication.translate("Macro_Input_Paths", u"layout_script", None))
+        self.btn_open_layout.setText(QCoreApplication.translate("Macro_Input_Paths", u"Open File", None))
         self.label.setText(QCoreApplication.translate("Macro_Input_Paths", u"Reliability Constraints:", None))
         self.combo_reliability_constraints.setItemText(0, QCoreApplication.translate("Macro_Input_Paths", u"no constraints", None))
         self.combo_reliability_constraints.setItemText(1, QCoreApplication.translate("Macro_Input_Paths", u"average case", None))
         self.combo_reliability_constraints.setItemText(2, QCoreApplication.translate("Macro_Input_Paths", u"worst case consideration", None))
 
+        self.pushButton.setText(QCoreApplication.translate("Macro_Input_Paths", u"Edit Materials", None))
         self.btn_create_project.setText(QCoreApplication.translate("Macro_Input_Paths", u"Create Layout", None))
     # retranslateUi
 

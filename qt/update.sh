@@ -1,18 +1,21 @@
 #!/bin/bash
 
+folder=$( dirname -- "$0" )
+
 qtpkg=pyside2
 declare -A exe=( ["ui"]="$qtpkg-uic" ["qrc"]="$qtpkg-rcc")
 declare -A arg=( ["ui"]="--from-imports" ["qrc"]="")
 declare -A post=( ["ui"]="" ["qrc"]="_rc")
 
-for dir in "${!exe[@]}"
+for type in "${!exe[@]}"
 do
+	dir=$folder/$type
 	echo -n "INFO: Processing $dir: "
-	for file in $dir/*.$dir
+	for file in $dir/*.$type
 	do
-		base=`basename $file .$dir`
-		echo -n "$base.$dir, "
-		${exe[$dir]} $file ${arg[$dir]} -o py/$base${post[$dir]}.py
+		base=`basename $file .$type`
+		echo -n "$base.$type, "
+		${exe[$type]} $file ${arg[$type]} -o $folder/py/$base${post[$type]}.py
 	done
 	echo "DONE."
 done

@@ -40,14 +40,27 @@
    <item>
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;Developed by E&lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:italic; vertical-align:super;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot; font-weight:700; font-style:italic;&quot;&gt;DA and MSCAD Labs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; font-style:italic;&quot;&gt;Developed by &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;E&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; vertical-align:super;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;DA&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; font-style:italic;&quot;&gt; and &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:700;&quot;&gt;MSCAD&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; font-style:italic;&quot;&gt; Labs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
    <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Click on Create a Macro to start a new project&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;or click on Run a Macro to run a pre-existing macro_script.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Click on Create a Macro to start a new project&lt;br/&gt;or click on Run a Macro to run a pre-existing macro_script.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
