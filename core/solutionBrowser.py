@@ -3,7 +3,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 
 import matplotlib
 
-matplotlib.use('Qt5Agg')
+matplotlib.use('QtAgg')
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from gui.qt.py.solutionBrowser import Ui_CornerStitch_Dialog as UI_solution_browser
 from core.CmdRun.cmd_layout_handler import export_solution_layout_attributes
@@ -11,12 +11,12 @@ import matplotlib.pyplot as plt
 
 
 
-def showSolutionBrowser(self):
+def showSolutionBrowser(gui):
         '''Function to Run the Solution Browser.  Final step of the main flow.'''
         solutionBrowser = QtWidgets.QDialog()
         ui = UI_solution_browser()
         ui.setupUi(solutionBrowser)
-        self.setWindow(solutionBrowser)
+        gui.setWindow(solutionBrowser)
 
         ui.lineEdit_size_w.setReadOnly(True)
         ui.lineEdit_size_h.setReadOnly(True)
@@ -25,7 +25,7 @@ def showSolutionBrowser(self):
 
         i = 1
         
-        while os.path.exists(os.path.join(self.pathToFigs, f"initial_layout_I{i}.png")):
+        while os.path.exists(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png")):
             graphics = QtWidgets.QGraphicsView()
 
             ui.tabWidget.insertTab(i-1, graphics, f"Layer {i}")
@@ -36,8 +36,8 @@ def showSolutionBrowser(self):
             ui.tabWidget.insertTab(i-1, graphics, "All Layers")
 
         # Solutions Graph
-        #self.core.cmd.solutionsFigure.set_size_inches(5, 4)
-        axes = self.core.cmd.solutionsFigure.gca()
+        #gui.core.cmd.solutionsFigure.set_size_inches(5, 4)
+        axes = gui.core.cmd.solutionsFigure.gca()
         axes.set_title("Solution Space")
         #fig=Figure()
         #ax=fig.add_subplot(111)
@@ -46,8 +46,8 @@ def showSolutionBrowser(self):
         data_x=[]
         data_y=[]
         perf_metrices=[]
-        if self.option:
-            for sol in self.core.cmd.structure_3D.solutions:
+        if gui.option:
+            for sol in gui.core.cmd.structure_3D.solutions:
                 for key in sol.parameters:
                     perf_metrices.append(key)
             if len(perf_metrices)>1:
@@ -59,8 +59,8 @@ def showSolutionBrowser(self):
             axes.set_xlabel("Solution Index")
             axes.set_ylabel("Solution Index")
 
-        for sol in self.core.cmd.structure_3D.solutions:
-            if self.option == 0:
+        for sol in gui.core.cmd.structure_3D.solutions:
+            if gui.option == 0:
                 data_x.append(sol.solution_id)
                 data_y.append(sol.solution_id)
             else:
@@ -72,28 +72,19 @@ def showSolutionBrowser(self):
 
         
         def on_pick(event):
-            self.solution_ind = event.ind[0]
-            sel_point = self.solution_ind
-            #try:
-                #axes.scatter(data_x, data_y, picker=1, marker='o', c='b')
-            #print ('sel_point', sel_point)
-            axes.clear()
-            axes.scatter(data_x, data_y, picker=1, marker='o', c='b',s = 50)
+            gui.solution_ind = event.ind[0]
+            sel_point = gui.solution_ind
+            #axes.clear()
+            #axes.scatter(data_x, data_y, picker=1, marker='o', c='b',s = 50)
             axes.scatter(data_x[sel_point], data_y[sel_point], picker=1, marker='o', c='r',s=100)
             canvas.draw()
-        
-
-            #except:
-                #axes.scatter(data_x, data_y, picker=1, marker='o', c='b')
-            
-            
 
             i = 1
-            if self.option==1:
+            if gui.option==1:
                 display_initial_layout()
             else:
-                while os.path.exists(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png")):
-                    pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_{event.ind[0]}_I{i}.png"))
+                while os.path.exists(os.path.join(gui.pathToFigs, f"Mode_{gui.layoutMode}/layout_{event.ind[0]}_I{i}.png")):
+                    pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"Mode_{gui.layoutMode}/layout_{event.ind[0]}_I{i}.png"))
                     #pix = pix.scaledToWidth(500)
                     item = QtWidgets.QGraphicsPixmapItem(pix)
                     scene = QtWidgets.QGraphicsScene()
@@ -101,14 +92,14 @@ def showSolutionBrowser(self):
                     ui.tabWidget.widget(i-1).setScene(scene)
                     i += 1
                 if i > 2:
-                    pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"Mode_{self.layoutMode}/layout_all_layers_{event.ind[0]}.png"))
+                    pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"Mode_{gui.layoutMode}/layout_all_layers_{event.ind[0]}.png"))
                     #pix = pix.scaledToWidth(500)
                     item = QtWidgets.QGraphicsPixmapItem(pix)
                     scene = QtWidgets.QGraphicsScene()
                     scene.addItem(item)
                     ui.tabWidget.widget(i-1).setScene(scene)
 
-            solution = self.core.cmd.structure_3D.solutions[self.solution_ind]
+            solution = gui.core.cmd.structure_3D.solutions[gui.solution_ind]
             
             for feature in solution.features_list:
                 if 'Ceramic' in feature.name:
@@ -128,8 +119,8 @@ def showSolutionBrowser(self):
 
         def display_initial_layout():
             i = 1
-            while os.path.exists(os.path.join(self.pathToFigs, f"initial_layout_I{i}.png")):
-                pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"initial_layout_I{i}.png"))
+            while os.path.exists(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png")):
+                pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png"))
                 #pix = pix.scaledToWidth(575)
                 item = QtWidgets.QGraphicsPixmapItem(pix)
                 scene = QtWidgets.QGraphicsScene()
@@ -137,7 +128,7 @@ def showSolutionBrowser(self):
                 ui.tabWidget.widget(i-1).setScene(scene)
                 i += 1
             if i > 2:
-                pix = QtGui.QPixmap(os.path.join(self.pathToFigs, f"initial_layout_all_layers.png"))
+                pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"initial_layout_all_layers.png"))
                 #pix = pix.scaledToWidth(650)
                 item = QtWidgets.QGraphicsPixmapItem(pix)
                 scene = QtWidgets.QGraphicsScene()
@@ -146,23 +137,14 @@ def showSolutionBrowser(self):
 
 
         axes.scatter(data_x, data_y, picker=True)
-        canvas = FigureCanvas(self.core.cmd.solutionsFigure)
+        canvas = FigureCanvas(gui.core.cmd.solutionsFigure)
         canvas.draw()
         canvas.callbacks.connect('pick_event', on_pick)
         scene2 = QtWidgets.QGraphicsScene()
         scene2.addWidget(canvas)
         ui.grview_sols_browser.setScene(scene2)
-        
-        #try:
-            #axes.scatter(data_x, data_y, picker=1, marker='o', c='b')
-            
-        
 
-        #except:
-            #axes.scatter(data_x, data_y, picker=1, marker='o', c='b')
-        
-
-        if self.option:
+        if gui.option:
             if len(perf_metrices)>1:
                 ui.x_label.setText(perf_metrices[0])
                 ui.y_label.setText(perf_metrices[1])
@@ -197,28 +179,28 @@ def showSolutionBrowser(self):
         def export_selected():
             #return
 
-            if self.solution_ind == None:
+            if gui.solution_ind == None:
                 print("Please select a solution.")
                 return
             
-            solution=self.core.cmd.structure_3D.solutions[self.solution_ind]
+            solution=gui.core.cmd.structure_3D.solutions[gui.solution_ind]
             for feature in solution.features_list:
                 if 'Ceramic' in feature.name:
-                    self.floorPlan[0]=feature.width
+                    gui.floorPlan[0]=feature.width
                     
-                    self.floorPlan[1]=feature.length
+                    gui.floorPlan[1]=feature.length
                     
                     break
-            if self.core.cmd.structure_3D.solutions:                
-                export_solution_layout_attributes(sol_path=self.pathToSolutions, solutions=[self.core.cmd.structure_3D.solutions[self.solution_ind]], size=[float(self.floorPlan[0]), float(self.floorPlan[1])])
-                show_info_messagebox(f"Layout #{self.solution_ind} exported")
+            if gui.core.cmd.structure_3D.solutions:                
+                export_solution_layout_attributes(sol_path=gui.pathToSolutions, solutions=[gui.core.cmd.structure_3D.solutions[gui.solution_ind]], size=[float(gui.floorPlan[0]), float(gui.floorPlan[1])])
+                show_info_messagebox(f"Layout #{gui.solution_ind} exported")
             else:
                 show_info_messagebox("Error: Something went wrong.")
             
         def export_all():
-            if self.core.cmd.structure_3D.solutions:
-                export_solution_layout_attributes(sol_path=self.pathToSolutions, solutions=self.core.cmd.structure_3D.solutions, size=[float(self.floorPlan[0]), float(self.floorPlan[1])])
-            show_info_messagebox(f"All {len(self.core.cmd.structure_3D.solutions)} Layouts exported")
+            if gui.core.cmd.structure_3D.solutions:
+                export_solution_layout_attributes(sol_path=gui.pathToSolutions, solutions=gui.core.cmd.structure_3D.solutions, size=[float(gui.floorPlan[0]), float(gui.floorPlan[1])])
+            show_info_messagebox(f"All {len(gui.core.cmd.structure_3D.solutions)} Layouts exported")
 
         def close_GUI():
             solutionBrowser.close()
