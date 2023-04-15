@@ -119,10 +119,10 @@ class PS2GUI():
         def run_macro():
             self.runMacro()
 
-        ui.open_manual.pressed.connect(manual)
-        ui.open_web.pressed.connect(web)
-        ui.create_macro.pressed.connect(create_macro)
-        ui.run_macro.pressed.connect(run_macro)
+        ui.open_manual.clicked.connect(manual)
+        ui.open_web.clicked.connect(web)
+        ui.create_macro.clicked.connect(create_macro)
+        ui.run_macro.clicked.connect(run_macro)
 
         ui.open_manual.setToolTip("Opens the user manual for PowerSynth in default browser.")
         ui.open_web.setToolTip("Opens the Release Website for PowerSynth in default browser.")
@@ -188,9 +188,9 @@ class PS2GUI():
 
             RunPSCore(self)
 
-        ui.btn_create_project.pressed.connect(runPowerSynth)
-        ui.btn_cancel.pressed.connect(self.openingWindow)
-        ui.btn_open_macro.pressed.connect(getMacroScript)
+        ui.btn_create_project.clicked.connect(runPowerSynth)
+        ui.btn_cancel.clicked.connect(self.openingWindow)
+        ui.btn_open_macro.clicked.connect(getMacroScript)
 
         ui.btn_cancel.setToolTip("Return to opening window.")
         ui.btn_create_project.setToolTip("Click once you have entered correct paths.")
@@ -216,8 +216,8 @@ class PS2GUI():
         def continueProject():
             self.editLayout()
         
-        ui.btn_edit_materials.pressed.connect(openMDK)
-        ui.btn_default_materials.pressed.connect(continueProject)
+        ui.btn_edit_materials.clicked.connect(openMDK)
+        ui.btn_default_materials.clicked.connect(continueProject)
 
         ui.btn_edit_materials.setToolTip("Open MDKEditor to create custom list of materials.")
         ui.btn_default_materials.setToolTip("Click to use the default materials list.")
@@ -284,10 +284,10 @@ class PS2GUI():
 
             self.displayLayerStack()
 
-        ui.btn_open_layer_stack.pressed.connect(getLayerStack)
-        ui.btn_open_layout.pressed.connect(getLayoutScript)
-        ui.btn_open_bondwire.pressed.connect(getBondwire)
-        ui.btn_create_project.pressed.connect(createLayout)
+        ui.btn_open_layer_stack.clicked.connect(getLayerStack)
+        ui.btn_open_layout.clicked.connect(getLayoutScript)
+        ui.btn_open_bondwire.clicked.connect(getBondwire)
+        ui.btn_create_project.clicked.connect(createLayout)
 
         ui.btn_open_layer_stack.setToolTip("Open file explorer for layer_stack.csv file.")
         ui.btn_open_bondwire.setToolTip("Open file explorer for bondwire_setup.txt file.")
@@ -334,7 +334,7 @@ class PS2GUI():
 
             self.editConstraints()
 
-        ui.btn_continue.pressed.connect(continue_UI)
+        ui.btn_continue.clicked.connect(continue_UI)
         ui.btn_continue.setToolTip("Click to continue once you have edited the layer_stack file.")
         
         displayLayerStack.show()
@@ -408,7 +408,7 @@ class PS2GUI():
 
             self.runOptions()
 
-        ui.btn_continue.pressed.connect(continue_UI)
+        ui.btn_continue.clicked.connect(continue_UI)
         ui.btn_continue.setToolTip("Click to continue once you have edited the constraints.")
 
         editConstraints.show()
@@ -432,9 +432,9 @@ class PS2GUI():
             self.option = 2
             self.optimizationSetup()
 
-        ui.pushButton.pressed.connect(option1)
-        ui.pushButton_2.pressed.connect(option0)
-        ui.pushButton_3.pressed.connect(option2)
+        ui.pushButton.clicked.connect(option1)
+        ui.pushButton_2.clicked.connect(option0)
+        ui.pushButton_3.clicked.connect(option2)
 
         ui.pushButton.setToolTip("This option will bypass electrical/thermal evaluation.")
         ui.pushButton_2.setToolTip("This option will bypass layout evaluation.")
@@ -539,9 +539,9 @@ class PS2GUI():
             
             self.runPowerSynth()
 
-        ui.btn_electrical_setup.pressed.connect(self.electricalSetup)
-        ui.btn_thermal_setup.pressed.connect(self.thermalSetup)
-        ui.btn_run_powersynth.pressed.connect(run)
+        ui.btn_electrical_setup.clicked.connect(self.electricalSetup)
+        ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
+        ui.btn_run_powersynth.clicked.connect(run)
 
         ui.btn_electrical_setup.setToolTip("Opens electrical setup in a separate window.")
         ui.btn_thermal_setup.setToolTip("Opens thermal setup in a separate window.")
@@ -618,11 +618,11 @@ class PS2GUI():
                 ui.tableWidget.removeRow(ui.tableWidget.rowCount() - 1)
 
         
-        ui.btn_open_parasitic.pressed.connect(getParasiticModel)
-        ui.btn_open_trace.pressed.connect(getTraceOri)
-        ui.btn_continue.pressed.connect(continue_UI)
-        ui.btn_add_device.pressed.connect(addRow)
-        ui.btn_remove_device.pressed.connect(removeRow)
+        ui.btn_open_parasitic.clicked.connect(getParasiticModel)
+        ui.btn_open_trace.clicked.connect(getTraceOri)
+        ui.btn_continue.clicked.connect(continue_UI)
+        ui.btn_add_device.clicked.connect(addRow)
+        ui.btn_remove_device.clicked.connect(removeRow)
 
         ui.btn_open_parasitic.setToolTip("Open file explorer for parasitic_model.rsmdl file.")
         ui.btn_open_trace.setToolTip("Open file explorer for trace_ori.txt file.")
@@ -693,9 +693,9 @@ class PS2GUI():
             if ui.tableWidget.rowCount() > 0:
                 ui.tableWidget.removeRow(ui.tableWidget.rowCount() - 1)
 
-        ui.btn_continue.pressed.connect(continue_UI)
-        ui.btn_add_device.pressed.connect(addRow)
-        ui.btn_remove_device.pressed.connect(removeRow)
+        ui.btn_continue.clicked.connect(continue_UI)
+        ui.btn_add_device.clicked.connect(addRow)
+        ui.btn_remove_device.clicked.connect(removeRow)
 
         ui.btn_continue.setToolTip("Save values for thermal setup.  Only click once thermal setup is complete.")
         ui.btn_add_device.setToolTip("Add a row to device power table.")

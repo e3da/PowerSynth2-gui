@@ -205,10 +205,10 @@ def showSolutionBrowser(gui):
         def close_GUI():
             solutionBrowser.close()
 
-        ui.btn_export_selected.pressed.connect(export_selected)
-        ui.btn_export_all.pressed.connect(export_all)
-        ui.btn_exit.pressed.connect(close_GUI)
-        ui.btn_initial_layout.pressed.connect(display_initial_layout)
+        ui.btn_export_selected.clicked.connect(export_selected)
+        ui.btn_export_all.clicked.connect(export_all)
+        ui.btn_exit.clicked.connect(close_GUI)
+        ui.btn_initial_layout.clicked.connect(display_initial_layout)
 
         ui.btn_export_selected.setToolTip("Export solution selected in the above graph to a csv file in the Solutions folder. Also, exports the parasitic netlist for the selected solution.")
         ui.btn_export_all.setToolTip("Export all solutions to a csv file in the Solutions folder.")
