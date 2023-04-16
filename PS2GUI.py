@@ -10,7 +10,7 @@ from matplotlib.figure import Figure
 from core.PS2Core import PS2Core
 from gui.qt.py.openingWindow import Ui_Dialog as UI_opening_window
 from gui.qt.py.runMacro import Ui_Dialog as UI_run_macro
-from gui.qt.py.editLayout import Ui_Macro_Input_Paths as UI_edit_layout
+from gui.qt.py.editLayout import Ui_Dialog as UI_edit_layout
 from gui.qt.py.layerStack import Ui_Dialog as UI_layer_stack
 from gui.qt.py.editConstraints import Ui_Dialog as UI_edit_constraints
 from gui.core.MDKEditor import EditLibrary
@@ -197,16 +197,6 @@ class PS2GUI():
 
         runMacro.show()
 
-    def editMaterials(self):
-        '''Window to edit Materials.  User is given option to open MDKEditor'''
-        editMaterials = QtWidgets.QDialog()
-        ui = UI_edit_materials()
-        ui.setupUi(editMaterials)
-        self.setWindow(editMaterials)
-
-
-        editMaterials.show()
-
     def editLayout(self):
         '''User Enters the Paths to Layer Stack, Bondwire Setup, Layout Script with this window'''
         editLayout = QtWidgets.QDialog()
@@ -267,7 +257,10 @@ class PS2GUI():
 
             self.displayLayerStack()
 
-        ui.btn_edit_materials.clicked.connect(EditLibrary)
+        def openMDK():
+            ui=EditLibrary()
+
+        ui.btn_edit_materials.clicked.connect(openMDK)
         ui.btn_open_layer_stack.clicked.connect(getLayerStack)
         ui.btn_open_layout.clicked.connect(getLayoutScript)
         ui.btn_open_bondwire.clicked.connect(getBondwire)
