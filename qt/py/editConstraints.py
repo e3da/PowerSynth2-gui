@@ -337,9 +337,6 @@ class Ui_Dialog(object):
         self.gridLayout_5.addWidget(self.tableWidget_5, 0, 0, 1, 1)
 
         self.tabWidget.addTab(self.min_ver_spacing, "")
-        self.tab = QWidget()
-        self.tab.setObjectName(u"tab")
-        self.tabWidget.addTab(self.tab, "")
 
         self.verticalLayout.addWidget(self.tabWidget)
 
@@ -639,7 +636,6 @@ class Ui_Dialog(object):
         self.tableWidget_5.setSortingEnabled(__sortingEnabled4)
 
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.min_ver_spacing), QCoreApplication.translate("Dialog", u"MinVerSpacing", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("Dialog", u"Reliability Constraints", None))
         self.btn_continue.setText(QCoreApplication.translate("Dialog", u"Continue", None))
     # retranslateUi
 

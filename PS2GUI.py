@@ -327,6 +327,8 @@ class PS2GUI():
         if int(self.reliabilityAwareness) == 0:
             ui.tabWidget.removeTab(5)
 
+
+        print(f"INFO: Reading Constraints: {self.pathToConstraints}")
         # Fill out the constraints from the given constraint file
         with open(self.pathToConstraints, 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)

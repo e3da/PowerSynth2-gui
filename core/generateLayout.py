@@ -32,7 +32,7 @@ def generateLayout(layout_script, bondwire_setup, layer_stack_file, constraint_f
         structure_3D.assign_via_connected_layer_info(info=via_connecting_layers)
 
     structure_3D.update_constraint_table(rel_cons=i_v_constraint)
-    structure_3D.read_constraint_table(rel_cons=i_v_constraint, mode=99, constraint_file=constraint_file)
+    structure_3D.read_constraint_table(rel_cons=i_v_constraint, mode=0, constraint_file=constraint_file)
 
     device_dict = dict()
     lead_list = []
