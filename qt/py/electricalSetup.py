@@ -3,21 +3,21 @@
 ################################################################################
 ## Form generated from reading UI file 'electricalSetup.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *  # type: ignore
-from PySide2.QtGui import *  # type: ignore
-from PySide2.QtWidgets import *  # type: ignore
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(400, 585)
+        Dialog.resize(400, 538)
         self.verticalLayout_2 = QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.electrical_setup_2 = QFrame(Dialog)
@@ -84,8 +84,8 @@ class Ui_Dialog(object):
 
         self.verticalLayout_4.addLayout(self.horizontalLayout_13)
 
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.tableWidget = QTableWidget(self.electrical_setup_2)
         if (self.tableWidget.columnCount() < 2):
             self.tableWidget.setColumnCount(2)
@@ -94,34 +94,33 @@ class Ui_Dialog(object):
         __qtablewidgetitem1 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.horizontalHeader().setDefaultSectionSize(150)
 
-        self.horizontalLayout_3.addWidget(self.tableWidget)
+        self.verticalLayout.addWidget(self.tableWidget)
 
-        self.horizontalSpacer_2 = QSpacerItem(70, 20, QSizePolicy.Maximum, QSizePolicy.Minimum)
-
-        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
-
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout.addItem(self.verticalSpacer)
-
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.horizontalLayout_5.setContentsMargins(-1, -1, -1, 6)
         self.btn_add_device = QPushButton(self.electrical_setup_2)
         self.btn_add_device.setObjectName(u"btn_add_device")
 
-        self.verticalLayout.addWidget(self.btn_add_device)
+        self.horizontalLayout_5.addWidget(self.btn_add_device)
+
+        self.btn_add_all = QPushButton(self.electrical_setup_2)
+        self.btn_add_all.setObjectName(u"btn_add_all")
+
+        self.horizontalLayout_5.addWidget(self.btn_add_all)
 
         self.btn_remove_device = QPushButton(self.electrical_setup_2)
         self.btn_remove_device.setObjectName(u"btn_remove_device")
 
-        self.verticalLayout.addWidget(self.btn_remove_device)
+        self.horizontalLayout_5.addWidget(self.btn_remove_device)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout)
+        self.verticalLayout.addLayout(self.horizontalLayout_5)
 
 
-        self.verticalLayout_4.addLayout(self.horizontalLayout_3)
+        self.verticalLayout_4.addLayout(self.verticalLayout)
 
         self.horizontalLayout_15 = QHBoxLayout()
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
@@ -140,25 +139,24 @@ class Ui_Dialog(object):
 
         self.horizontalLayout_15.addWidget(self.combo_source)
 
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.verticalLayout_4.addLayout(self.horizontalLayout_15)
+        self.horizontalLayout_15.addItem(self.horizontalSpacer_2)
 
-        self.horizontalLayout_16 = QHBoxLayout()
-        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
         self.label_22 = QLabel(self.electrical_setup_2)
         self.label_22.setObjectName(u"label_22")
 
-        self.horizontalLayout_16.addWidget(self.label_22)
+        self.horizontalLayout_15.addWidget(self.label_22)
 
         self.combo_sink = QComboBox(self.electrical_setup_2)
         self.combo_sink.setObjectName(u"combo_sink")
         sizePolicy.setHeightForWidth(self.combo_sink.sizePolicy().hasHeightForWidth())
         self.combo_sink.setSizePolicy(sizePolicy)
 
-        self.horizontalLayout_16.addWidget(self.combo_sink)
+        self.horizontalLayout_15.addWidget(self.combo_sink)
 
 
-        self.verticalLayout_4.addLayout(self.horizontalLayout_16)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_15)
 
         self.horizontalLayout_14 = QHBoxLayout()
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
@@ -183,11 +181,6 @@ class Ui_Dialog(object):
 
 
         self.verticalLayout_4.addLayout(self.horizontalLayout_14)
-
-        self.parasitic_model_layout = QHBoxLayout()
-        self.parasitic_model_layout.setObjectName(u"parasitic_model_layout")
-
-        self.verticalLayout_4.addLayout(self.parasitic_model_layout)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -220,21 +213,25 @@ class Ui_Dialog(object):
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.parasitic_model_frame.sizePolicy().hasHeightForWidth())
         self.parasitic_model_frame.setSizePolicy(sizePolicy2)
+        self.parasitic_model_frame.setMinimumSize(QSize(0, 40))
         self.parasitic_model_frame.setFrameShape(QFrame.StyledPanel)
         self.parasitic_model_frame.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_2 = QHBoxLayout(self.parasitic_model_frame)
+        self.horizontalLayout_3 = QHBoxLayout(self.parasitic_model_frame)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.label_6 = QLabel(self.parasitic_model_frame)
         self.label_6.setObjectName(u"label_6")
         sizePolicy2.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
         self.label_6.setSizePolicy(sizePolicy2)
+        self.label_6.setMinimumSize(QSize(0, 0))
 
         self.horizontalLayout_2.addWidget(self.label_6)
 
         self.parasitic_textedit = QLineEdit(self.parasitic_model_frame)
         self.parasitic_textedit.setObjectName(u"parasitic_textedit")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.parasitic_textedit.sizePolicy().hasHeightForWidth())
@@ -252,10 +249,17 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addWidget(self.btn_open_parasitic)
 
 
+        self.horizontalLayout_3.addLayout(self.horizontalLayout_2)
+
+
         self.verticalLayout_4.addWidget(self.parasitic_model_frame)
 
 
         self.verticalLayout_2.addWidget(self.electrical_setup_2)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -298,15 +302,16 @@ class Ui_Dialog(object):
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("Dialog", u"Options", None));
         self.btn_add_device.setText(QCoreApplication.translate("Dialog", u"Add Device", None))
+        self.btn_add_all.setText(QCoreApplication.translate("Dialog", u"Add All", None))
         self.btn_remove_device.setText(QCoreApplication.translate("Dialog", u"Remove Device", None))
-        self.label_21.setText(QCoreApplication.translate("Dialog", u"Select a source:", None))
-        self.label_22.setText(QCoreApplication.translate("Dialog", u"Select a sink:", None))
-        self.label_23.setText(QCoreApplication.translate("Dialog", u"Frequency (kHz):", None))
+        self.label_21.setText(QCoreApplication.translate("Dialog", u"source:", None))
+        self.label_22.setText(QCoreApplication.translate("Dialog", u"sink:", None))
+        self.label_23.setText(QCoreApplication.translate("Dialog", u"Frequency (Hz):", None))
         self.frequency.setSpecialValueText(QCoreApplication.translate("Dialog", u"10000", None))
-        self.label_5.setText(QCoreApplication.translate("Dialog", u"Path to trace_orientation", None))
-        self.btn_open_trace.setText(QCoreApplication.translate("Dialog", u"Open File", None))
-        self.label_6.setText(QCoreApplication.translate("Dialog", u"Path to parasitic_model", None))
-        self.btn_open_parasitic.setText(QCoreApplication.translate("Dialog", u"Open File", None))
+        self.label_5.setText(QCoreApplication.translate("Dialog", u"trace_orientation", None))
+        self.btn_open_trace.setText(QCoreApplication.translate("Dialog", u"Open", None))
+        self.label_6.setText(QCoreApplication.translate("Dialog", u"parasitic_model", None))
+        self.btn_open_parasitic.setText(QCoreApplication.translate("Dialog", u"Open", None))
         self.btn_continue.setText(QCoreApplication.translate("Dialog", u"Continue", None))
     # retranslateUi
 

@@ -5,9 +5,11 @@ import sys
 import os
 import csv
 import webbrowser
+import traceback
 from PySide2 import QtWidgets
 from matplotlib.figure import Figure
-from core.PS2Core import PS2Core
+from core.PSCore import PSEnv
+from core.PS2CLI import PS2CLI
 from gui.qt.py.openingWindow import Ui_Dialog as UI_opening_window
 from gui.qt.py.runMacro import Ui_Dialog as UI_run_macro
 from gui.qt.py.editLayout import Ui_Dialog as UI_edit_layout
@@ -22,24 +24,12 @@ from gui.qt.py.runOptions import Ui_Dialog as UI_run_options
 from gui.core.solutionBrowser import showSolutionBrowser
 from gui.core.createMacro import createMacro
 
-def RunPSCore(gui):
-    try:
-        gui.core = PS2Core(gui.macro_script_path)
-        gui.core.run()
-        showSolutionBrowser(gui)
-        return 0
-    except Exception as e:
-        print(str(e))
-        popup = QtWidgets.QMessageBox()
-        popup.setWindowTitle("Error:")
-        popup.setText("PowerSynth excution failed :(. Plesae check your macro file.")
-        popup.exec_()
-    return 1
-
 class PS2GUI():
     '''GUI Class -- Stores Important Information for the GUI'''
 
     def __init__(self):
+        self.core = PSEnv()
+
         self.app = None
         self.currentWindow = None
         self.pathToWorkFolder = None
@@ -87,6 +77,20 @@ class PS2GUI():
         self.ambientTemperature = ""
 
     
+    def RunPSCLI(self):
+        try:
+            self.core = PS2CLI(self.macro_script_path)
+            self.core.run()
+            showSolutionBrowser(self)
+            return 0
+        except:
+            traceback.print_exc()
+            popup = QtWidgets.QMessageBox()
+            popup.setWindowTitle("Error:")
+            popup.setText("PowerSynth excution failed :(. Plesae check your macro file.")
+            popup.exec_()
+        return 1
+
     def setWindow(self, newWindow):
         if self.currentWindow:
             self.currentWindow.close()
@@ -185,7 +189,7 @@ class PS2GUI():
                     if line.startswith("Layout_Mode: "):
                         self.layoutMode = line.split()[1]
 
-            RunPSCore(self)
+            self.RunPSCLI()
 
         ui.btn_create_project.clicked.connect(runPowerSynth)
         ui.btn_cancel.clicked.connect(self.openingWindow)
@@ -205,13 +209,13 @@ class PS2GUI():
         self.setWindow(editLayout)
 
         def getLayerStack():
-            ui.lineEdit_layer.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layer_stack', os.getcwd())[0])
+            ui.lineEdit_layer.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layer_stack')[0])
 
         def getLayoutScript():
-            ui.lineEdit_layout.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layout_script', os.getcwd())[0])
+            ui.lineEdit_layout.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open layout_script')[0])
 
         def getBondwire():
-            ui.lineEdit_bondwire.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open Connectivity_script', os.getcwd())[0])
+            ui.lineEdit_bondwire.setText(QtWidgets.QFileDialog.getOpenFileName(editLayout, 'Open Connectivity_script')[0])
 
         def createLayout():
 
@@ -243,7 +247,7 @@ class PS2GUI():
             self.pathToLayoutScript = ui.lineEdit_layout.text()
             self.pathToBondwireSetup = ui.lineEdit_bondwire.text()
 			
-            self.reliabilityAwareness = "0" if ui.combo_reliability_constraints.currentText() == "no constraints" else "1" if ui.combo_reliability_constraints.currentText() == "worst case consideration" else "2"
+            self.reliabilityAwareness = "0" if ui.combo_reliability_constraints.currentText() == "no constraint" else "1" if ui.combo_reliability_constraints.currentText() == "worst case" else "2"
 
             self.pathToWorkFolder = os.path.dirname(self.pathToLayoutScript)
             os.chdir(self.pathToWorkFolder)
@@ -258,7 +262,8 @@ class PS2GUI():
             self.displayLayerStack()
 
         def openMDK():
-            ui=EditLibrary()
+            ui=EditLibrary(self.currentWindow,self.core.MatLib)
+            ui.show()
 
         ui.btn_edit_materials.clicked.connect(openMDK)
         ui.btn_open_layer_stack.clicked.connect(getLayerStack)
@@ -271,6 +276,7 @@ class PS2GUI():
         ui.btn_open_bondwire.setToolTip("Open file explorer for bondwire_setup.txt file.")
         ui.btn_open_layout.setToolTip("Open file explorer for layout_script.txt file.")
         ui.btn_create_project.setToolTip("Click once you have entered correct paths.")
+        ui.default_mat_lib.setText(PSEnv.MatLib)
 
         editLayout.show()
     
@@ -571,7 +577,10 @@ class PS2GUI():
                 self.optimizationUI.btn_run_powersynth.setDisabled(False)
 
             electricalSetup.close()
-           
+
+        def addAll():
+            for i in range(len(self.device_dict) - ui.tableWidget.rowCount()):
+                addRow()           
 
         def addRow():
             index = ui.tableWidget.rowCount()
@@ -580,6 +589,8 @@ class PS2GUI():
             for device in self.device_dict.keys():
                 combo.addItem(str(device))
             ui.tableWidget.setCellWidget(index, 0, combo)
+            combo.setCurrentIndex(index if index<len(self.device_dict) else 0)
+
             combo2 = QtWidgets.QComboBox()
             for path in self.device_dict[combo.currentText()]:
                 combo2.addItem(path[0] + " to " + path[1])
@@ -602,6 +613,7 @@ class PS2GUI():
         ui.btn_open_trace.clicked.connect(getTraceOri)
         ui.btn_continue.clicked.connect(continue_UI)
         ui.btn_add_device.clicked.connect(addRow)
+        ui.btn_add_all.clicked.connect(addAll)
         ui.btn_remove_device.clicked.connect(removeRow)
 
         ui.btn_open_parasitic.setToolTip("Open file explorer for parasitic_model.rsmdl file.")
@@ -656,12 +668,17 @@ class PS2GUI():
 
             thermalSetup.close()
 
+        def addAll():
+            for i in range(len(self.device_dict) - ui.tableWidget.rowCount()):
+                addRow()           
+
         def addRow():
             index = ui.tableWidget.rowCount()
             ui.tableWidget.insertRow(index)
             combo = QtWidgets.QComboBox()
             for device in self.device_dict.keys():
                 combo.addItem(str(device))
+            combo.setCurrentIndex(index if index<len(self.device_dict) else 0)
             ui.tableWidget.setCellWidget(index, 0, combo)
             spinbox = QtWidgets.QSpinBox()
             spinbox.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons) # Removes buttons
@@ -674,6 +691,7 @@ class PS2GUI():
                 ui.tableWidget.removeRow(ui.tableWidget.rowCount() - 1)
 
         ui.btn_continue.clicked.connect(continue_UI)
+        ui.btn_add_all.clicked.connect(addAll)
         ui.btn_add_device.clicked.connect(addRow)
         ui.btn_remove_device.clicked.connect(removeRow)
 
@@ -696,7 +714,7 @@ class PS2GUI():
         with open(self.macro_script_path, "w") as file:
             createMacro(file, self)
 
-        RunPSCore(self)
+        self.RunPSCLI()
 
     def run(self):
         '''Main Function to run the GUI'''

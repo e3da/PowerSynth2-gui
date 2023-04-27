@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>405</width>
-    <height>370</height>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,48 +23,6 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_24">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Thermal Setup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_17">
-        <item>
-         <widget class="QLabel" name="label_25">
-          <property name="text">
-           <string>Model Select:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="combo_model_select">
-          <item>
-           <property name="text">
-            <string>ParaPower</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>TSFM</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Analytical</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
       <item row="2" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_18">
         <item>
@@ -79,77 +37,19 @@
         </item>
        </layout>
       </item>
-      <item row="3" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QTableWidget" name="tableWidget">
-          <column>
-           <property name="text">
-            <string>Device</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Power</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Maximum</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>70</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_add_device">
-            <property name="text">
-             <string>Add Device</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_remove_device">
-            <property name="text">
-             <string>Remove Device</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_24">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Thermal Setup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_19">
         <item>
          <widget class="QLabel" name="label_27">
           <property name="text">
-           <string>Heat Convection:</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Heat Convection (W/(m&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;·K)):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
         </item>
@@ -158,12 +58,12 @@
         </item>
        </layout>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_20">
         <item>
          <widget class="QLabel" name="label_28">
           <property name="text">
-           <string>Ambient Temperature:</string>
+           <string>Ambient Temperature (K):</string>
           </property>
          </widget>
         </item>
@@ -200,8 +100,102 @@
         </item>
        </layout>
       </item>
+      <item row="3" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>150</number>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Device</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Power</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="btn_add_device">
+            <property name="text">
+             <string>Add Device</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_add_all">
+            <property name="text">
+             <string>Add All</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btn_remove_device">
+            <property name="text">
+             <string>Remove Device</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_17">
+        <item>
+         <widget class="QLabel" name="label_25">
+          <property name="text">
+           <string>Model Select:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="combo_model_select">
+          <item>
+           <property name="text">
+            <string>ParaPower</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>TSFM</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Analytical</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string/>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

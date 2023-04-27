@@ -3,21 +3,21 @@
 ################################################################################
 ## Form generated from reading UI file 'runMacro.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *  # type: ignore
-from PySide2.QtGui import *  # type: ignore
-from PySide2.QtWidgets import *  # type: ignore
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(503, 147)
+        Dialog.resize(503, 100)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout_4 = QHBoxLayout()
@@ -47,6 +47,10 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
 
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -74,7 +78,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Run Project", None))
-        self.label_4.setText(QCoreApplication.translate("Dialog", u"macro_script.txt", None))
+        self.label_4.setText(QCoreApplication.translate("Dialog", u"macro_script", None))
         self.btn_open_macro.setText(QCoreApplication.translate("Dialog", u"Open", None))
         self.btn_create_project.setText(QCoreApplication.translate("Dialog", u"Run Project", None))
         self.btn_cancel.setText(QCoreApplication.translate("Dialog", u"Cancel", None))

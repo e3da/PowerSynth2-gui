@@ -10,47 +10,49 @@ from copy import deepcopy
 from PySide2.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox, QApplication, QComboBox, QFileDialog
 
 class EditLibrary(QMainWindow, Ui_MDKWindow):
-    selected = []       #variable pass material information to PowerSynth
-    bridge = None
-    mat_lib = []        #Have all material information
-    row_num = 0         #Num of ALL materials
-    pcm_num = 0         #Num of PCM materials
-    con_num = 0         #Num of Conductor materials
-    ins_num = 0         #Num of Insulator materials
-    sem_num = 0         #Num of Semiconductor materials
+    def __init__(self, parent=None, MatLib=None):
+        self.bridge = None
+        self.mat_lib = []        #Have all material information
+        self.row_num = 0         #Num of ALL materials
+        self.pcm_num = 0         #Num of PCM materials
+        self.con_num = 0         #Num of Conductor materials
+        self.ins_num = 0         #Num of Insulator materials
+        self.sem_num = 0         #Num of Semiconductor materials
 
-    def __init__(self, parent=None):
+        self.material_lib=MatLib
+
         super(EditLibrary, self).__init__(parent)
         self.setupUi(self)
-        self.show()
-        self.actionImport_2.triggered.connect(self.upload)
-        self.actionSave.triggered.connect(self.export)
+        self.actionImport_2.triggered.connect(self.load)
+        self.actionSave.triggered.connect(self.save)
         self.actionOpen_explanation.triggered.connect(self.explanation)
-        self.select_button.clicked.connect(self.select)
-        self.load_button.clicked.connect(self.load)
-        self.save_button.clicked.connect(self.save)
+        self.load_default_button.clicked.connect(self.load(self.material_lib))
         self.search_button.clicked.connect(self.search)
         self.sort_button.clicked.connect(self.sort)
         self.add_all_button.clicked.connect(self.add_all)
         self.clone_all_button.clicked.connect(self.clone_all)
-        self.edit_all_button.clicked.connect(self.edit_all)
+        self.update_all_button.clicked.connect(self.update_all)
         self.remove_all_button.clicked.connect(self.remove_all)
         self.add_pcm_button.clicked.connect(self.add_pcm)
         self.clone_pcm_button.clicked.connect(self.clone_pcm)
-        self.edit_pcm_button.clicked.connect(self.edit_pcm)
+        self.update_pcm_button.clicked.connect(self.update_pcm)
         self.remove_pcm_button.clicked.connect(self.remove_pcm)
         self.add_con_button.clicked.connect(self.add_conductor)
         self.clone_con_button.clicked.connect(self.clone_conductor)
-        self.edit_con_button.clicked.connect(self.edit_conductor)
+        self.update_con_button.clicked.connect(self.update_conductor)
         self.remove_con_button.clicked.connect(self.remove_conductor)
         self.add_ins_button.clicked.connect(self.add_insulator)
         self.clone_ins_button.clicked.connect(self.clone_insulator)
-        self.edit_ins_button.clicked.connect(self.edit_insulator)
+        self.update_ins_button.clicked.connect(self.update_insulator)
         self.remove_ins_button.clicked.connect(self.remove_insulator)
         self.add_sem_button.clicked.connect(self.add_semiconductor)
         self.clone_sem_button.clicked.connect(self.clone_semiconductor)
-        self.edit_sem_button.clicked.connect(self.edit_semiconductor)
+        self.update_sem_button.clicked.connect(self.update_semiconductor)
         self.remove_sem_button.clicked.connect(self.remove_semiconductor)
+
+        self.load(self.material_lib)
+
+        self.show()
 
     def check_alpha(self, name):
         """
@@ -77,7 +79,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return:True or False
         """
         check = True
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         for row in rows:
             if row.name == name:
@@ -88,13 +90,16 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     break
         return check
 
-    def upload(self):
+    def load(self,MatLib=None):
         """
         Open another window to get file name
         :return: Nothing
         """
-        EditLibrary.mat_lib = []
-        filename, ok = QFileDialog.getOpenFileName(parent=self, caption='Select Open File', filter='CSV Files (*.csv)')
+        self.mat_lib = []
+        if not MatLib:
+            filename, ok = QFileDialog.getOpenFileName(parent=self, caption='Select Open File', filter='CSV Files (*.csv)')
+        else:
+            filename=MatLib
         if not filename:
             return
         with open(filename, newline='') as data:
@@ -130,23 +135,23 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                         density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
                         young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
                         type=row['type'], melting_temp=melt)
-                EditLibrary.mat_lib.append(data)
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Your file is updated to the table")
-        msg.setWindowTitle("Message")
-        msg.exec_()
+                self.mat_lib.append(data)
         self.ok()
 
-    def export(self):
+    def save(self,MatLib=None):
         """
         Open another window and choose or create file to save materials
         :return: Nothing
         """
-        rows = EditLibrary.mat_lib
-        filename, ok = QFileDialog.getSaveFileName(parent=self, caption='Select Save File', filter='CSV Files (*.csv)')
+        rows = self.mat_lib
+        if not MatLib:
+            filename, ok = QFileDialog.getSaveFileName(parent=self, caption='Select Save File', filter='CSV Files (*.csv)')
+        else:
+            filename=MatLib
+
         if not filename:
             return
+
         with open(filename, 'w') as csvFile:
             header = ["name", "thermal_cond", "thermal_cond_liq", "spec_heat_cap",
                     "spec_heat_cap_liq", "density", "density_liq", "electrical_res",
@@ -179,7 +184,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                 writer.writerow(data)
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
-        msg.setText("Materials are saved correctly")
+        msg.setText("Materials are saved to "+filename)
         msg.setWindowTitle("Message")
         msg.exec_()
 
@@ -190,107 +195,6 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.setInformativeText("Export : Save materials to your own file")
         msg.setWindowTitle("Message")
         msg.exec_()
-
-    def select(self):
-        """
-        Get information of a material and return it
-        :return: material
-        """
-        rows = EditLibrary.mat_lib
-        change = self.tabWidget.currentIndex()
-        material = []
-        if change == 0:
-            num = self.tableWidget.currentRow()
-            item = self.tableWidget.item(num, 0).text()
-            for row in rows:
-                if row.name == item:
-                    material = row
-        if change == 1:
-            num = self.tableWidget_2.currentRow()
-            item = self.tableWidget_2.item(num, 0).text()
-            for row in rows:
-                if row.name == item:
-                    material = row
-        if change == 2:
-            num = self.tableWidget_3.currentRow()
-            item = self.tableWidget_3.item(num, 0).text()
-            for row in rows:
-                if row.name == item:
-                    material = row
-        if change == 3:
-            num = self.tableWidget_4.currentRow()
-            item = self.tableWidget_4.item(num, 0).text()
-            for row in rows:
-                if row.name == item:
-                    material = row
-        if change == 4:
-            num = self.tableWidget_5.currentRow()
-            item = self.tableWidget_5.item(num, 0).text()
-            for row in rows:
-                if row.name == item:
-                    material = row
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        message = item + " is selected"
-        msg.setText(message)
-        msg.setWindowTitle("Message")
-        msg.exec_()
-        EditLibrary.selected = material
-        print(material)
-        return material
-
-    def load(self):
-        """
-        Load material library information to mat_lib
-        :return: Nothing
-        """
-        path_parent = os. path. dirname(os. getcwd())
-        material_lib=os.path.join(path_parent,'tech_lib/Material/Materials.csv')
-
-        if os.path.exists(material_lib):
-            with open(material_lib) as data:
-                reader = csv.DictReader(data)
-                for row in reader:
-                    p_rat = None
-                    th_cond = None
-                    th_condL = None
-                    dens = None
-                    densL = None
-                    spec = None
-                    specL = None
-                    melt = None
-                    e_res = None
-                    pmit = None
-                    pmea = None
-                    cte = None
-                    y_mdl = row['young_modulus']
-                    p_rat = row['poissons_ratios']
-                    th_cond = row['thermal_cond']
-                    th_condL = row['thermal_cond_liq']
-                    dens = row['density']
-                    densL = row['density_liq']
-                    spec = row['spec_heat_cap']
-                    specL = row['spec_heat_cap_liq']
-                    melt = row['melting_temp']
-                    e_res = row['electrical_res']
-                    pmit = row['rel_permit']
-                    pmea = row['rel_permeab']
-                    cte = row['thermal_expansion_coeffcient']
-                    data = MaterialProperties(name=row['name'], thermal_cond_so=th_cond, thermal_cond_liq=th_condL,
-                            spec_heat_cap_so=spec, spec_heat_cap_liq=specL, density_so=dens,
-                            density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
-                            young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
-                            type=row['type'], melting_temp=melt)
-                    EditLibrary.mat_lib.append(data)
-        else:
-            print("Please Import the Material.csv file from tech_lib")
-
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("Materials.csv file is opened")
-        msg.setWindowTitle("Message")
-        msg.exec_()
-        self.ok()
 
     def ok(self):
         """
@@ -313,7 +217,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         id3 = 0
         id4 = 0
         id5 = 0
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         for row in rows:        #Insert row each table depend on materials' types
             self.tableWidget.insertRow(row_id)
             if row.type == 'PCM':
@@ -424,61 +328,18 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         self.tableWidget_3.resizeColumnsToContents()
         self.tableWidget_4.resizeColumnsToContents()
         self.tableWidget_5.resizeColumnsToContents()
-        EditLibrary.row_num = row_id
-        EditLibrary.pcm_num = id2
-        EditLibrary.con_num = id3
-        EditLibrary.ins_num = id4
-        EditLibrary.sem_num = id5
-
-    def save(self):
-        """
-        Save modifed materials on csv file
-        :return:
-        """
-        rows = EditLibrary.mat_lib
-        with open("Materials.csv", 'w') as csvFile:
-            header = ['name', 'thermal_cond', 'thermal_cond_liq', 'spec_heat_cap',
-                    'spec_heat_cap_liq', 'density', 'density_liq', 'electrical_res',
-                    'rel_permit', 'rel_permeab', 'q3d_id', 'young_modulus', 'poissons_ratios',
-                    'thermal_expansion_coeffcient', 'type',
-                    'melting_temp']
-
-            writer = csv.DictWriter(csvFile, fieldnames=header)
-            writer.writeheader()
-            for row in rows:
-                data={'name':None, 'thermal_cond':None, 'thermal_cond_liq':None, 'spec_heat_cap':None,
-                        'spec_heat_cap_liq':None, 'density':None, 'density_liq':None, 'electrical_res':None,
-                        'rel_permit':None, 'rel_permeab':None, 'q3d_id':None, 'young_modulus':None, 'poissons_ratios':None,
-                        'thermal_expansion_coeffcient':None, 'type':None, 'melting_temp':None}
-                data['name'] = row.name
-                data['thermal_cond'] = row.thermal_cond_so
-                data['thermal_cond_liq'] = row.thermal_cond_liq
-                data['spec_heat_cap'] = row.spec_heat_cap_so
-                data['spec_heat_cap_liq'] = row.spec_heat_cap_liq
-                data['density'] = row.density_so
-                data['density_liq'] = row.density_liq
-                data['electrical_res'] = row.electrical_res
-                data['rel_permit'] = row.rel_permit
-                data['rel_permeab'] = row.rel_permeab
-                data['q3d_id'] = row.name
-                data['young_modulus'] = row.young_modulus
-                data['poissons_ratios'] = row.poisson_ratio
-                data['thermal_expansion_coeffcient'] = row.thermal_expansion_coefficient
-                data['type'] = row.type
-                data['melting_temp'] = row.melting_temp
-                writer.writerow(data)
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText("All materials are saved to Materials.csv file")
-        msg.setWindowTitle("Message")
-        msg.exec_()
+        self.row_num = row_id
+        self.pcm_num = id2
+        self.con_num = id3
+        self.ins_num = id4
+        self.sem_num = id5
 
     def search(self):
         """
         Find specific material and come it to the top of the table
         :return: Nothing
         """
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         text = self.comboBox.currentText()
         item = self.SearchItem.text()
         value2 = item
@@ -489,7 +350,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     message = item + " is found"
@@ -505,7 +366,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -520,7 +381,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -535,7 +396,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -550,7 +411,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -565,7 +426,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -580,7 +441,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -595,7 +456,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -610,7 +471,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -625,7 +486,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -640,7 +501,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -655,7 +516,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -670,7 +531,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     value = rows[row_id]
                     rows.pop(row_id)
                     rows.insert(0, value)
-                    EditLibrary.mat_lib = rows
+                    self.mat_lib = rows
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
@@ -684,7 +545,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         Sort materials based on name
         :return: Nothing
         """
-        line = EditLibrary.mat_lib
+        line = self.mat_lib
         rows = []
         for row in line:
             data = {'name': None, 'thermal_cond': None, 'thermal_cond_liq': None, 'spec_heat_cap': None,
@@ -714,7 +575,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             def sort(lines):
                 return lines['name']
             rows.sort(key=sort)
-        EditLibrary.mat_lib = []
+        self.mat_lib = []
         for row in rows:
             p_rat = None
             th_cond = None
@@ -746,7 +607,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
                     young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
                     type=row['type'], melting_temp=melt)
-            EditLibrary.mat_lib.append(data)
+            self.mat_lib.append(data)
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = "Materials are sorted"
@@ -779,7 +640,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                 density_liq=densL, electrical_res=e_res, rel_permit=pmit, rel_permeab=pmea,
                 young_modulus=y_mdl, poisson_ratio=p_rat, thermal_expansion_coefficient=cte,
                 type=type, melting_temp=melt)
-        EditLibrary.mat_lib.append(data)
+        self.mat_lib.append(data)
         self.ok()
 
     def add_all(self):
@@ -799,7 +660,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         if value == -1:
             print("Error: No value is selected.")
             return
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         item = rows[value]
         clone = deepcopy(item)
         clone.name = clone.name + 'Cloned'
@@ -807,7 +668,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         rows.pop(value)
         rows.insert(0, clone)
         rows.insert(0, item)
-        EditLibrary.mat_lib = rows
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is cloned"
@@ -816,7 +677,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
-    def edit_all(self):
+    def update_all(self):
         """
         Edit material with value checker in tableWidget
         :return: Nothing
@@ -884,7 +745,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             check = True
             break
         if check:
-            rows = EditLibrary.mat_lib
+            rows = self.mat_lib
             id2 = 0
             for row in rows:
                 if num == id2:
@@ -904,10 +765,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     row.rel_permeab = pmea
                     row.thermal_expansion_coefficient = tm_co
                 id2 += 1
-            EditLibrary.mat_lib = rows
+            self.mat_lib = rows
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            message = name + " is edited"
+            message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
             msg.exec_()
@@ -927,7 +788,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         name = None
         for row in rows:
@@ -936,7 +797,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                 name = name
             num += 1
         rows.pop(value)
-        EditLibrary.mat_lib = rows
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is removed"
@@ -951,16 +812,16 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_2.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for i,row in rows:
             if row.type == type:
                 if value == num:
-                    EditLibrary.pcm_num = id2
+                    self.pcm_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.pcm_num]
+        item = rows[self.pcm_num]
         clone = deepcopy(item)
         clone.name = clone.name + ' copy'
         rows.append(item)
@@ -980,23 +841,23 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_2.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'PCM':
                 if value == num:
-                    EditLibrary.pcm_num = id2
+                    self.pcm_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.pcm_num]
+        item = rows[self.pcm_num]
         clone = deepcopy(item)
         clone.name = clone.name + 'Cloned'
         name = item.name
-        rows.pop(EditLibrary.pcm_num)
+        rows.pop(self.pcm_num)
         rows.insert(0, clone)
         rows.insert(0, item)
-        EditLibrary.mat_lib = rows
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is cloned"
@@ -1005,7 +866,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
-    def edit_pcm(self):
+    def update_pcm(self):
         """
         Edit material with value checker in tableWidget_2
         :return: Nothing
@@ -1059,7 +920,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             check = True
             break
         if check:
-            rows = EditLibrary.mat_lib
+            rows = self.mat_lib
             number = 0
             id2 = 0
             for row in rows:
@@ -1078,10 +939,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                         row.thermal_expansion_coefficient = tm_co
                     number += 1
                 id2 += 1
-            EditLibrary.mat_lib = rows
+            self.mat_lib = rows
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            message = name + " is edited"
+            message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
             msg.exec_()
@@ -1100,19 +961,19 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_2.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'PCM':
                 if value == num:
-                    EditLibrary.pcm_num = id2
+                    self.pcm_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.pcm_num]
+        item = rows[self.pcm_num]
         name = item.name
-        rows.pop(EditLibrary.pcm_num)
-        EditLibrary.mat_lib = rows
+        rows.pop(self.pcm_num)
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is removed"
@@ -1135,20 +996,20 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_3.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'Conductor':
                 if value == num:
-                    EditLibrary.con_num = id2
+                    self.con_num = id2
                     name = row.name
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.con_num]
+        item = rows[self.con_num]
         clone = deepcopy(item)
         clone.name = clone.name + 'Cloned'
-        rows.pop(EditLibrary.con_num)
+        rows.pop(self.con_num)
         rows.insert(0, clone)
         rows.insert(0, item)
         msg = QMessageBox()
@@ -1159,7 +1020,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
-    def edit_conductor(self):
+    def update_conductor(self):
         """
         Edit material with value checker in tableWidget_3
         :return: Nothing
@@ -1209,13 +1070,13 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             check = True
             break
         if check:
-            rows = EditLibrary.mat_lib
+            rows = self.mat_lib
             number = 0
             id2 = 0
             for row in rows:
                 if row.type == 'Conductor':
                     if num == number:
-                        EditLibrary.con_num = id2
+                        self.con_num = id2
                         row.name = name
                         row.young_modulus = y_mdl
                         row.poisson_ratio = p_rat
@@ -1229,10 +1090,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                         print(row)
                     number += 1
                 id2 += 1
-            EditLibrary.mat_lib = rows
+            self.mat_lib = rows
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            message = name + " is edited"
+            message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
             msg.exec_()
@@ -1252,19 +1113,19 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_3.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'Conductor':
                 if value == num:
-                    EditLibrary.con_num = id2
+                    self.con_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.con_num]
+        item = rows[self.con_num]
         name = item.name
-        rows.pop(EditLibrary.con_num)
-        EditLibrary.mat_lib = rows
+        rows.pop(self.con_num)
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is removed"
@@ -1287,23 +1148,23 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_4.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'Insulator':
                 if value == num:
-                    EditLibrary.ins_num = id2
+                    self.ins_num = id2
                     name = row.name
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.ins_num]
+        item = rows[self.ins_num]
         clone = deepcopy(item)
         clone.name = clone.name + 'Cloned'
-        rows.pop(EditLibrary.ins_num)
+        rows.pop(self.ins_num)
         rows.insert(0, clone)
         rows.insert(0, item)
-        EditLibrary.mat_lib = rows
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is cloned"
@@ -1312,7 +1173,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
-    def edit_insulator(self):
+    def update_insulator(self):
         """
         Edit material with value checker in tableWidget_4
         :return: Nothing
@@ -1363,13 +1224,13 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             check = True
             break
         if check:
-            rows = EditLibrary.mat_lib
+            rows = self.mat_lib
             number = 0
             id2 = 0
             for row in rows:
                 if row.type == 'Insulator':
                     if value == number:
-                        EditLibrary.ins_num = id2
+                        self.ins_num = id2
                         row.name = name
                         row.young_modulus = y_mdl
                         row.poisson_ratio = p_rat
@@ -1382,10 +1243,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                         row.thermal_expansion_coefficient = tm_co
                     number += 1
                 id2 += 1
-            EditLibrary.mat_lib = rows
+            self.mat_lib = rows
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            message = name + " is edited"
+            message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
             msg.exec_()
@@ -1405,19 +1266,19 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_4.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'Insulator':
                 if value == num:
-                    EditLibrary.ins_num = id2
+                    self.ins_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.ins_num]
+        item = rows[self.ins_num]
         name = item.name
-        rows.pop(EditLibrary.ins_num)
-        EditLibrary.mat_lib = rows
+        rows.pop(self.ins_num)
+        self.mat_lib = rows
         print ('Material is removed')
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
@@ -1440,24 +1301,24 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         Create clone material in tableWidget_5
         :return: Nothing
         """
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         value = self.tableWidget_5.currentRow()
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'Semiconductor':
                 if value == num:
-                    EditLibrary.sem_num = id2
+                    self.sem_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.sem_num]
+        item = rows[self.sem_num]
         name = item.name
         clone = deepcopy(item)
         clone.name = clone.name + 'Cloned'
-        rows.pop(EditLibrary.sem_num)
+        rows.pop(self.sem_num)
         rows.insert(0, clone)
         rows.insert(0, item)
-        EditLibrary.mat_lib = rows
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is cloned"
@@ -1466,7 +1327,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.exec_()
         self.ok()
 
-    def edit_semiconductor(self):
+    def update_semiconductor(self):
         """
         Edit material with value checker in tableWidget_5
         :return: Nothing
@@ -1516,13 +1377,13 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             check = True
             break
         if check:
-            rows = EditLibrary.mat_lib
+            rows = self.mat_lib
             num2 = 0
             id2 = 0
             for row in rows:
                 if row.type == 'Semiconductor':
                     if num == num2:
-                        EditLibrary.sem_num = id2
+                        self.sem_num = id2
                         row.name = name
                         row.young_modulus = y_mdl
                         row.poisson_ratio = p_rat
@@ -1536,10 +1397,10 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                         print(row)
                     num2 += 1
                 id2 += 1
-            EditLibrary.mat_lib = rows
+            self.mat_lib = rows
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            message = name + " is edited"
+            message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
             msg.exec_()
@@ -1559,19 +1420,19 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         :return: Nothing
         """
         value = self.tableWidget_5.currentRow()
-        rows = EditLibrary.mat_lib
+        rows = self.mat_lib
         num = 0
         id2 = 0
         for row in rows:
             if row.type == 'Semiconductor':
                 if value == num:
-                    EditLibrary.sem_num = id2
+                    self.sem_num = id2
                 num += 1
             id2 += 1
-        item = rows[EditLibrary.sem_num]
-        rows.pop(EditLibrary.sem_num)
+        item = rows[self.sem_num]
+        rows.pop(self.sem_num)
         name = item.name
-        EditLibrary.mat_lib = rows
+        self.mat_lib = rows
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         message = name + " is removed"
@@ -1583,6 +1444,6 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = EditLibrary()
+    window = self()
     gui = app.exec_()
     sys.exit(gui)

@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 def showSolutionBrowser(gui):
         '''Function to Run the Solution Browser.  Final step of the main flow.'''
+        gui.solution_ind=0
         solutionBrowser = QtWidgets.QDialog()
         ui = UI_solution_browser()
         ui.setupUi(solutionBrowser)
@@ -84,10 +85,10 @@ def showSolutionBrowser(gui):
         
         def on_pick(event):
             gui.solution_ind = event.ind[0]
-            sel_point = gui.solution_ind
             #axes.clear()
             #axes.scatter(data_x, data_y, picker=1, marker='o', c='b',s = 50)
-            axes.scatter(data_x[sel_point], data_y[sel_point], picker=1, marker='o', c='r',s=100)
+            gui.sel_points.remove()
+            gui.sel_points=axes.scatter(data_x[gui.solution_ind], data_y[gui.solution_ind], marker='o', c='r',s=100,label='select')
             canvas.draw()
 
             i = 1
@@ -129,6 +130,9 @@ def showSolutionBrowser(gui):
 
 
         def display_initial_layout():
+            gui.sel_points.remove()
+            gui.sel_points=axes.scatter([],[], label='select')
+            canvas.draw()
             i = 1
             while os.path.exists(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png")):
                 pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png"))
@@ -147,9 +151,9 @@ def showSolutionBrowser(gui):
                 ui.tabWidget.widget(i-1).setScene(scene)
 
 
-        axes.scatter(data_x, data_y, picker=True)
+        axes.scatter(data_x, data_y, picker=True, label='data')
+        gui.sel_points=axes.scatter([],[], label='select')
         canvas = FigureCanvas(gui.core.cmd.solutionsFigure)
-        canvas.draw()
         canvas.callbacks.connect('pick_event', on_pick)
         scene2 = QtWidgets.QGraphicsScene()
         scene2.addWidget(canvas)
