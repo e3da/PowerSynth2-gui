@@ -3,21 +3,21 @@
 ################################################################################
 ## Form generated from reading UI file 'thermalSetup.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 5.15.8
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide2.QtCore import *  # type: ignore
+from PySide2.QtGui import *  # type: ignore
+from PySide2.QtWidgets import *  # type: ignore
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(405, 433)
+        Dialog.resize(405, 462)
         self.verticalLayout_2 = QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.thermal_setup_2 = QFrame(Dialog)
@@ -35,6 +35,11 @@ class Ui_Dialog(object):
 
         self.lineedit_measure_name = QLineEdit(self.thermal_setup_2)
         self.lineedit_measure_name.setObjectName(u"lineedit_measure_name")
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lineedit_measure_name.sizePolicy().hasHeightForWidth())
+        self.lineedit_measure_name.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_18.addWidget(self.lineedit_measure_name)
 
@@ -55,6 +60,8 @@ class Ui_Dialog(object):
 
         self.heat_convection = QLineEdit(self.thermal_setup_2)
         self.heat_convection.setObjectName(u"heat_convection")
+        sizePolicy.setHeightForWidth(self.heat_convection.sizePolicy().hasHeightForWidth())
+        self.heat_convection.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_19.addWidget(self.heat_convection)
 
@@ -70,9 +77,6 @@ class Ui_Dialog(object):
 
         self.ambient_temperature = QSpinBox(self.thermal_setup_2)
         self.ambient_temperature.setObjectName(u"ambient_temperature")
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.ambient_temperature.sizePolicy().hasHeightForWidth())
         self.ambient_temperature.setSizePolicy(sizePolicy)
         self.ambient_temperature.setMinimumSize(QSize(15, 0))
@@ -103,16 +107,22 @@ class Ui_Dialog(object):
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.btn_add_device = QPushButton(self.thermal_setup_2)
         self.btn_add_device.setObjectName(u"btn_add_device")
+        sizePolicy.setHeightForWidth(self.btn_add_device.sizePolicy().hasHeightForWidth())
+        self.btn_add_device.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_3.addWidget(self.btn_add_device)
 
         self.btn_add_all = QPushButton(self.thermal_setup_2)
         self.btn_add_all.setObjectName(u"btn_add_all")
+        sizePolicy.setHeightForWidth(self.btn_add_all.sizePolicy().hasHeightForWidth())
+        self.btn_add_all.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_3.addWidget(self.btn_add_all)
 
         self.btn_remove_device = QPushButton(self.thermal_setup_2)
         self.btn_remove_device.setObjectName(u"btn_remove_device")
+        sizePolicy.setHeightForWidth(self.btn_remove_device.sizePolicy().hasHeightForWidth())
+        self.btn_remove_device.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_3.addWidget(self.btn_remove_device)
 
@@ -135,6 +145,8 @@ class Ui_Dialog(object):
         self.combo_model_select.addItem("")
         self.combo_model_select.addItem("")
         self.combo_model_select.setObjectName(u"combo_model_select")
+        sizePolicy.setHeightForWidth(self.combo_model_select.sizePolicy().hasHeightForWidth())
+        self.combo_model_select.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_17.addWidget(self.combo_model_select)
 
@@ -144,10 +156,6 @@ class Ui_Dialog(object):
 
         self.verticalLayout_2.addWidget(self.thermal_setup_2)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_2.addItem(self.verticalSpacer)
-
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
@@ -156,6 +164,8 @@ class Ui_Dialog(object):
 
         self.btn_continue = QPushButton(Dialog)
         self.btn_continue.setObjectName(u"btn_continue")
+        sizePolicy.setHeightForWidth(self.btn_continue.sizePolicy().hasHeightForWidth())
+        self.btn_continue.setSizePolicy(sizePolicy)
 
         self.horizontalLayout.addWidget(self.btn_continue)
 

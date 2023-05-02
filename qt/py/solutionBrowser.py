@@ -3,46 +3,47 @@
 ################################################################################
 ## Form generated from reading UI file 'solutionBrowser.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 5.15.8
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide2.QtCore import *  # type: ignore
+from PySide2.QtGui import *  # type: ignore
+from PySide2.QtWidgets import *  # type: ignore
 
 
 class Ui_CornerStitch_Dialog(object):
     def setupUi(self, CornerStitch_Dialog):
         if not CornerStitch_Dialog.objectName():
             CornerStitch_Dialog.setObjectName(u"CornerStitch_Dialog")
-        CornerStitch_Dialog.resize(1203, 747)
+        CornerStitch_Dialog.resize(999, 625)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(CornerStitch_Dialog.sizePolicy().hasHeightForWidth())
+        CornerStitch_Dialog.setSizePolicy(sizePolicy)
         self.horizontalLayout_3 = QHBoxLayout(CornerStitch_Dialog)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.grbox_view = QGroupBox(CornerStitch_Dialog)
         self.grbox_view.setObjectName(u"grbox_view")
+        sizePolicy.setHeightForWidth(self.grbox_view.sizePolicy().hasHeightForWidth())
+        self.grbox_view.setSizePolicy(sizePolicy)
         self.grbox_view.setMinimumSize(QSize(0, 0))
         self.grbox_view.setMaximumSize(QSize(16777215, 16777215))
         self.grbox_view.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.verticalLayout_2 = QVBoxLayout(self.grbox_view)
-        self.verticalLayout_2.setSpacing(0)
+        self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(-1, 0, -1, 0)
         self.tabWidget = QTabWidget(self.grbox_view)
         self.tabWidget.setObjectName(u"tabWidget")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
         self.tabWidget.setSizePolicy(sizePolicy)
-        self.tabWidget.setMinimumSize(QSize(300, 300))
+        self.tabWidget.setMinimumSize(QSize(400, 400))
         self.tabWidget.setMaximumSize(QSize(1000, 1500))
 
-        self.verticalLayout.addWidget(self.tabWidget)
+        self.verticalLayout_2.addWidget(self.tabWidget)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
@@ -53,7 +54,7 @@ class Ui_CornerStitch_Dialog(object):
 
         self.lineEdit_x = QLineEdit(self.grbox_view)
         self.lineEdit_x.setObjectName(u"lineEdit_x")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.lineEdit_x.sizePolicy().hasHeightForWidth())
@@ -93,6 +94,11 @@ class Ui_CornerStitch_Dialog(object):
 
         self.horizontalLayout.addItem(self.horizontalSpacer_3)
 
+        self.label_2 = QLabel(self.grbox_view)
+        self.label_2.setObjectName(u"label_2")
+
+        self.horizontalLayout.addWidget(self.label_2)
+
         self.lineEdit_size_w = QLineEdit(self.grbox_view)
         self.lineEdit_size_w.setObjectName(u"lineEdit_size_w")
         sizePolicy1.setHeightForWidth(self.lineEdit_size_w.sizePolicy().hasHeightForWidth())
@@ -115,10 +121,7 @@ class Ui_CornerStitch_Dialog(object):
         self.horizontalLayout.addWidget(self.lineEdit_size_h)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
-
-        self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
 
 
         self.horizontalLayout_3.addWidget(self.grbox_view)
@@ -130,17 +133,18 @@ class Ui_CornerStitch_Dialog(object):
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
         self.grview_sols_browser = QGraphicsView(self.groupBox_2)
         self.grview_sols_browser.setObjectName(u"grview_sols_browser")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.grview_sols_browser.sizePolicy().hasHeightForWidth())
-        self.grview_sols_browser.setSizePolicy(sizePolicy2)
+        sizePolicy.setHeightForWidth(self.grview_sols_browser.sizePolicy().hasHeightForWidth())
+        self.grview_sols_browser.setSizePolicy(sizePolicy)
         self.grview_sols_browser.setMinimumSize(QSize(400, 400))
         self.grview_sols_browser.setMaximumSize(QSize(2000, 16777215))
         self.grview_sols_browser.setLayoutDirection(Qt.LeftToRight)
         self.grview_sols_browser.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_3.addWidget(self.grview_sols_browser)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -156,6 +160,8 @@ class Ui_CornerStitch_Dialog(object):
 
         self.btn_export_selected = QPushButton(self.groupBox_2)
         self.btn_export_selected.setObjectName(u"btn_export_selected")
+        sizePolicy1.setHeightForWidth(self.btn_export_selected.sizePolicy().hasHeightForWidth())
+        self.btn_export_selected.setSizePolicy(sizePolicy1)
         self.btn_export_selected.setMaximumSize(QSize(200, 16777215))
         self.btn_export_selected.setFlat(False)
 
@@ -163,13 +169,15 @@ class Ui_CornerStitch_Dialog(object):
 
         self.btn_export_all = QPushButton(self.groupBox_2)
         self.btn_export_all.setObjectName(u"btn_export_all")
+        sizePolicy1.setHeightForWidth(self.btn_export_all.sizePolicy().hasHeightForWidth())
+        self.btn_export_all.setSizePolicy(sizePolicy1)
         self.btn_export_all.setMaximumSize(QSize(200, 16777215))
 
         self.horizontalLayout_2.addWidget(self.btn_export_all)
 
-        self.horizontalSpacer_4 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_4)
+        self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
         self.btn_exit = QPushButton(self.groupBox_2)
         self.btn_exit.setObjectName(u"btn_exit")
@@ -204,6 +212,7 @@ class Ui_CornerStitch_Dialog(object):
         self.label_units1.setText(QCoreApplication.translate("CornerStitch_Dialog", u"units1", None))
         self.y_label.setText(QCoreApplication.translate("CornerStitch_Dialog", u"text2", None))
         self.label_units2.setText(QCoreApplication.translate("CornerStitch_Dialog", u"units2", None))
+        self.label_2.setText(QCoreApplication.translate("CornerStitch_Dialog", u"Size", None))
         self.label.setText(QCoreApplication.translate("CornerStitch_Dialog", u"X", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("CornerStitch_Dialog", u"Layout Selection", None))
         self.btn_initial_layout.setText(QCoreApplication.translate("CornerStitch_Dialog", u" View Initial Layout", None))

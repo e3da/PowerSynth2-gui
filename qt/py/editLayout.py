@@ -3,14 +3,14 @@
 ################################################################################
 ## Form generated from reading UI file 'editLayout.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 5.15.8
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide2.QtCore import *  # type: ignore
+from PySide2.QtGui import *  # type: ignore
+from PySide2.QtWidgets import *  # type: ignore
 
 
 class Ui_Dialog(object):
@@ -28,7 +28,7 @@ class Ui_Dialog(object):
 
         self.btn_create_project = QPushButton(Dialog)
         self.btn_create_project.setObjectName(u"btn_create_project")
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.btn_create_project.sizePolicy().hasHeightForWidth())
@@ -66,8 +66,11 @@ class Ui_Dialog(object):
         self.combo_reliability_constraints.addItem("")
         self.combo_reliability_constraints.addItem("")
         self.combo_reliability_constraints.setObjectName(u"combo_reliability_constraints")
-        sizePolicy1.setHeightForWidth(self.combo_reliability_constraints.sizePolicy().hasHeightForWidth())
-        self.combo_reliability_constraints.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.combo_reliability_constraints.sizePolicy().hasHeightForWidth())
+        self.combo_reliability_constraints.setSizePolicy(sizePolicy2)
 
         self.horizontalLayout.addWidget(self.combo_reliability_constraints)
 
@@ -83,6 +86,11 @@ class Ui_Dialog(object):
         self.gridLayout_3.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.lineEdit_bondwire = QLineEdit(Dialog)
         self.lineEdit_bondwire.setObjectName(u"lineEdit_bondwire")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.lineEdit_bondwire.sizePolicy().hasHeightForWidth())
+        self.lineEdit_bondwire.setSizePolicy(sizePolicy3)
 
         self.gridLayout_3.addWidget(self.lineEdit_bondwire, 0, 1, 1, 1)
 
@@ -102,6 +110,11 @@ class Ui_Dialog(object):
 
         self.btn_edit_materials = QPushButton(Dialog)
         self.btn_edit_materials.setObjectName(u"btn_edit_materials")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.btn_edit_materials.sizePolicy().hasHeightForWidth())
+        self.btn_edit_materials.setSizePolicy(sizePolicy4)
 
         self.gridLayout_3.addWidget(self.btn_edit_materials, 1, 2, 1, 1)
 
@@ -123,6 +136,8 @@ class Ui_Dialog(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.lineEdit_layout = QLineEdit(Dialog)
         self.lineEdit_layout.setObjectName(u"lineEdit_layout")
+        sizePolicy3.setHeightForWidth(self.lineEdit_layout.sizePolicy().hasHeightForWidth())
+        self.lineEdit_layout.setSizePolicy(sizePolicy3)
 
         self.gridLayout_2.addWidget(self.lineEdit_layout, 1, 1, 1, 1)
 
@@ -156,6 +171,8 @@ class Ui_Dialog(object):
 
         self.lineEdit_layer = QLineEdit(Dialog)
         self.lineEdit_layer.setObjectName(u"lineEdit_layer")
+        sizePolicy3.setHeightForWidth(self.lineEdit_layer.sizePolicy().hasHeightForWidth())
+        self.lineEdit_layer.setSizePolicy(sizePolicy3)
 
         self.gridLayout_2.addWidget(self.lineEdit_layer, 0, 1, 1, 1)
 

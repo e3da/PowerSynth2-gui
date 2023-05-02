@@ -32,7 +32,7 @@
      <item>
       <widget class="QPushButton" name="btn_create_project">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -88,7 +88,7 @@
      <item>
       <widget class="QComboBox" name="combo_reliability_constraints">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -131,12 +131,19 @@
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_bondwire"/>
+      <widget class="QLineEdit" name="lineEdit_bondwire">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="btn_open_bondwire">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -167,6 +174,12 @@
      </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="btn_edit_materials">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Edit</string>
        </property>
@@ -191,12 +204,19 @@
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_layout"/>
+      <widget class="QLineEdit" name="lineEdit_layout">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="btn_open_layer_stack">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -221,7 +241,7 @@
      <item row="1" column="2">
       <widget class="QPushButton" name="btn_open_layout">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -258,7 +278,14 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_layer"/>
+      <widget class="QLineEdit" name="lineEdit_layer">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

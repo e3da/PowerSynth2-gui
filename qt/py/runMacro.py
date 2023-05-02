@@ -3,14 +3,14 @@
 ################################################################################
 ## Form generated from reading UI file 'runMacro.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 5.15.8
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide2.QtCore import *  # type: ignore
+from PySide2.QtGui import *  # type: ignore
+from PySide2.QtWidgets import *  # type: ignore
 
 
 class Ui_Dialog(object):
@@ -29,16 +29,21 @@ class Ui_Dialog(object):
 
         self.lineEdit_4 = QLineEdit(Dialog)
         self.lineEdit_4.setObjectName(u"lineEdit_4")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
+        self.lineEdit_4.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_4.addWidget(self.lineEdit_4)
 
         self.btn_open_macro = QPushButton(Dialog)
         self.btn_open_macro.setObjectName(u"btn_open_macro")
-        sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(10)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_open_macro.sizePolicy().hasHeightForWidth())
-        self.btn_open_macro.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(10)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.btn_open_macro.sizePolicy().hasHeightForWidth())
+        self.btn_open_macro.setSizePolicy(sizePolicy1)
         self.btn_open_macro.setMinimumSize(QSize(0, 0))
         self.btn_open_macro.setMaximumSize(QSize(55, 16777215))
 
@@ -59,11 +64,18 @@ class Ui_Dialog(object):
 
         self.btn_create_project = QPushButton(Dialog)
         self.btn_create_project.setObjectName(u"btn_create_project")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.btn_create_project.sizePolicy().hasHeightForWidth())
+        self.btn_create_project.setSizePolicy(sizePolicy2)
 
         self.horizontalLayout_5.addWidget(self.btn_create_project)
 
         self.btn_cancel = QPushButton(Dialog)
         self.btn_cancel.setObjectName(u"btn_cancel")
+        sizePolicy2.setHeightForWidth(self.btn_cancel.sizePolicy().hasHeightForWidth())
+        self.btn_cancel.setSizePolicy(sizePolicy2)
 
         self.horizontalLayout_5.addWidget(self.btn_cancel)
 

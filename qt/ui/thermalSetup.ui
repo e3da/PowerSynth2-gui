@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>405</width>
-    <height>433</height>
+    <height>462</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineedit_measure_name"/>
+         <widget class="QLineEdit" name="lineedit_measure_name">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -54,7 +61,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="heat_convection"/>
+         <widget class="QLineEdit" name="heat_convection">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -70,7 +84,7 @@
         <item>
          <widget class="QSpinBox" name="ambient_temperature">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -123,6 +137,12 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QPushButton" name="btn_add_device">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Add Device</string>
             </property>
@@ -130,6 +150,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="btn_add_all">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Add All</string>
             </property>
@@ -137,6 +163,12 @@
           </item>
           <item>
            <widget class="QPushButton" name="btn_remove_device">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Remove Device</string>
             </property>
@@ -157,6 +189,12 @@
         </item>
         <item>
          <widget class="QComboBox" name="combo_model_select">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <item>
            <property name="text">
             <string>ParaPower</string>
@@ -185,19 +223,6 @@
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
@@ -214,6 +239,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="btn_continue">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Continue</string>
        </property>

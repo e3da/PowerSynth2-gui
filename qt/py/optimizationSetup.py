@@ -3,14 +3,14 @@
 ################################################################################
 ## Form generated from reading UI file 'optimizationSetup.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.2
+## Created by: Qt User Interface Compiler version 5.15.8
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide2.QtCore import *  # type: ignore
+from PySide2.QtGui import *  # type: ignore
+from PySide2.QtWidgets import *  # type: ignore
 
 
 class Ui_Dialog(object):
@@ -45,22 +45,29 @@ class Ui_Dialog(object):
 
         self.floor_plan_x = QLineEdit(self.layout_generation_setup_frame_2)
         self.floor_plan_x.setObjectName(u"floor_plan_x")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.floor_plan_x.sizePolicy().hasHeightForWidth())
+        self.floor_plan_x.setSizePolicy(sizePolicy1)
 
         self.horizontalLayout_8.addWidget(self.floor_plan_x)
 
         self.label_13 = QLabel(self.layout_generation_setup_frame_2)
         self.label_13.setObjectName(u"label_13")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.label_13.sizePolicy().hasHeightForWidth())
-        self.label_13.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.label_13.sizePolicy().hasHeightForWidth())
+        self.label_13.setSizePolicy(sizePolicy2)
         self.label_13.setMinimumSize(QSize(10, 0))
 
         self.horizontalLayout_8.addWidget(self.label_13)
 
         self.floor_plan_y = QLineEdit(self.layout_generation_setup_frame_2)
         self.floor_plan_y.setObjectName(u"floor_plan_y")
+        sizePolicy1.setHeightForWidth(self.floor_plan_y.sizePolicy().hasHeightForWidth())
+        self.floor_plan_y.setSizePolicy(sizePolicy1)
 
         self.horizontalLayout_8.addWidget(self.floor_plan_y)
 
@@ -71,16 +78,21 @@ class Ui_Dialog(object):
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.label_24 = QLabel(self.layout_generation_setup_frame_2)
         self.label_24.setObjectName(u"label_24")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.label_24.sizePolicy().hasHeightForWidth())
-        self.label_24.setSizePolicy(sizePolicy2)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.label_24.sizePolicy().hasHeightForWidth())
+        self.label_24.setSizePolicy(sizePolicy3)
 
         self.horizontalLayout_17.addWidget(self.label_24)
 
         self.checkbox_plot_solutions = QCheckBox(self.layout_generation_setup_frame_2)
         self.checkbox_plot_solutions.setObjectName(u"checkbox_plot_solutions")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.checkbox_plot_solutions.sizePolicy().hasHeightForWidth())
+        self.checkbox_plot_solutions.setSizePolicy(sizePolicy4)
         self.checkbox_plot_solutions.setLayoutDirection(Qt.LeftToRight)
         self.checkbox_plot_solutions.setChecked(True)
 
@@ -110,13 +122,18 @@ class Ui_Dialog(object):
         self.combo_layout_mode.addItem("")
         self.combo_layout_mode.addItem("")
         self.combo_layout_mode.setObjectName(u"combo_layout_mode")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.combo_layout_mode.sizePolicy().hasHeightForWidth())
+        self.combo_layout_mode.setSizePolicy(sizePolicy5)
 
         self.gridLayout_4.addWidget(self.combo_layout_mode, 0, 1, 1, 1)
 
         self.num_layouts = QLineEdit(self.layout_generation_setup_frame)
         self.num_layouts.setObjectName(u"num_layouts")
-        sizePolicy.setHeightForWidth(self.num_layouts.sizePolicy().hasHeightForWidth())
-        self.num_layouts.setSizePolicy(sizePolicy)
+        sizePolicy5.setHeightForWidth(self.num_layouts.sizePolicy().hasHeightForWidth())
+        self.num_layouts.setSizePolicy(sizePolicy5)
 
         self.gridLayout_4.addWidget(self.num_layouts, 1, 1, 1, 1)
 
@@ -127,8 +144,8 @@ class Ui_Dialog(object):
 
         self.seed = QLineEdit(self.layout_generation_setup_frame)
         self.seed.setObjectName(u"seed")
-        sizePolicy.setHeightForWidth(self.seed.sizePolicy().hasHeightForWidth())
-        self.seed.setSizePolicy(sizePolicy)
+        sizePolicy5.setHeightForWidth(self.seed.sizePolicy().hasHeightForWidth())
+        self.seed.setSizePolicy(sizePolicy5)
 
         self.gridLayout_4.addWidget(self.seed, 2, 1, 1, 1)
 
@@ -151,11 +168,8 @@ class Ui_Dialog(object):
         self.combo_optimization_algorithm.addItem("")
         self.combo_optimization_algorithm.addItem("")
         self.combo_optimization_algorithm.setObjectName(u"combo_optimization_algorithm")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.combo_optimization_algorithm.sizePolicy().hasHeightForWidth())
-        self.combo_optimization_algorithm.setSizePolicy(sizePolicy3)
+        sizePolicy5.setHeightForWidth(self.combo_optimization_algorithm.sizePolicy().hasHeightForWidth())
+        self.combo_optimization_algorithm.setSizePolicy(sizePolicy5)
         self.combo_optimization_algorithm.setMaximumSize(QSize(110, 16777215))
 
         self.gridLayout_4.addWidget(self.combo_optimization_algorithm, 3, 1, 1, 1)
@@ -179,11 +193,15 @@ class Ui_Dialog(object):
 
         self.btn_electrical_setup = QPushButton(self.electrical_thermal_frame)
         self.btn_electrical_setup.setObjectName(u"btn_electrical_setup")
+        sizePolicy4.setHeightForWidth(self.btn_electrical_setup.sizePolicy().hasHeightForWidth())
+        self.btn_electrical_setup.setSizePolicy(sizePolicy4)
 
         self.gridLayout_2.addWidget(self.btn_electrical_setup, 1, 0, 1, 1)
 
         self.btn_thermal_setup = QPushButton(self.electrical_thermal_frame)
         self.btn_thermal_setup.setObjectName(u"btn_thermal_setup")
+        sizePolicy4.setHeightForWidth(self.btn_thermal_setup.sizePolicy().hasHeightForWidth())
+        self.btn_thermal_setup.setSizePolicy(sizePolicy4)
 
         self.gridLayout_2.addWidget(self.btn_thermal_setup, 1, 1, 1, 1)
 
@@ -196,6 +214,8 @@ class Ui_Dialog(object):
 
         self.btn_run_powersynth = QPushButton(Dialog)
         self.btn_run_powersynth.setObjectName(u"btn_run_powersynth")
+        sizePolicy4.setHeightForWidth(self.btn_run_powersynth.sizePolicy().hasHeightForWidth())
+        self.btn_run_powersynth.setSizePolicy(sizePolicy4)
         self.btn_run_powersynth.setMinimumSize(QSize(0, 40))
 
         self.verticalLayout.addWidget(self.btn_run_powersynth)
