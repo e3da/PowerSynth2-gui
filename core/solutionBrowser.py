@@ -133,22 +133,31 @@ def showSolutionBrowser(gui):
             gui.sel_points.remove()
             gui.sel_points=axes.scatter([],[], label='select')
             canvas.draw()
-            i = 1
-            while os.path.exists(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png")):
-                pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"initial_layout_I{i}.png"))
+            i = 0
+            while os.path.exists(os.path.join(gui.pathToFigs, f"initial_layout_I{i+1}.png")):
+                pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"initial_layout_I{i+1}.png"))
                 #pix = pix.scaledToWidth(575)
                 item = QtWidgets.QGraphicsPixmapItem(pix)
                 scene = QtWidgets.QGraphicsScene()
                 scene.addItem(item)
-                ui.tabWidget.widget(i-1).setScene(scene)
+                ui.tabWidget.widget(i).setScene(scene)
+
+                if ui.tabWidget.width()+10 < pix.width():
+                    ui.tabWidget.setMinimumSize(pix.width()+10, pix.height()+10)
+
                 i += 1
-            if i > 2:
+
+
+            if i > 1:
                 pix = QtGui.QPixmap(os.path.join(gui.pathToFigs, f"initial_layout_all_layers.png"))
                 #pix = pix.scaledToWidth(650)
                 item = QtWidgets.QGraphicsPixmapItem(pix)
                 scene = QtWidgets.QGraphicsScene()
                 scene.addItem(item)
-                ui.tabWidget.widget(i-1).setScene(scene)
+                ui.tabWidget.widget(i).setScene(scene)
+
+                if ui.tabWidget.width()+10 < pix.width():
+                    ui.tabWidget.setMinimumSize(pix.width()+10, pix.height()+10)
 
 
         axes.scatter(data_x, data_y, picker=True, label='data')

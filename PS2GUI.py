@@ -434,8 +434,6 @@ class PS2GUI():
         self.optimizationUI = ui
         ui.setupUi(optimizationSetup)
         self.setWindow(optimizationSetup)
-        optimizationSetup.setFixedHeight(410)
-        optimizationSetup.setFixedWidth(400)
         ui.btn_run_powersynth.setEnabled(False)
         ui.seed.setText("0")
 
@@ -460,7 +458,6 @@ class PS2GUI():
             #ui.btn_run_powersynth.setDisabled(True)
             ui.electrical_thermal_frame.show()
             ui.layout_generation_setup_frame.hide()
-            optimizationSetup.setFixedHeight(205)
             ui.floor_plan_x.setText(self.floorPlan[0])
             ui.floor_plan_y.setText(self.floorPlan[1])
             ui.floor_plan_x.setEnabled(False)
@@ -468,7 +465,6 @@ class PS2GUI():
             ui.electrical_thermal_frame.show()
             ui.btn_run_powersynth.setEnabled(True)
         elif self.option == 0:
-            optimizationSetup.setFixedHeight(350)
             ui.electrical_thermal_frame.hide()
             if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
                 ui.floor_plan_x.setEnabled(False)

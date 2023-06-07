@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Optimization Setup</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0">
    <item>
     <widget class="QFrame" name="layout_generation_setup_frame_2">
      <property name="frameShape">
@@ -308,7 +308,7 @@
    <item>
     <widget class="QPushButton" name="btn_run_powersynth">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>

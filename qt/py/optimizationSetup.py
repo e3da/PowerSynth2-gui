@@ -211,8 +211,8 @@ class Ui_Dialog(object):
 
         self.btn_run_powersynth = QPushButton(Dialog)
         self.btn_run_powersynth.setObjectName(u"btn_run_powersynth")
-        sizePolicy4.setHeightForWidth(self.btn_run_powersynth.sizePolicy().hasHeightForWidth())
-        self.btn_run_powersynth.setSizePolicy(sizePolicy4)
+        sizePolicy.setHeightForWidth(self.btn_run_powersynth.sizePolicy().hasHeightForWidth())
+        self.btn_run_powersynth.setSizePolicy(sizePolicy)
         self.btn_run_powersynth.setMinimumSize(QSize(0, 40))
 
         self.verticalLayout.addWidget(self.btn_run_powersynth)
