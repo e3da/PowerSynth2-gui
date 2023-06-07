@@ -109,7 +109,7 @@ class Ui_Dialog(object):
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.horizontalLayout_5.setContentsMargins(-1, -1, -1, 6)
+        self.horizontalLayout_5.setContentsMargins(-1, -1, -1, 0)
         self.btn_add_device = QPushButton(self.electrical_setup_2)
         self.btn_add_device.setObjectName(u"btn_add_device")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)

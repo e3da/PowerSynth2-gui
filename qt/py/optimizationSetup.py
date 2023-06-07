@@ -18,7 +18,7 @@ class Ui_Dialog(object):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(453, 425)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
@@ -122,18 +122,15 @@ class Ui_Dialog(object):
         self.combo_layout_mode.addItem("")
         self.combo_layout_mode.addItem("")
         self.combo_layout_mode.setObjectName(u"combo_layout_mode")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(0)
-        sizePolicy5.setHeightForWidth(self.combo_layout_mode.sizePolicy().hasHeightForWidth())
-        self.combo_layout_mode.setSizePolicy(sizePolicy5)
+        sizePolicy.setHeightForWidth(self.combo_layout_mode.sizePolicy().hasHeightForWidth())
+        self.combo_layout_mode.setSizePolicy(sizePolicy)
 
         self.gridLayout_4.addWidget(self.combo_layout_mode, 0, 1, 1, 1)
 
         self.num_layouts = QLineEdit(self.layout_generation_setup_frame)
         self.num_layouts.setObjectName(u"num_layouts")
-        sizePolicy5.setHeightForWidth(self.num_layouts.sizePolicy().hasHeightForWidth())
-        self.num_layouts.setSizePolicy(sizePolicy5)
+        sizePolicy.setHeightForWidth(self.num_layouts.sizePolicy().hasHeightForWidth())
+        self.num_layouts.setSizePolicy(sizePolicy)
 
         self.gridLayout_4.addWidget(self.num_layouts, 1, 1, 1, 1)
 
@@ -144,8 +141,8 @@ class Ui_Dialog(object):
 
         self.seed = QLineEdit(self.layout_generation_setup_frame)
         self.seed.setObjectName(u"seed")
-        sizePolicy5.setHeightForWidth(self.seed.sizePolicy().hasHeightForWidth())
-        self.seed.setSizePolicy(sizePolicy5)
+        sizePolicy.setHeightForWidth(self.seed.sizePolicy().hasHeightForWidth())
+        self.seed.setSizePolicy(sizePolicy)
 
         self.gridLayout_4.addWidget(self.seed, 2, 1, 1, 1)
 
@@ -168,8 +165,8 @@ class Ui_Dialog(object):
         self.combo_optimization_algorithm.addItem("")
         self.combo_optimization_algorithm.addItem("")
         self.combo_optimization_algorithm.setObjectName(u"combo_optimization_algorithm")
-        sizePolicy5.setHeightForWidth(self.combo_optimization_algorithm.sizePolicy().hasHeightForWidth())
-        self.combo_optimization_algorithm.setSizePolicy(sizePolicy5)
+        sizePolicy.setHeightForWidth(self.combo_optimization_algorithm.sizePolicy().hasHeightForWidth())
+        self.combo_optimization_algorithm.setSizePolicy(sizePolicy)
         self.combo_optimization_algorithm.setMaximumSize(QSize(110, 16777215))
 
         self.gridLayout_4.addWidget(self.combo_optimization_algorithm, 3, 1, 1, 1)

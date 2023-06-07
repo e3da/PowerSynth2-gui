@@ -680,7 +680,7 @@ class PS2GUI():
                 combo.addItem(str(device))
             combo.setCurrentIndex(index if index<len(self.device_dict) else 0)
             ui.tableWidget.setCellWidget(index, 0, combo)
-            spinbox = QtWidgets.QSpinBox()
+            spinbox = QtWidgets.QDoubleSpinBox()
             spinbox.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons) # Removes buttons
             spinbox.setValue(10)
             spinbox.setMaximum(10000)
