@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>PowerSynth 2</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../qrc/png.qrc">:/png/PS2_logo.png</pixmap>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600; font-style:italic;&quot;&gt;Welcome to PowerSynth 2!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; font-style:italic;&quot;&gt;Developed by &lt;/span&gt;&lt;a href=&quot;https://e3da.csce.uark.edu&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; text-decoration: underline; color:#0000ff;&quot;&gt;E&lt;/span&gt;&lt;/a&gt;&lt;a href=&quot;https://e3da.csce.uark.edu&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; text-decoration: underline; color:#0000ff; vertical-align:super;&quot;&gt;3&lt;/span&gt;&lt;/a&gt;&lt;a href=&quot;https://e3da.csce.uark.edu&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; text-decoration: underline; color:#0000ff;&quot;&gt;DA&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; font-style:italic;&quot;&gt; &amp;amp; &lt;/span&gt;&lt;a href=&quot;https://mscad.uark.edu/&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; text-decoration: underline; color:#0000ff;&quot;&gt;MSCAD&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:700; font-style:italic;&quot;&gt; Labs EECS@Uark&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Powered by constraint-aware hierarchical engine&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Inspired by VLSI EDA algorithms and CAD models&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Designed by and for Power Electronics engineers&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Create a new Macro or Run a pre-existing Macro&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="open_web">
+       <property name="text">
+        <string>Open Website</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="open_manual">
+       <property name="text">
+        <string>Open Manual</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="create_macro">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Create a Macro</string>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="run_macro">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Run PowerSynth 2</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../qrc/png.qrc"/>
+ </resources>
+ <connections/>
+</ui>

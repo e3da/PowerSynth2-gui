@@ -1,0 +1,8 @@
+PowerSynth GUI: all QT/GUI related files, including pics/figs you draw for the tool. 
+
+'core' is the main functionality code
+'QT' contains the qt design ui files and converted python files
+'fig' are figures and photos, generally in png/jpg/svg/eps, etc
+'misc' should contain other resources such as icons, etc
+
+each QT design project should be self-contained in its own folder
