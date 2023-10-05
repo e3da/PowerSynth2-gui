@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'optimizationSetup.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.6
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,7 +17,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(453, 425)
+        Dialog.resize(417, 450)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -117,6 +117,7 @@ class Ui_Dialog(object):
 
         self.gridLayout_4 = QGridLayout()
         self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setHorizontalSpacing(10)
         self.combo_layout_mode = QComboBox(self.layout_generation_setup_frame)
         self.combo_layout_mode.addItem("")
         self.combo_layout_mode.addItem("")
@@ -158,6 +159,8 @@ class Ui_Dialog(object):
 
         self.label_16 = QLabel(self.layout_generation_setup_frame)
         self.label_16.setObjectName(u"label_16")
+        sizePolicy.setHeightForWidth(self.label_16.sizePolicy().hasHeightForWidth())
+        self.label_16.setSizePolicy(sizePolicy)
 
         self.gridLayout_4.addWidget(self.label_16, 3, 0, 1, 1)
 
@@ -214,6 +217,9 @@ class Ui_Dialog(object):
         sizePolicy.setHeightForWidth(self.btn_run_powersynth.sizePolicy().hasHeightForWidth())
         self.btn_run_powersynth.setSizePolicy(sizePolicy)
         self.btn_run_powersynth.setMinimumSize(QSize(0, 40))
+        font = QFont()
+        font.setBold(True)
+        self.btn_run_powersynth.setFont(font)
 
         self.verticalLayout.addWidget(self.btn_run_powersynth)
 
@@ -228,26 +234,27 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Optimization Setup", None))
-        self.label_17.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Macro Script Setup:</span></p></body></html>", None))
-        self.label_12.setText(QCoreApplication.translate("Dialog", u"Floor Plan:", None))
-        self.label_13.setText(QCoreApplication.translate("Dialog", u"X", None))
-        self.label_24.setText(QCoreApplication.translate("Dialog", u"Plot Solution:", None))
+        self.label_17.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Floorplan Setup</span></p></body></html>", None))
+        self.label_12.setText(QCoreApplication.translate("Dialog", u"Size", None))
+        self.label_13.setText(QCoreApplication.translate("Dialog", u"x", None))
+        self.label_24.setText(QCoreApplication.translate("Dialog", u"Plot Solution", None))
         self.checkbox_plot_solutions.setText("")
-        self.label_10.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Layout Generation Setup:</span></p></body></html>", None))
+        self.label_10.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Layout Synthesis Setup</span></p></body></html>", None))
         self.combo_layout_mode.setItemText(0, QCoreApplication.translate("Dialog", u"minimum-sized solutions", None))
         self.combo_layout_mode.setItemText(1, QCoreApplication.translate("Dialog", u"variable-sized solutions", None))
         self.combo_layout_mode.setItemText(2, QCoreApplication.translate("Dialog", u"fixed-sized solutions", None))
 
-        self.label_11.setText(QCoreApplication.translate("Dialog", u"Layout_Mode:", None))
-        self.label_14.setText(QCoreApplication.translate("Dialog", u"Layout Count (per generation):", None))
-        self.label_15.setText(QCoreApplication.translate("Dialog", u"Seed:", None))
-        self.label_16.setText(QCoreApplication.translate("Dialog", u"Optimization Algorithm:", None))
+        self.label_11.setText(QCoreApplication.translate("Dialog", u"Layout Mode", None))
+        self.seed.setText(QCoreApplication.translate("Dialog", u"0", None))
+        self.label_14.setText(QCoreApplication.translate("Dialog", u"Layout Count", None))
+        self.label_15.setText(QCoreApplication.translate("Dialog", u"Random Seed", None))
+        self.label_16.setText(QCoreApplication.translate("Dialog", u"Optimization Algorithm", None))
         self.combo_optimization_algorithm.setItemText(0, QCoreApplication.translate("Dialog", u"NG-RANDOM", None))
         self.combo_optimization_algorithm.setItemText(1, QCoreApplication.translate("Dialog", u"NSGAII", None))
 
-        self.label.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Layout Model Setup:</span></p></body></html>", None))
+        self.label.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Analysis Model Setup</span></p></body></html>", None))
         self.btn_electrical_setup.setText(QCoreApplication.translate("Dialog", u"Electrical Setup", None))
         self.btn_thermal_setup.setText(QCoreApplication.translate("Dialog", u"Thermal Setup", None))
-        self.btn_run_powersynth.setText(QCoreApplication.translate("Dialog", u"Run Powersynth", None))
+        self.btn_run_powersynth.setText(QCoreApplication.translate("Dialog", u"Run", None))
     # retranslateUi
 

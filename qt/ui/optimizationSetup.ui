@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>425</height>
+    <width>417</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -32,7 +32,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_17">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Macro Script Setup:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Floorplan Setup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -41,7 +41,7 @@
         <item>
          <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>Floor Plan:</string>
+           <string>Size</string>
           </property>
          </widget>
         </item>
@@ -70,7 +70,7 @@
            </size>
           </property>
           <property name="text">
-           <string>X</string>
+           <string>x</string>
           </property>
          </widget>
         </item>
@@ -97,7 +97,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Plot Solution:</string>
+           <string>Plot Solution</string>
           </property>
          </widget>
         </item>
@@ -137,12 +137,15 @@
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label_10">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Layout Generation Setup:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Layout Synthesis Setup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
        <layout class="QGridLayout" name="gridLayout_4">
+        <property name="horizontalSpacing">
+         <number>10</number>
+        </property>
         <item row="0" column="1">
          <widget class="QComboBox" name="combo_layout_mode">
           <property name="sizePolicy">
@@ -181,7 +184,7 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_11">
           <property name="text">
-           <string>Layout_Mode:</string>
+           <string>Layout Mode</string>
           </property>
          </widget>
         </item>
@@ -193,26 +196,35 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="text">
+           <string>0</string>
+          </property>
          </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_14">
           <property name="text">
-           <string>Layout Count (per generation):</string>
+           <string>Layout Count</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_15">
           <property name="text">
-           <string>Seed:</string>
+           <string>Random Seed</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_16">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Optimization Algorithm:</string>
+           <string>Optimization Algorithm</string>
           </property>
          </widget>
         </item>
@@ -259,7 +271,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Layout Model Setup:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Analysis Model Setup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
@@ -319,8 +331,13 @@
        <height>40</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Run Powersynth</string>
+      <string>Run</string>
      </property>
      <property name="default">
       <bool>true</bool>

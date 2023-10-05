@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
+    <width>489</width>
     <height>254</height>
    </rect>
   </property>
@@ -32,16 +32,10 @@
      <item>
       <widget class="QPushButton" name="btn_create_project">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
        </property>
        <property name="text">
         <string>Create Layout</string>
@@ -81,7 +75,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Reliability Constraints:</string>
+        <string>Reliability Constraints</string>
        </property>
       </widget>
      </item>
@@ -154,12 +148,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>85</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>Open</string>
        </property>
@@ -168,7 +156,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Connectivity_script</string>
+        <string>Connectivity Script</string>
        </property>
       </widget>
      </item>
@@ -187,6 +175,12 @@
      </item>
      <item row="1" column="1">
       <widget class="QLabel" name="default_mat_lib">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -227,12 +221,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>85</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>Open</string>
        </property>
@@ -252,12 +240,6 @@
          <height>0</height>
         </size>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>85</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>Open</string>
        </property>
@@ -266,14 +248,14 @@
      <item row="0" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>layer_stack</string>
+        <string>Layer Stack</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>layout_script</string>
+        <string>Layout Script</string>
        </property>
       </widget>
      </item>
@@ -292,7 +274,7 @@
    <item row="2" column="0">
     <widget class="QLabel" name="label_7">
      <property name="text">
-      <string>Optional:</string>
+      <string>Optional</string>
      </property>
     </widget>
    </item>

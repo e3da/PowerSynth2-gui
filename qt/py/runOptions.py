@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'runOptions.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.6
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -65,7 +65,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Options", None))
-        self.label_2.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">How would you like to run PowerSynth?</span></p></body></html>", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600;\">How to run PowerSynth 2?</span></p></body></html>", None))
         self.pushButton_2.setText(QCoreApplication.translate("Dialog", u"Layout solution generation only", None))
         self.pushButton.setText(QCoreApplication.translate("Dialog", u"Initial layout evaluation", None))
         self.pushButton_3.setText(QCoreApplication.translate("Dialog", u"Layout optimization/evaluation", None))

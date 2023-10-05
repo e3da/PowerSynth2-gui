@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>547</height>
+    <height>500</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>350</width>
+    <height>400</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Electrical Setup</string>
@@ -41,7 +47,7 @@
         <item>
          <widget class="QLabel" name="label_24">
           <property name="text">
-           <string>Model Type:</string>
+           <string>Electrical Model</string>
           </property>
          </widget>
         </item>
@@ -78,7 +84,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Measure Name:</string>
+           <string>Measure Name</string>
           </property>
          </widget>
         </item>
@@ -99,7 +105,7 @@
         <item>
          <widget class="QLabel" name="label_20">
           <property name="text">
-           <string>Measure Type:</string>
+           <string>Measure Type</string>
           </property>
          </widget>
         </item>
@@ -197,14 +203,14 @@
         <item>
          <widget class="QLabel" name="label_21">
           <property name="text">
-           <string>source:</string>
+           <string>Source</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QComboBox" name="combo_source">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -227,14 +233,14 @@
         <item>
          <widget class="QLabel" name="label_22">
           <property name="text">
-           <string>sink:</string>
+           <string>Sink</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QComboBox" name="combo_sink">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -254,7 +260,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Frequency (kHz):</string>
+           <string>Frequency (kHz)</string>
           </property>
          </widget>
         </item>
@@ -296,7 +302,7 @@
         <item>
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string>trace_orientation</string>
+           <string>Trace Orientation</string>
           </property>
          </widget>
         </item>
@@ -385,7 +391,7 @@
             </size>
            </property>
            <property name="text">
-            <string>parasitic_model</string>
+            <string>Parasitic Model</string>
            </property>
           </widget>
          </item>

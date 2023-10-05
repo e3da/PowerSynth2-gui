@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'runMacro.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.6
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,7 +17,8 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(503, 100)
+        Dialog.resize(500, 100)
+        Dialog.setMinimumSize(QSize(0, 0))
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout_4 = QHBoxLayout()
@@ -34,13 +35,14 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
         self.lineEdit_4.setSizePolicy(sizePolicy)
+        self.lineEdit_4.setMinimumSize(QSize(100, 0))
 
         self.horizontalLayout_4.addWidget(self.lineEdit_4)
 
         self.btn_open_macro = QPushButton(Dialog)
         self.btn_open_macro.setObjectName(u"btn_open_macro")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(10)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.btn_open_macro.sizePolicy().hasHeightForWidth())
         self.btn_open_macro.setSizePolicy(sizePolicy1)
@@ -64,18 +66,18 @@ class Ui_Dialog(object):
 
         self.btn_create_project = QPushButton(Dialog)
         self.btn_create_project.setObjectName(u"btn_create_project")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.btn_create_project.sizePolicy().hasHeightForWidth())
-        self.btn_create_project.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.btn_create_project.sizePolicy().hasHeightForWidth())
+        self.btn_create_project.setSizePolicy(sizePolicy1)
+        font = QFont()
+        font.setBold(True)
+        self.btn_create_project.setFont(font)
 
         self.horizontalLayout_5.addWidget(self.btn_create_project)
 
         self.btn_cancel = QPushButton(Dialog)
         self.btn_cancel.setObjectName(u"btn_cancel")
-        sizePolicy2.setHeightForWidth(self.btn_cancel.sizePolicy().hasHeightForWidth())
-        self.btn_cancel.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.btn_cancel.sizePolicy().hasHeightForWidth())
+        self.btn_cancel.setSizePolicy(sizePolicy1)
 
         self.horizontalLayout_5.addWidget(self.btn_cancel)
 
@@ -89,10 +91,10 @@ class Ui_Dialog(object):
     # setupUi
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Run Project", None))
-        self.label_4.setText(QCoreApplication.translate("Dialog", u"macro_script", None))
+        Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Run Macro", None))
+        self.label_4.setText(QCoreApplication.translate("Dialog", u"Macro Script", None))
         self.btn_open_macro.setText(QCoreApplication.translate("Dialog", u"Open", None))
-        self.btn_create_project.setText(QCoreApplication.translate("Dialog", u"Run Project", None))
+        self.btn_create_project.setText(QCoreApplication.translate("Dialog", u"Run", None))
         self.btn_cancel.setText(QCoreApplication.translate("Dialog", u"Cancel", None))
     # retranslateUi
 

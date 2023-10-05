@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'electricalSetup.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.6
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,7 +17,8 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(400, 547)
+        Dialog.resize(400, 500)
+        Dialog.setMinimumSize(QSize(350, 400))
         self.verticalLayout_2 = QVBoxLayout(Dialog)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.electrical_setup_2 = QFrame(Dialog)
@@ -149,11 +150,8 @@ class Ui_Dialog(object):
 
         self.combo_source = QComboBox(self.electrical_setup_2)
         self.combo_source.setObjectName(u"combo_source")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.combo_source.sizePolicy().hasHeightForWidth())
-        self.combo_source.setSizePolicy(sizePolicy2)
+        sizePolicy.setHeightForWidth(self.combo_source.sizePolicy().hasHeightForWidth())
+        self.combo_source.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_15.addWidget(self.combo_source)
 
@@ -168,8 +166,8 @@ class Ui_Dialog(object):
 
         self.combo_sink = QComboBox(self.electrical_setup_2)
         self.combo_sink.setObjectName(u"combo_sink")
-        sizePolicy2.setHeightForWidth(self.combo_sink.sizePolicy().hasHeightForWidth())
-        self.combo_sink.setSizePolicy(sizePolicy2)
+        sizePolicy.setHeightForWidth(self.combo_sink.sizePolicy().hasHeightForWidth())
+        self.combo_sink.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_15.addWidget(self.combo_sink)
 
@@ -180,21 +178,21 @@ class Ui_Dialog(object):
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
         self.label_23 = QLabel(self.electrical_setup_2)
         self.label_23.setObjectName(u"label_23")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.label_23.sizePolicy().hasHeightForWidth())
-        self.label_23.setSizePolicy(sizePolicy3)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.label_23.sizePolicy().hasHeightForWidth())
+        self.label_23.setSizePolicy(sizePolicy2)
 
         self.horizontalLayout_14.addWidget(self.label_23)
 
         self.frequency = QSpinBox(self.electrical_setup_2)
         self.frequency.setObjectName(u"frequency")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(0)
-        sizePolicy4.setHeightForWidth(self.frequency.sizePolicy().hasHeightForWidth())
-        self.frequency.setSizePolicy(sizePolicy4)
+        sizePolicy3 = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.frequency.sizePolicy().hasHeightForWidth())
+        self.frequency.setSizePolicy(sizePolicy3)
         self.frequency.setMinimumSize(QSize(20, 0))
         self.frequency.setMaximumSize(QSize(70, 16777215))
         self.frequency.setButtonSymbols(QAbstractSpinBox.NoButtons)
@@ -214,15 +212,15 @@ class Ui_Dialog(object):
 
         self.trace_textedit = QLineEdit(self.electrical_setup_2)
         self.trace_textedit.setObjectName(u"trace_textedit")
-        sizePolicy3.setHeightForWidth(self.trace_textedit.sizePolicy().hasHeightForWidth())
-        self.trace_textedit.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.trace_textedit.sizePolicy().hasHeightForWidth())
+        self.trace_textedit.setSizePolicy(sizePolicy2)
 
         self.horizontalLayout_4.addWidget(self.trace_textedit)
 
         self.btn_open_trace = QPushButton(self.electrical_setup_2)
         self.btn_open_trace.setObjectName(u"btn_open_trace")
-        sizePolicy4.setHeightForWidth(self.btn_open_trace.sizePolicy().hasHeightForWidth())
-        self.btn_open_trace.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.btn_open_trace.sizePolicy().hasHeightForWidth())
+        self.btn_open_trace.setSizePolicy(sizePolicy3)
         self.btn_open_trace.setMinimumSize(QSize(0, 0))
         self.btn_open_trace.setMaximumSize(QSize(85, 16777215))
 
@@ -251,15 +249,15 @@ class Ui_Dialog(object):
 
         self.parasitic_textedit = QLineEdit(self.parasitic_model_frame)
         self.parasitic_textedit.setObjectName(u"parasitic_textedit")
-        sizePolicy3.setHeightForWidth(self.parasitic_textedit.sizePolicy().hasHeightForWidth())
-        self.parasitic_textedit.setSizePolicy(sizePolicy3)
+        sizePolicy2.setHeightForWidth(self.parasitic_textedit.sizePolicy().hasHeightForWidth())
+        self.parasitic_textedit.setSizePolicy(sizePolicy2)
 
         self.horizontalLayout_3.addWidget(self.parasitic_textedit)
 
         self.btn_open_parasitic = QPushButton(self.parasitic_model_frame)
         self.btn_open_parasitic.setObjectName(u"btn_open_parasitic")
-        sizePolicy4.setHeightForWidth(self.btn_open_parasitic.sizePolicy().hasHeightForWidth())
-        self.btn_open_parasitic.setSizePolicy(sizePolicy4)
+        sizePolicy3.setHeightForWidth(self.btn_open_parasitic.sizePolicy().hasHeightForWidth())
+        self.btn_open_parasitic.setSizePolicy(sizePolicy3)
         self.btn_open_parasitic.setMinimumSize(QSize(0, 0))
         self.btn_open_parasitic.setMaximumSize(QSize(85, 16777215))
 
@@ -300,12 +298,12 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Electrical Setup", None))
         self.label_17.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p align=\"justify\"><span style=\" font-size:10pt; font-weight:600;\">Electrical Setup</span></p></body></html>", None))
-        self.label_24.setText(QCoreApplication.translate("Dialog", u"Model Type:", None))
+        self.label_24.setText(QCoreApplication.translate("Dialog", u"Electrical Model", None))
         self.combo_model_type.setItemText(0, QCoreApplication.translate("Dialog", u"FastHenry", None))
         self.combo_model_type.setItemText(1, QCoreApplication.translate("Dialog", u"PEEC", None))
 
-        self.label_19.setText(QCoreApplication.translate("Dialog", u"Measure Name:", None))
-        self.label_20.setText(QCoreApplication.translate("Dialog", u"Measure Type:", None))
+        self.label_19.setText(QCoreApplication.translate("Dialog", u"Measure Name", None))
+        self.label_20.setText(QCoreApplication.translate("Dialog", u"Measure Type", None))
         self.combo_measure_type.setItemText(0, QCoreApplication.translate("Dialog", u"inductance", None))
         self.combo_measure_type.setItemText(1, QCoreApplication.translate("Dialog", u"resistance", None))
 
@@ -316,13 +314,13 @@ class Ui_Dialog(object):
         self.btn_add_device.setText(QCoreApplication.translate("Dialog", u"Add Device", None))
         self.btn_add_all.setText(QCoreApplication.translate("Dialog", u"Add All", None))
         self.btn_remove_device.setText(QCoreApplication.translate("Dialog", u"Remove Device", None))
-        self.label_21.setText(QCoreApplication.translate("Dialog", u"source:", None))
-        self.label_22.setText(QCoreApplication.translate("Dialog", u"sink:", None))
-        self.label_23.setText(QCoreApplication.translate("Dialog", u"Frequency (kHz):", None))
+        self.label_21.setText(QCoreApplication.translate("Dialog", u"Source", None))
+        self.label_22.setText(QCoreApplication.translate("Dialog", u"Sink", None))
+        self.label_23.setText(QCoreApplication.translate("Dialog", u"Frequency (kHz)", None))
         self.frequency.setSpecialValueText(QCoreApplication.translate("Dialog", u"10000", None))
-        self.label_5.setText(QCoreApplication.translate("Dialog", u"trace_orientation", None))
+        self.label_5.setText(QCoreApplication.translate("Dialog", u"Trace Orientation", None))
         self.btn_open_trace.setText(QCoreApplication.translate("Dialog", u"Open", None))
-        self.label_6.setText(QCoreApplication.translate("Dialog", u"parasitic_model", None))
+        self.label_6.setText(QCoreApplication.translate("Dialog", u"Parasitic Model", None))
         self.btn_open_parasitic.setText(QCoreApplication.translate("Dialog", u"Open", None))
         self.btn_continue.setText(QCoreApplication.translate("Dialog", u"Continue", None))
     # retranslateUi
