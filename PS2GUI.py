@@ -6,7 +6,7 @@ import os
 import csv
 import webbrowser
 import traceback
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 from matplotlib.figure import Figure
 from core.PSCore import PSEnv
 from core.PS2CLI import PS2CLI
@@ -88,7 +88,7 @@ class PS2GUI():
             popup = QtWidgets.QMessageBox()
             popup.setWindowTitle("Error:")
             popup.setText("PowerSynth excution failed :(. Plesae check your macro file.")
-            popup.exec_()
+            popup.exec()
         return 1
 
     def setWindow(self, newWindow):
@@ -157,7 +157,7 @@ class PS2GUI():
                 popup = QtWidgets.QMessageBox()
                 popup.setWindowTitle("Error:")
                 popup.setText("Please enter a valid path to the macro_script file.")
-                popup.exec_()
+                popup.exec()
                 return
 
             self.macro_script_path = ui.lineEdit_4.text()
@@ -224,14 +224,14 @@ class PS2GUI():
                 popup = QtWidgets.QMessageBox()
                 popup.setWindowTitle("Error:")
                 popup.setText("Please enter a valid path to the layer_stack file.")
-                popup.exec_()
+                popup.exec()
                 return
 
             if not os.path.exists(ui.lineEdit_layout.text()) or not ui.lineEdit_layout.text().endswith(".txt"):
                 popup = QtWidgets.QMessageBox()
                 popup.setWindowTitle("Error:")
                 popup.setText("Please enter a valid path to the layout_script file.")
-                popup.exec_()
+                popup.exec()
                 return
             
             if len(ui.lineEdit_bondwire.text()):
@@ -240,7 +240,7 @@ class PS2GUI():
                         popup = QtWidgets.QMessageBox()
                         popup.setWindowTitle("Error:")
                         popup.setText("Please enter a valid path to the Connectivity_script file.")
-                        popup.exec_()
+                        popup.exec()
                         return
             
             self.pathToLayerStack = ui.lineEdit_layer.text()
@@ -719,7 +719,7 @@ class PS2GUI():
 
         self.openingWindow()
 
-        self.app.exec_()
+        self.app.exec()
 
 
 if __name__ == "__main__":  
