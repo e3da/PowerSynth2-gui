@@ -104,11 +104,10 @@ class PS2GUI():
         self.setWindow(openingWindow)
 
         def manual():
-            #webbrowser.open_new("./GUI/pdfs/PowerSynth_v1.9.pdf") 
             try: 
-                webbrowser.open_new("https://e3da.csce.uark.edu/release/PowerSynth/manual/PowerSynth_v2.0.pdf")
+                webbrowser.open_new(f"https://e3da.csce.uark.edu/release/PowerSynth/manual/PowerSynth_v{PSEnv.PSVers}.pdf")
             except:
-                print("Failed to open manual! Please look inside the package for PowerSynth_v2.0.pdf")
+                print("Failed to open manual! Please look inside the package for PowerSynth_v{PSEnv.PSVers}.pdf")
         
         def web():
             try: 
