@@ -142,22 +142,19 @@ class PS2GUI():
 
         def getMacroScript():
             if self.macro_script_path==None:
-                ui.lineEdit_4.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open macro_script.txt', os.getcwd())[0])
+                ui.line_macro.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open Macro Script .txt', os.getcwd())[0])
             else:
-                ui.lineEdit_4.setText(self.macro_script_path)
+                ui.line_macro.setText(self.macro_script_path)
                 self.currentWindow.close()
                 return
 
         def runPowerSynth():
             
-            if not os.path.exists(ui.lineEdit_4.text()) or not ui.lineEdit_4.text().endswith(".txt"):
-                popup = QtWidgets.QMessageBox()
-                popup.setWindowTitle("Error:")
-                popup.setText("Please enter a valid path to the macro_script file.")
-                popup.exec()
+            if not os.path.exists(ui.line_macro.text()) or not ui.line_macro.text().endswith(".txt"):
+                QtWidgets.QMessageBox.critical(runMacro, "ERROR", "Please enter a valid macro script .txt file.")
                 return
 
-            self.macro_script_path = ui.lineEdit_4.text()
+            self.macro_script_path = ui.line_macro.text()
 
             self.currentWindow.close()
             self.currentWindow = None
@@ -188,6 +185,7 @@ class PS2GUI():
 
             self.RunPSCLI()
 
+        ui.line_macro.setText(self.macro_script_path)
         ui.btn_create_project.clicked.connect(runPowerSynth)
         ui.btn_cancel.clicked.connect(self.openingWindow)
         ui.btn_open_macro.clicked.connect(getMacroScript)
@@ -216,29 +214,17 @@ class PS2GUI():
 
         def createLayout():
 
-            #'''
-            if not os.path.exists(ui.lineEdit_layer.text()) or not ui.lineEdit_layer.text().endswith(".csv"):
-                popup = QtWidgets.QMessageBox()
-                popup.setWindowTitle("Error:")
-                popup.setText("Please enter a valid path to the layer_stack file.")
-                popup.exec()
+            if not (os.path.exists(ui.lineEdit_layer.text()) and ui.lineEdit_layer.text().endswith(".csv")):
+                QtWidgets.QMessageBox.critical(editLayout,"ERROR","Please enter a valid layer stack .csv file.")
                 return
 
-            if not os.path.exists(ui.lineEdit_layout.text()) or not ui.lineEdit_layout.text().endswith(".txt"):
-                popup = QtWidgets.QMessageBox()
-                popup.setWindowTitle("Error:")
-                popup.setText("Please enter a valid path to the layout_script file.")
-                popup.exec()
+            if not (os.path.exists(ui.lineEdit_layout.text()) and ui.lineEdit_layout.text().endswith(".txt")):
+                QtWidgets.QMessageBox.critical(editLayout,"ERROR","Please enter a valid layout script .txt file.")
                 return
             
-            if len(ui.lineEdit_bondwire.text()):
-                if not os.path.exists(ui.lineEdit_bondwire.text()) or not ui.lineEdit_bondwire.text().endswith(".txt"):
-                    
-                        popup = QtWidgets.QMessageBox()
-                        popup.setWindowTitle("Error:")
-                        popup.setText("Please enter a valid path to the Connectivity_script file.")
-                        popup.exec()
-                        return
+            if len(ui.lineEdit_bondwire.text()) and not (os.path.exists(ui.lineEdit_bondwire.text()) and ui.lineEdit_bondwire.text().endswith(".txt")):
+                QtWidgets.QMessageBox.critical(editLayout,"ERROR","Please enter a valid connectivity script .txt file.")
+                return
             
             self.pathToLayerStack = ui.lineEdit_layer.text()
             self.pathToLayoutScript = ui.lineEdit_layout.text()
@@ -493,13 +479,13 @@ class PS2GUI():
             self.currentWindow.close()
             self.currentWindow = None
 
-            self.macro_script_path = QtWidgets.QFileDialog.getOpenFileName(optimizationSetup, 'save macro_script.txt', os.getcwd())[0]
+            self.macro_script_path = QtWidgets.QFileDialog.getSaveFileName(optimizationSetup, 'save macro_script.txt', os.getcwd())[0]
             self.pathToWorkFolder = os.path.dirname(self.macro_script_path)
 
             with open(self.macro_script_path, "w") as file:
                 createMacro(file, self)
 
-            QtWidgets.QMessageBox.about(optimizationSetup, "Save Macro","MacroScript saved to "+self.macro_script_path )
+            QtWidgets.QMessageBox.about(optimizationSetup, "Save Macro","MacroScript saved to "+self.macro_script_path)
 
             self.openingWindow()
 

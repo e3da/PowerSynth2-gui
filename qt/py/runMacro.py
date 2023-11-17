@@ -34,16 +34,16 @@ class Ui_Dialog(object):
 
         self.horizontalLayout_4.addWidget(self.label_4)
 
-        self.lineEdit_4 = QLineEdit(Dialog)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
+        self.line_macro = QLineEdit(Dialog)
+        self.line_macro.setObjectName(u"line_macro")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
-        self.lineEdit_4.setSizePolicy(sizePolicy)
-        self.lineEdit_4.setMinimumSize(QSize(100, 0))
+        sizePolicy.setHeightForWidth(self.line_macro.sizePolicy().hasHeightForWidth())
+        self.line_macro.setSizePolicy(sizePolicy)
+        self.line_macro.setMinimumSize(QSize(100, 0))
 
-        self.horizontalLayout_4.addWidget(self.lineEdit_4)
+        self.horizontalLayout_4.addWidget(self.line_macro)
 
         self.btn_open_macro = QPushButton(Dialog)
         self.btn_open_macro.setObjectName(u"btn_open_macro")
