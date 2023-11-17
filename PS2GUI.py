@@ -44,7 +44,6 @@ class PS2GUI():
         self.option = None
         self.optimizationUI = None
         self.extraConstraints = []
-        self.setupsDone = [0, 0]
         self.device_dict = None
         self.lead_list = None
         self.solution_ind = None
@@ -489,9 +488,6 @@ class PS2GUI():
 
             self.openingWindow()
 
-
-
-        ui.btn_saveas.setDisabled(True)
         ui.btn_electrical_setup.clicked.connect(self.electricalSetup)
         ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
         ui.btn_saveas.clicked.connect(saveas)
@@ -538,10 +534,6 @@ class PS2GUI():
 
             self.pathToParasiticModel = ui.parasitic_textedit.text()
             self.pathToTraceOri = ui.trace_textedit.text()
-
-            self.setupsDone[0] += 1
-            if self.setupsDone[0] > 0 and self.setupsDone[1] > 0:
-                self.optimizationUI.btn_saveas.setDisabled(False)
 
             electricalSetup.close()
 
@@ -628,10 +620,6 @@ class PS2GUI():
 
             self.heatConvection = ui.heat_convection.text()
             self.ambientTemperature = ui.ambient_temperature.text()
-
-            self.setupsDone[1] += 1
-            if self.setupsDone[0] > 0 and self.setupsDone[1] > 0:
-                self.optimizationUI.btn_saveas.setDisabled(False)
 
             thermalSetup.close()
 
