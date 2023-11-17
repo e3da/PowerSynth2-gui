@@ -19,7 +19,7 @@ def createMacro(file: TextIOWrapper, self):
     solutionDir = self.pathToLayoutScript.split("/")
     solutionDir.pop(-1)
     solutionDir = "/".join(solutionDir) + "/Solutions"
-    
+
     file.write("Fig_dir: " + figDir + "\n")
     file.write("Solution_dir: " + solutionDir + "\n")
     file.write("Constraint_file: " + self.pathToConstraints + "\n")
@@ -48,7 +48,7 @@ def createMacro(file: TextIOWrapper, self):
         file.write("Num_of_layouts: " + self.numLayouts + "\n")
         file.write("Seed: " + self.seed + "\n")
         file.write("Optimization_Algorithm: " + self.optimizationAlgorithm + "\n")
-        if self.optimizationAlgorithm=='NSGAII':
+        if self.optimizationAlgorithm!="NG-RANDOM":
             file.write("Num_generations: " + self.numGenerations + "\n")
 
     file.write("\n")

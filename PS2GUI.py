@@ -55,7 +55,7 @@ class PS2GUI():
         self.plotSolution = ""
         self.layoutMode = "0"
         self.floorPlan = ["", ""]
-        self.numLayouts = "1"
+        self.numLayouts = "100"
         self.seed = "10"
         self.optimizationAlgorithm = "NG-RANDOM"
         self.numGenerations = "10"
@@ -433,69 +433,44 @@ class PS2GUI():
         self.optimizationUI = ui
         ui.setupUi(optimizationSetup)
         self.setWindow(optimizationSetup)
-        ui.btn_run_powersynth.setEnabled(False)
         ui.seed.setText("0")
 
         def floorplan_assignment():
-            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                ui.floor_plan_x.setEnabled(False)
-                ui.floor_plan_y.setEnabled(False)
-                #ui.combo_optimization_algorithm.setEnabled(False)
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    ui.num_layouts.setText("1")
-                    ui.num_layouts.setEnabled(False)
-                else:
-                    ui.num_layouts.setEnabled(True)
-        
-                
-            else:
+            ui.floor_plan_x.setEnabled(False)
+            ui.floor_plan_y.setEnabled(False)
+            ui.num_layouts.setEnabled(True)
+            ui.combo_optimization_algorithm.setEnabled(self.option)
+
+            if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
+                ui.num_layouts.setText("1")
+                ui.num_layouts.setEnabled(False)
+                ui.combo_optimization_algorithm.setEnabled(False)
+            elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
                 ui.floor_plan_x.setEnabled(True)
                 ui.floor_plan_y.setEnabled(True)
-                ui.num_layouts.setEnabled(True)
 
         if self.option == 1:
-            #ui.btn_run_powersynth.setDisabled(True)
-            ui.electrical_thermal_frame.show()
-            ui.layout_generation_setup_frame.hide()
+            ui.layout_synthesis_setup.hide()
             ui.floor_plan_x.setText(self.floorPlan[0])
             ui.floor_plan_y.setText(self.floorPlan[1])
             ui.floor_plan_x.setEnabled(False)
             ui.floor_plan_y.setEnabled(False)
-            ui.electrical_thermal_frame.show()
-            ui.btn_run_powersynth.setEnabled(True)
         elif self.option == 0:
-            ui.electrical_thermal_frame.hide()
-            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                ui.floor_plan_x.setEnabled(False)
-                ui.floor_plan_y.setEnabled(False)
-                ui.combo_optimization_algorithm.setEnabled(False)
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    ui.num_layouts.setText("1")
-                    ui.num_layouts.setEnabled(False)
-                else:
-                    ui.num_layouts.setEnabled(True)
-            else:
-                ui.num_layouts.setEnabled(True)
+            ui.analysis_model_setup.hide()
+            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
+        elif self.option == 2:
             ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
 
-            
-            ui.combo_optimization_algorithm.setEnabled(False)
-            ui.btn_run_powersynth.setEnabled(True)
-        elif self.option == 2:
-            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                ui.floor_plan_x.setEnabled(False)
-                ui.floor_plan_y.setEnabled(False)
-                ui.combo_optimization_algorithm.setEnabled(False)
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    ui.num_layouts.setText("1")
-                    ui.num_layouts.setEnabled(False)
-                else:
-                    ui.num_layouts.setEnabled(True)
+
+        def show_optimization_setup():
+            if ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
+                ui.optimization_setup.hide()
             else:
-                ui.num_layouts.setEnabled(True)
-                ui.combo_optimization_algorithm.setEnabled(True)
-            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
-            ui.btn_run_powersynth.setEnabled(True)
+                ui.optimization_setup.show()
+        
+        floorplan_assignment()
+        ui.optimization_setup.hide()
+        ui.combo_optimization_algorithm.currentIndexChanged.connect(show_optimization_setup)
 
         
         def run():
@@ -512,10 +487,10 @@ class PS2GUI():
                 elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
                     self.layoutMode = "2" 
                 
-                self.numLayouts = ui.num_layouts.text()
                 self.seed = ui.seed.text()
                 self.optimizationAlgorithm = ui.combo_optimization_algorithm.currentText()
-                self.numGenerations = ui.num_layouts.text()
+                self.numLayouts = ui.num_layouts.text()
+                self.numGenerations = ui.num_gen.text()
 
             
             self.runPowerSynth()
