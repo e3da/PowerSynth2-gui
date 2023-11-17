@@ -407,7 +407,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="btn_run_powersynth">
+    <widget class="QPushButton" name="btn_saveas">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -426,7 +426,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Run</string>
+      <string>Save As</string>
      </property>
      <property name="default">
       <bool>true</bool>

@@ -85,10 +85,8 @@ class PS2GUI():
             return 0
         except:
             traceback.print_exc()
-            popup = QtWidgets.QMessageBox()
-            popup.setWindowTitle("Error:")
-            popup.setText("PowerSynth excution failed :(. Plesae check your macro file.")
-            popup.exec()
+            QtWidgets.QMessageBox.critical(None, "ERROR","PowerSynth excution failed :(.\nPlesae check your macro file: "+self.macro_script_path)
+
         return 1
 
     def setWindow(self, newWindow):
@@ -473,7 +471,7 @@ class PS2GUI():
         ui.combo_optimization_algorithm.currentIndexChanged.connect(show_optimization_setup)
 
         
-        def run():
+        def saveas():
             # SAVE VALUES HERE
             self.floorPlan[0] = ui.floor_plan_x.text()
             self.floorPlan[1] = ui.floor_plan_y.text()
@@ -492,16 +490,29 @@ class PS2GUI():
                 self.numLayouts = ui.num_layouts.text()
                 self.numGenerations = ui.num_gen.text()
 
-            
-            self.runPowerSynth()
+            self.currentWindow.close()
+            self.currentWindow = None
 
+            self.macro_script_path = QtWidgets.QFileDialog.getOpenFileName(optimizationSetup, 'save macro_script.txt', os.getcwd())[0]
+            self.pathToWorkFolder = os.path.dirname(self.macro_script_path)
+
+            with open(self.macro_script_path, "w") as file:
+                createMacro(file, self)
+
+            QtWidgets.QMessageBox.about(optimizationSetup, "Save Macro","MacroScript saved to "+self.macro_script_path )
+
+            self.openingWindow()
+
+
+
+        ui.btn_saveas.setDisabled(True)
         ui.btn_electrical_setup.clicked.connect(self.electricalSetup)
         ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
-        ui.btn_run_powersynth.clicked.connect(run)
+        ui.btn_saveas.clicked.connect(saveas)
 
         ui.btn_electrical_setup.setToolTip("Opens electrical setup in a separate window.")
         ui.btn_thermal_setup.setToolTip("Opens thermal setup in a separate window.")
-        ui.btn_run_powersynth.setToolTip("Click to run PowerSynth once all setup options are entered correctly.")
+        ui.btn_saveas.setToolTip("Click to save the macrofile.")
 
         optimizationSetup.show()
 
@@ -544,7 +555,7 @@ class PS2GUI():
 
             self.setupsDone[0] += 1
             if self.setupsDone[0] > 0 and self.setupsDone[1] > 0:
-                self.optimizationUI.btn_run_powersynth.setDisabled(False)
+                self.optimizationUI.btn_saveas.setDisabled(False)
 
             electricalSetup.close()
 
@@ -634,7 +645,7 @@ class PS2GUI():
 
             self.setupsDone[1] += 1
             if self.setupsDone[0] > 0 and self.setupsDone[1] > 0:
-                self.optimizationUI.btn_run_powersynth.setDisabled(False)
+                self.optimizationUI.btn_saveas.setDisabled(False)
 
             thermalSetup.close()
 
@@ -673,18 +684,6 @@ class PS2GUI():
 
         #self.currentWindow.close()
         #self.currentWindow = None
-    def runPowerSynth(self):
-
-        self.currentWindow.close()
-        self.currentWindow = None
-
-        self.pathToWorkFolder = os.path.dirname(self.pathToLayoutScript)
-        self.macro_script_path = os.path.join(self.pathToWorkFolder, "macro_script.txt")
-
-        with open(self.macro_script_path, "w") as file:
-            createMacro(file, self)
-
-        self.RunPSCLI()
 
     def run(self):
         '''Main Function to run the GUI'''

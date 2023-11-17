@@ -253,21 +253,21 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addItem(self.verticalSpacer)
 
-        self.btn_run_powersynth = QPushButton(Dialog)
-        self.btn_run_powersynth.setObjectName(u"btn_run_powersynth")
-        sizePolicy.setHeightForWidth(self.btn_run_powersynth.sizePolicy().hasHeightForWidth())
-        self.btn_run_powersynth.setSizePolicy(sizePolicy)
-        self.btn_run_powersynth.setMinimumSize(QSize(0, 40))
+        self.btn_saveas = QPushButton(Dialog)
+        self.btn_saveas.setObjectName(u"btn_saveas")
+        sizePolicy.setHeightForWidth(self.btn_saveas.sizePolicy().hasHeightForWidth())
+        self.btn_saveas.setSizePolicy(sizePolicy)
+        self.btn_saveas.setMinimumSize(QSize(0, 40))
         font = QFont()
         font.setBold(True)
-        self.btn_run_powersynth.setFont(font)
+        self.btn_saveas.setFont(font)
 
-        self.verticalLayout.addWidget(self.btn_run_powersynth)
+        self.verticalLayout.addWidget(self.btn_saveas)
 
 
         self.retranslateUi(Dialog)
 
-        self.btn_run_powersynth.setDefault(True)
+        self.btn_saveas.setDefault(True)
 
 
         QMetaObject.connectSlotsByName(Dialog)
@@ -299,6 +299,6 @@ class Ui_Dialog(object):
         self.label.setText(QCoreApplication.translate("Dialog", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Analysis Model Setup</span></p></body></html>", None))
         self.btn_electrical_setup.setText(QCoreApplication.translate("Dialog", u"Electrical Setup", None))
         self.btn_thermal_setup.setText(QCoreApplication.translate("Dialog", u"Thermal Setup", None))
-        self.btn_run_powersynth.setText(QCoreApplication.translate("Dialog", u"Run", None))
+        self.btn_saveas.setText(QCoreApplication.translate("Dialog", u"Save As", None))
     # retranslateUi
 
