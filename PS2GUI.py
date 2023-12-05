@@ -42,7 +42,6 @@ class PS2GUI():
         self.pathToFigs = ""
         self.pathToSolutions = ""
         self.option = None
-        self.optimizationUI = None
         self.extraConstraints = []
         self.device_dict = None
         self.lead_list = None
@@ -413,10 +412,49 @@ class PS2GUI():
     def optimizationSetup(self):
         optimizationSetup = QtWidgets.QDialog()
         ui = UI_optimization_setup()
-        self.optimizationUI = ui
         ui.setupUi(optimizationSetup)
         self.setWindow(optimizationSetup)
         ui.seed.setText("0")
+
+        def show_optimization_setup():
+            if ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
+                ui.optimization_setup.hide()
+            else:
+                ui.optimization_setup.show()
+        
+        def saveas():
+            # SAVE VALUES HERE
+            self.floorPlan[0] = ui.floor_plan_x.text()
+            self.floorPlan[1] = ui.floor_plan_y.text()
+            self.plotSolution = "1" if ui.checkbox_plot_solutions.isChecked() else "0"
+
+            if self.option !=1:
+                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
+                    self.layoutMode = "0" 
+                elif ui.combo_layout_mode.currentText() == "variable-sized solutions":
+                    self.layoutMode = "1" 
+                elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
+                    self.layoutMode = "2" 
+                
+                self.seed = ui.seed.text()
+                self.optimizationAlgorithm = ui.combo_optimization_algorithm.currentText()
+                self.numLayouts = ui.num_layouts.text()
+                self.numGenerations = ui.num_gen.text()
+
+
+            self.macro_script_path = QtWidgets.QFileDialog.getSaveFileName(self.currentWindow, "Save Macro", "macro_script.txt","Text files (*.txt)")[0]
+            self.pathToWorkFolder = os.path.dirname(self.macro_script_path)
+
+            if not self.macro_script_path.endswith(".txt"):
+                self.macro_script_path += ".txt"
+
+            with open(self.macro_script_path, "w") as file:
+                createMacro(file, self)
+
+            print("INFO: MacroScript saved to "+self.macro_script_path)
+
+            self.currentWindow.close()
+            self.openingWindow()
 
         def floorplan_assignment():
             ui.floor_plan_x.setEnabled(False)
@@ -444,49 +482,9 @@ class PS2GUI():
         elif self.option == 2:
             ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
 
-
-        def show_optimization_setup():
-            if ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
-                ui.optimization_setup.hide()
-            else:
-                ui.optimization_setup.show()
-        
         floorplan_assignment()
         ui.optimization_setup.hide()
         ui.combo_optimization_algorithm.currentIndexChanged.connect(show_optimization_setup)
-
-        
-        def saveas():
-            # SAVE VALUES HERE
-            self.floorPlan[0] = ui.floor_plan_x.text()
-            self.floorPlan[1] = ui.floor_plan_y.text()
-            self.plotSolution = "1" if ui.checkbox_plot_solutions.isChecked() else "0"
-
-            if self.option !=1:
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    self.layoutMode = "0" 
-                elif ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                    self.layoutMode = "1" 
-                elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
-                    self.layoutMode = "2" 
-                
-                self.seed = ui.seed.text()
-                self.optimizationAlgorithm = ui.combo_optimization_algorithm.currentText()
-                self.numLayouts = ui.num_layouts.text()
-                self.numGenerations = ui.num_gen.text()
-
-            self.currentWindow.close()
-            self.currentWindow = None
-
-            self.macro_script_path = QtWidgets.QFileDialog.getSaveFileName(optimizationSetup, 'save macro_script.txt', os.getcwd())[0]
-            self.pathToWorkFolder = os.path.dirname(self.macro_script_path)
-
-            with open(self.macro_script_path, "w") as file:
-                createMacro(file, self)
-
-            QtWidgets.QMessageBox.about(optimizationSetup, "Save Macro","MacroScript saved to "+self.macro_script_path)
-
-            self.openingWindow()
 
         ui.btn_electrical_setup.clicked.connect(self.electricalSetup)
         ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
@@ -516,9 +514,9 @@ class PS2GUI():
             self.modelType = ui.combo_model_type.currentText()
             self.measureNameElectrical = ui.lineedit_measure_name.text()
             if ui.combo_measure_type.currentText() == "inductance":
-                self.measureType = "0"  
+                self.measureType = "1"  
             elif ui.combo_measure_type.currentText() == "resistance":
-                self.measureType = "1"
+                self.measureType = "0"
             elif ui.combo_measure_type.currentText() == "capacitance":
                 self.measureType = "2"
             
