@@ -10,6 +10,7 @@ from PySide6 import QtWidgets
 from matplotlib.figure import Figure
 from core.PSCore import PSEnv
 from core.PS2CLI import PS2CLI
+
 from gui.qt.py.openingWindow import Ui_Dialog as UI_opening_window
 from gui.qt.py.runMacro import Ui_Dialog as UI_run_macro
 from gui.qt.py.editLayout import Ui_Dialog as UI_edit_layout
@@ -23,12 +24,14 @@ from gui.qt.py.thermalSetup import Ui_Dialog as UI_thermal_setup
 from gui.qt.py.runOptions import Ui_Dialog as UI_run_options
 from gui.core.solutionBrowser import showSolutionBrowser
 from gui.core.createMacro import createMacro
+from gui.core.Terminal import SubProcessWindow
 
 class PS2GUI():
     '''GUI Class -- Stores Important Information for the GUI'''
 
     def __init__(self):
         self.core = PSEnv()
+        self.term = None
 
         self.app = None
         self.currentWindow = None
@@ -74,16 +77,40 @@ class PS2GUI():
         self.heatConvection = ""
         self.ambientTemperature = ""
 
+    def PrintErr(self):
+        traceback.print_exc(file=sys.stdout)
+        QtWidgets.QMessageBox.critical(None, "ERROR","PowerSynth excution failed :(.\nPlesae check your macro file: "+self.macro_script_path)
+
+    def OpenSolutionBrowser(self):
+        if self.term:
+            self.term.close()
+            self.term=None
+
+        showSolutionBrowser(self)
+
+
+    def RunPS2CMD(self):
+        self.term=SubProcessWindow()
+        self.term.set_cbfunc(after_finish=self.OpenSolutionBrowser)
+        self.term.show()
+
+        try:
+            self.term.start_process(args=[self.macro_script_path])
+            return 0
+        except:
+            self.PrintErr()
+
+        return 1
+
     
-    def RunPSCLI(self):
+    def RunPS2CLI(self):
         try:
             self.core = PS2CLI(self.macro_script_path)
             self.core.run()
-            showSolutionBrowser(self)
+            self.OpenSolutionBrowser()
             return 0
         except:
-            traceback.print_exc()
-            QtWidgets.QMessageBox.critical(None, "ERROR","PowerSynth excution failed :(.\nPlesae check your macro file: "+self.macro_script_path)
+            self.PrintErr()
 
         return 1
 
@@ -93,7 +120,7 @@ class PS2GUI():
         self.currentWindow = newWindow
 
     def openingWindow(self):
-        '''Function to create the main opening window and start to GUI'''
+        '''Function to create the main opening window and start GUI'''
         openingWindow = QtWidgets.QDialog()
         ui = UI_opening_window()
         ui.setupUi(openingWindow)
@@ -181,7 +208,8 @@ class PS2GUI():
                     if line.startswith("Layout_Mode: "):
                         self.layoutMode = line.split()[1]
 
-            self.RunPSCLI()
+            #self.RunPS2CLI()
+            self.RunPS2CMD()
 
         ui.line_macro.setText(self.macro_script_path)
         ui.btn_create_project.clicked.connect(runPowerSynth)
