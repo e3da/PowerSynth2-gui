@@ -322,7 +322,7 @@ class Ui_Dialog(object):
         self.btn_remove_device.setText(QCoreApplication.translate("Dialog", u"Remove Device", None))
         self.label_5.setText(QCoreApplication.translate("Dialog", u"Trace Orientation", None))
         self.btn_open_trace.setText(QCoreApplication.translate("Dialog", u"Open", None))
-        self.label_6.setText(QCoreApplication.translate("Dialog", u"Parasitic Model", None))
+        self.label_6.setText(QCoreApplication.translate("Dialog", u"Parasitic Model (Optional)", None))
         self.btn_open_parasitic.setText(QCoreApplication.translate("Dialog", u"Open", None))
         self.btn_continue.setText(QCoreApplication.translate("Dialog", u"Continue", None))
     # retranslateUi

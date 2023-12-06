@@ -81,21 +81,17 @@ class PS2GUI():
         traceback.print_exc(file=sys.stdout)
         QtWidgets.QMessageBox.critical(None, "ERROR","PowerSynth excution failed :(.\nPlesae check your macro file: "+self.macro_script_path)
 
-    def OpenSolutionBrowser(self):
-        if self.term:
-            self.term.close()
-            self.term=None
-
-        showSolutionBrowser(self)
-
-
     def RunPS2CMD(self):
         self.term=SubProcessWindow()
-        self.term.set_cbfunc(after_finish=self.OpenSolutionBrowser)
         self.term.show()
 
         try:
-            self.term.start_process(args=[self.macro_script_path])
+            if os.name == 'nt':
+                cmd=os.path.join(self.core.PSRoot,"python.exe")
+            else:
+                cmd=os.path.join(self.core.PSRoot,"bin","python")
+
+            self.term.start_process(cmd,[os.path.join(self.core.PSRoot,"pkg","bin","PowerSynth2.py"),self.macro_script_path])
             return 0
         except:
             self.PrintErr()
@@ -107,7 +103,7 @@ class PS2GUI():
         try:
             self.core = PS2CLI(self.macro_script_path)
             self.core.run()
-            self.OpenSolutionBrowser()
+            showSolutionBrowser(self)
             return 0
         except:
             self.PrintErr()
@@ -208,8 +204,8 @@ class PS2GUI():
                     if line.startswith("Layout_Mode: "):
                         self.layoutMode = line.split()[1]
 
-            #self.RunPS2CLI()
-            self.RunPS2CMD()
+            self.RunPS2CLI()
+            #self.RunPS2CMD()
 
         ui.line_macro.setText(self.macro_script_path)
         ui.btn_create_project.clicked.connect(runPowerSynth)

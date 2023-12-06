@@ -21,7 +21,11 @@ class SubProcessWindow(QMainWindow):
         w = QWidget()
         w.setLayout(l)
 
+        self.resize(800, 600)
+
         self.setCentralWidget(w)
+
+        self.close_after_finish=True
 
         self.before_start=None
         self.after_start=None
@@ -35,15 +39,15 @@ class SubProcessWindow(QMainWindow):
     def message(self, s):
         self.text.appendPlainText(s)
 
-    def start_process(self,cmd="python",args=[]):
+    def start_process(self,cmd="",args=[]):
         if self.before_start:
             self.before_start()
         if self.p is None:  # No process running.
-            self.message("Starting Process.")
+            self.setWindowTitle(" ".join(["Running",cmd]))
             self.p = QProcess()  # Keep a reference to the QProcess (e.g. on self) while it's running.
             self.p.readyReadStandardOutput.connect(self.handle_stdout)
             self.p.readyReadStandardError.connect(self.handle_stderr)
-            self.p.stateChanged.connect(self.handle_state)
+            #self.p.stateChanged.connect(self.handle_state)
             self.p.finished.connect(self.process_finished)  # Clean up once complete.
             self.p.start(cmd, args)
 
@@ -75,3 +79,7 @@ class SubProcessWindow(QMainWindow):
         if self.after_finish:
             self.after_finish()
 
+        if self.close_after_finish:
+            self.close()
+        else:
+            self.setWindowTitle(" ".join(["Finished",cmd]))
