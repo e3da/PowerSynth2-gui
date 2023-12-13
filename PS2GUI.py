@@ -441,7 +441,7 @@ class PS2GUI():
         ui.seed.setText("0")
 
         def show_optimization_setup():
-            if ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
+            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
                 ui.optimization_setup.hide()
             else:
                 ui.optimization_setup.show()
@@ -509,6 +509,7 @@ class PS2GUI():
         floorplan_assignment()
         ui.optimization_setup.hide()
         ui.combo_optimization_algorithm.currentIndexChanged.connect(show_optimization_setup)
+        ui.combo_layout_mode.currentIndexChanged.connect(show_optimization_setup)
 
         ui.btn_electrical_setup.clicked.connect(self.electricalSetup)
         ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
