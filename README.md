@@ -1,10 +1,10 @@
 # PowerSynth 2 Release Series Core Repository
 ## Repository Overview
 This is the gui repository for PowerSynth 2. Refer to the [PowerSynth2-core](https://github.com/e3da/PowerSynth2-core) and other related repos for the CLI and other parts. 
-This repository contains the main source code for the QT-based PowerSynth 2 the GUI. 
+This repository contains the main source code for the Qt-based PowerSynth 2 GUI and design files. 
 
-The UI is designed with QT designer. Currently, Qt 5.15 and PySide2 are used for the release.
-Note that the GUI is not tested extensively as the CLI. Minor rendering issues exists, especially on Windows. Also, several modules are ported from earilier versions. Therefore, it is provided for users' convienience and preview. Regular users and researchers are suggested to use CLI for more stable and smoother work flow. 
+The UI is designed with Qt designer. Currently, Qt 6.5 and PySide6 are used for the release.
+Note that the GUI is not tested extensively as the CLI. Minor rendering issues exists, especially on Windows or HiDPI. Also, several modules are ported from earilier versions. Therefore, it is provided for users' convienience and preview. Regular users and researchers are suggested to use CLI for more stable and smoother work flow. 
 
 # PowerSynth 2 Project Overview
 PowerSynth 2 started as a research project to introduce the VLSI electronics design automation algorithms for power electronic applications. It is developed originally by the [E3DA Lab](https://e3da.csce.uark.edu/) as a POETS project and then jointly by [MSCAD Lab](https://mscad.uark.edu/), at University of Arkansas. 
