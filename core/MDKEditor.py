@@ -152,7 +152,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         if not filename:
             return
 
-        with open(filename, 'w') as csvFile:
+        with open(filename, 'w', newline='') as csvFile:
             header = ["name", "thermal_cond", "thermal_cond_liq", "spec_heat_cap",
                     "spec_heat_cap_liq", "density", "density_liq", "electrical_res",
                     "rel_permit", "rel_permeab", "q3d_id", "young_modulus", "poissons_ratios",
