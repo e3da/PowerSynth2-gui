@@ -1,5 +1,5 @@
 import os
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 
 import matplotlib
 
@@ -198,7 +198,7 @@ def showSolutionBrowser(gui):
             
             msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
             
-            return msg.exec_()
+            return msg.exec()
 
         def export_selected():
             #return

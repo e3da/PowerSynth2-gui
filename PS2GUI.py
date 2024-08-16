@@ -6,10 +6,11 @@ import os
 import csv
 import webbrowser
 import traceback
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 from matplotlib.figure import Figure
 from core.PSCore import PSEnv
 from core.PS2CLI import PS2CLI
+
 from gui.qt.py.openingWindow import Ui_Dialog as UI_opening_window
 from gui.qt.py.runMacro import Ui_Dialog as UI_run_macro
 from gui.qt.py.editLayout import Ui_Dialog as UI_edit_layout
@@ -23,12 +24,14 @@ from gui.qt.py.thermalSetup import Ui_Dialog as UI_thermal_setup
 from gui.qt.py.runOptions import Ui_Dialog as UI_run_options
 from gui.core.solutionBrowser import showSolutionBrowser
 from gui.core.createMacro import createMacro
+from gui.core.Terminal import SubProcessWindow
 
 class PS2GUI():
     '''GUI Class -- Stores Important Information for the GUI'''
 
     def __init__(self):
         self.core = PSEnv()
+        self.term = None
 
         self.app = None
         self.currentWindow = None
@@ -42,9 +45,7 @@ class PS2GUI():
         self.pathToFigs = ""
         self.pathToSolutions = ""
         self.option = None
-        self.optimizationUI = None
         self.extraConstraints = []
-        self.setupsDone = [0, 0]
         self.device_dict = None
         self.lead_list = None
         self.solution_ind = None
@@ -55,7 +56,7 @@ class PS2GUI():
         self.plotSolution = ""
         self.layoutMode = "0"
         self.floorPlan = ["", ""]
-        self.numLayouts = "1"
+        self.numLayouts = "100"
         self.seed = "10"
         self.optimizationAlgorithm = "NG-RANDOM"
         self.numGenerations = "10"
@@ -76,19 +77,37 @@ class PS2GUI():
         self.heatConvection = ""
         self.ambientTemperature = ""
 
+    def PrintErr(self):
+        traceback.print_exc(file=sys.stdout)
+        QtWidgets.QMessageBox.critical(None, "ERROR","PowerSynth excution failed :(.\nPlesae check your macro file: "+self.macro_script_path)
+
+    def RunPS2CMD(self):
+        self.term=SubProcessWindow()
+        self.term.show()
+
+        try:
+            if os.name == 'nt':
+                cmd=os.path.join(self.core.PSRoot,"python.exe")
+            else:
+                cmd=os.path.join(self.core.PSRoot,"bin","python")
+
+            self.term.start_process(cmd,[os.path.join(self.core.PSRoot,"pkg","bin","PowerSynth2.py"),self.macro_script_path])
+            return 0
+        except:
+            self.PrintErr()
+
+        return 1
+
     
-    def RunPSCLI(self):
+    def RunPS2CLI(self):
         try:
             self.core = PS2CLI(self.macro_script_path)
             self.core.run()
             showSolutionBrowser(self)
             return 0
         except:
-            traceback.print_exc()
-            popup = QtWidgets.QMessageBox()
-            popup.setWindowTitle("Error:")
-            popup.setText("PowerSynth excution failed :(. Plesae check your macro file.")
-            popup.exec_()
+            self.PrintErr()
+
         return 1
 
     def setWindow(self, newWindow):
@@ -97,18 +116,17 @@ class PS2GUI():
         self.currentWindow = newWindow
 
     def openingWindow(self):
-        '''Function to create the main opening window and start to GUI'''
+        '''Function to create the main opening window and start GUI'''
         openingWindow = QtWidgets.QDialog()
         ui = UI_opening_window()
         ui.setupUi(openingWindow)
         self.setWindow(openingWindow)
 
         def manual():
-            #webbrowser.open_new("./GUI/pdfs/PowerSynth_v1.9.pdf") 
             try: 
-                webbrowser.open_new("https://e3da.csce.uark.edu/release/PowerSynth/manual/PowerSynth_v2.0.pdf")
+                webbrowser.open_new(f"https://e3da.csce.uark.edu/release/PowerSynth/manual/PowerSynth_v{PSEnv.PSVers}.pdf")
             except:
-                print("Failed to open manual! Please look inside the package for PowerSynth_v2.0.pdf")
+                print("Failed to open manual! Please look inside the package for PowerSynth_v{PSEnv.PSVers}.pdf")
         
         def web():
             try: 
@@ -145,22 +163,19 @@ class PS2GUI():
 
         def getMacroScript():
             if self.macro_script_path==None:
-                ui.lineEdit_4.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open macro_script.txt', os.getcwd())[0])
+                ui.line_macro.setText(QtWidgets.QFileDialog.getOpenFileName(runMacro, 'Open Macro Script .txt', os.getcwd())[0])
             else:
-                ui.lineEdit_4.setText(self.macro_script_path)
+                ui.line_macro.setText(self.macro_script_path)
                 self.currentWindow.close()
                 return
 
         def runPowerSynth():
             
-            if not os.path.exists(ui.lineEdit_4.text()) or not ui.lineEdit_4.text().endswith(".txt"):
-                popup = QtWidgets.QMessageBox()
-                popup.setWindowTitle("Error:")
-                popup.setText("Please enter a valid path to the macro_script file.")
-                popup.exec_()
+            if not os.path.exists(ui.line_macro.text()) or not ui.line_macro.text().endswith(".txt"):
+                QtWidgets.QMessageBox.critical(runMacro, "ERROR", "Please enter a valid macro script .txt file.")
                 return
 
-            self.macro_script_path = ui.lineEdit_4.text()
+            self.macro_script_path = ui.line_macro.text()
 
             self.currentWindow.close()
             self.currentWindow = None
@@ -189,8 +204,10 @@ class PS2GUI():
                     if line.startswith("Layout_Mode: "):
                         self.layoutMode = line.split()[1]
 
-            self.RunPSCLI()
+            self.RunPS2CLI()
+            #self.RunPS2CMD()
 
+        ui.line_macro.setText(self.macro_script_path)
         ui.btn_create_project.clicked.connect(runPowerSynth)
         ui.btn_cancel.clicked.connect(self.openingWindow)
         ui.btn_open_macro.clicked.connect(getMacroScript)
@@ -219,29 +236,17 @@ class PS2GUI():
 
         def createLayout():
 
-            #'''
-            if not os.path.exists(ui.lineEdit_layer.text()) or not ui.lineEdit_layer.text().endswith(".csv"):
-                popup = QtWidgets.QMessageBox()
-                popup.setWindowTitle("Error:")
-                popup.setText("Please enter a valid path to the layer_stack file.")
-                popup.exec_()
+            if not (os.path.exists(ui.lineEdit_layer.text()) and ui.lineEdit_layer.text().endswith(".csv")):
+                QtWidgets.QMessageBox.critical(editLayout,"ERROR","Please enter a valid layer stack .csv file.")
                 return
 
-            if not os.path.exists(ui.lineEdit_layout.text()) or not ui.lineEdit_layout.text().endswith(".txt"):
-                popup = QtWidgets.QMessageBox()
-                popup.setWindowTitle("Error:")
-                popup.setText("Please enter a valid path to the layout_script file.")
-                popup.exec_()
+            if not (os.path.exists(ui.lineEdit_layout.text()) and ui.lineEdit_layout.text().endswith(".txt")):
+                QtWidgets.QMessageBox.critical(editLayout,"ERROR","Please enter a valid layout script .txt file.")
                 return
             
-            if len(ui.lineEdit_bondwire.text()):
-                if not os.path.exists(ui.lineEdit_bondwire.text()) or not ui.lineEdit_bondwire.text().endswith(".txt"):
-                    
-                        popup = QtWidgets.QMessageBox()
-                        popup.setWindowTitle("Error:")
-                        popup.setText("Please enter a valid path to the Connectivity_script file.")
-                        popup.exec_()
-                        return
+            if len(ui.lineEdit_bondwire.text()) and not (os.path.exists(ui.lineEdit_bondwire.text()) and ui.lineEdit_bondwire.text().endswith(".txt")):
+                QtWidgets.QMessageBox.critical(editLayout,"ERROR","Please enter a valid connectivity script .txt file.")
+                return
             
             self.pathToLayerStack = ui.lineEdit_layer.text()
             self.pathToLayoutScript = ui.lineEdit_layout.text()
@@ -431,75 +436,17 @@ class PS2GUI():
     def optimizationSetup(self):
         optimizationSetup = QtWidgets.QDialog()
         ui = UI_optimization_setup()
-        self.optimizationUI = ui
         ui.setupUi(optimizationSetup)
         self.setWindow(optimizationSetup)
-        ui.btn_run_powersynth.setEnabled(False)
         ui.seed.setText("0")
 
-        def floorplan_assignment():
-            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                ui.floor_plan_x.setEnabled(False)
-                ui.floor_plan_y.setEnabled(False)
-                #ui.combo_optimization_algorithm.setEnabled(False)
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    ui.num_layouts.setText("1")
-                    ui.num_layouts.setEnabled(False)
-                else:
-                    ui.num_layouts.setEnabled(True)
+        def show_optimization_setup():
+            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
+                ui.optimization_setup.hide()
+            else:
+                ui.optimization_setup.show()
         
-                
-            else:
-                ui.floor_plan_x.setEnabled(True)
-                ui.floor_plan_y.setEnabled(True)
-                ui.num_layouts.setEnabled(True)
-
-        if self.option == 1:
-            #ui.btn_run_powersynth.setDisabled(True)
-            ui.electrical_thermal_frame.show()
-            ui.layout_generation_setup_frame.hide()
-            ui.floor_plan_x.setText(self.floorPlan[0])
-            ui.floor_plan_y.setText(self.floorPlan[1])
-            ui.floor_plan_x.setEnabled(False)
-            ui.floor_plan_y.setEnabled(False)
-            ui.electrical_thermal_frame.show()
-            ui.btn_run_powersynth.setEnabled(True)
-        elif self.option == 0:
-            ui.electrical_thermal_frame.hide()
-            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                ui.floor_plan_x.setEnabled(False)
-                ui.floor_plan_y.setEnabled(False)
-                ui.combo_optimization_algorithm.setEnabled(False)
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    ui.num_layouts.setText("1")
-                    ui.num_layouts.setEnabled(False)
-                else:
-                    ui.num_layouts.setEnabled(True)
-            else:
-                ui.num_layouts.setEnabled(True)
-            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
-
-            
-            ui.combo_optimization_algorithm.setEnabled(False)
-            ui.btn_run_powersynth.setEnabled(True)
-        elif self.option == 2:
-            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_layout_mode.currentText() == "variable-sized solutions":
-                ui.floor_plan_x.setEnabled(False)
-                ui.floor_plan_y.setEnabled(False)
-                ui.combo_optimization_algorithm.setEnabled(False)
-                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
-                    ui.num_layouts.setText("1")
-                    ui.num_layouts.setEnabled(False)
-                else:
-                    ui.num_layouts.setEnabled(True)
-            else:
-                ui.num_layouts.setEnabled(True)
-                ui.combo_optimization_algorithm.setEnabled(True)
-            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
-            ui.btn_run_powersynth.setEnabled(True)
-
-        
-        def run():
+        def saveas():
             # SAVE VALUES HERE
             self.floorPlan[0] = ui.floor_plan_x.text()
             self.floorPlan[1] = ui.floor_plan_y.text()
@@ -513,21 +460,64 @@ class PS2GUI():
                 elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
                     self.layoutMode = "2" 
                 
-                self.numLayouts = ui.num_layouts.text()
                 self.seed = ui.seed.text()
                 self.optimizationAlgorithm = ui.combo_optimization_algorithm.currentText()
-                self.numGenerations = ui.num_layouts.text()
+                self.numLayouts = ui.num_layouts.text()
+                self.numGenerations = ui.num_gen.text()
 
-            
-            self.runPowerSynth()
+
+            self.macro_script_path = QtWidgets.QFileDialog.getSaveFileName(self.currentWindow, "Save Macro", "macro_script.txt","Text files (*.txt)")[0]
+            self.pathToWorkFolder = os.path.dirname(self.macro_script_path)
+
+            if not self.macro_script_path.endswith(".txt"):
+                self.macro_script_path += ".txt"
+
+            with open(self.macro_script_path, "w") as file:
+                createMacro(file, self)
+
+            print("INFO: MacroScript saved to "+self.macro_script_path)
+
+            self.currentWindow.close()
+            self.openingWindow()
+
+        def floorplan_assignment():
+            ui.floor_plan_x.setEnabled(False)
+            ui.floor_plan_y.setEnabled(False)
+            ui.num_layouts.setEnabled(True)
+            ui.combo_optimization_algorithm.setEnabled(self.option)
+
+            if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
+                ui.num_layouts.setText("1")
+                ui.num_layouts.setEnabled(False)
+                ui.combo_optimization_algorithm.setEnabled(False)
+            elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
+                ui.floor_plan_x.setEnabled(True)
+                ui.floor_plan_y.setEnabled(True)
+
+        if self.option == 1:
+            ui.layout_synthesis_setup.hide()
+            ui.floor_plan_x.setText(self.floorPlan[0])
+            ui.floor_plan_y.setText(self.floorPlan[1])
+            ui.floor_plan_x.setEnabled(False)
+            ui.floor_plan_y.setEnabled(False)
+        elif self.option == 0:
+            ui.analysis_model_setup.hide()
+            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
+        elif self.option == 2:
+            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
+
+        floorplan_assignment()
+        ui.optimization_setup.hide()
+        ui.combo_optimization_algorithm.currentIndexChanged.connect(show_optimization_setup)
+        ui.combo_layout_mode.currentIndexChanged.connect(show_optimization_setup)
 
         ui.btn_electrical_setup.clicked.connect(self.electricalSetup)
         ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
-        ui.btn_run_powersynth.clicked.connect(run)
+        ui.btn_saveas.clicked.connect(saveas)
 
         ui.btn_electrical_setup.setToolTip("Opens electrical setup in a separate window.")
         ui.btn_thermal_setup.setToolTip("Opens thermal setup in a separate window.")
-        ui.btn_run_powersynth.setToolTip("Click to run PowerSynth once all setup options are entered correctly.")
+        ui.btn_saveas.setToolTip("Click to save the macrofile.")
 
         optimizationSetup.show()
 
@@ -549,9 +539,9 @@ class PS2GUI():
             self.modelType = ui.combo_model_type.currentText()
             self.measureNameElectrical = ui.lineedit_measure_name.text()
             if ui.combo_measure_type.currentText() == "inductance":
-                self.measureType = "0"  
+                self.measureType = "1"  
             elif ui.combo_measure_type.currentText() == "resistance":
-                self.measureType = "1"
+                self.measureType = "0"
             elif ui.combo_measure_type.currentText() == "capacitance":
                 self.measureType = "2"
             
@@ -567,10 +557,6 @@ class PS2GUI():
 
             self.pathToParasiticModel = ui.parasitic_textedit.text()
             self.pathToTraceOri = ui.trace_textedit.text()
-
-            self.setupsDone[0] += 1
-            if self.setupsDone[0] > 0 and self.setupsDone[1] > 0:
-                self.optimizationUI.btn_run_powersynth.setDisabled(False)
 
             electricalSetup.close()
 
@@ -658,10 +644,6 @@ class PS2GUI():
             self.heatConvection = ui.heat_convection.text()
             self.ambientTemperature = ui.ambient_temperature.text()
 
-            self.setupsDone[1] += 1
-            if self.setupsDone[0] > 0 and self.setupsDone[1] > 0:
-                self.optimizationUI.btn_run_powersynth.setDisabled(False)
-
             thermalSetup.close()
 
         def addAll():
@@ -699,18 +681,6 @@ class PS2GUI():
 
         #self.currentWindow.close()
         #self.currentWindow = None
-    def runPowerSynth(self):
-
-        self.currentWindow.close()
-        self.currentWindow = None
-
-        self.pathToWorkFolder = os.path.dirname(self.pathToLayoutScript)
-        self.macro_script_path = os.path.join(self.pathToWorkFolder, "macro_script.txt")
-
-        with open(self.macro_script_path, "w") as file:
-            createMacro(file, self)
-
-        self.RunPSCLI()
 
     def run(self):
         '''Main Function to run the GUI'''
@@ -719,7 +689,7 @@ class PS2GUI():
 
         self.openingWindow()
 
-        self.app.exec_()
+        self.app.exec()
 
 
 if __name__ == "__main__":  

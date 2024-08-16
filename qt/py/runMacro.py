@@ -3,15 +3,21 @@
 ################################################################################
 ## Form generated from reading UI file 'runMacro.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.6
+## Created by: Qt User Interface Compiler version 6.5.3
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *  # type: ignore
-from PySide2.QtGui import *  # type: ignore
-from PySide2.QtWidgets import *  # type: ignore
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QDialog, QHBoxLayout, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -28,16 +34,16 @@ class Ui_Dialog(object):
 
         self.horizontalLayout_4.addWidget(self.label_4)
 
-        self.lineEdit_4 = QLineEdit(Dialog)
-        self.lineEdit_4.setObjectName(u"lineEdit_4")
+        self.line_macro = QLineEdit(Dialog)
+        self.line_macro.setObjectName(u"line_macro")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_4.sizePolicy().hasHeightForWidth())
-        self.lineEdit_4.setSizePolicy(sizePolicy)
-        self.lineEdit_4.setMinimumSize(QSize(100, 0))
+        sizePolicy.setHeightForWidth(self.line_macro.sizePolicy().hasHeightForWidth())
+        self.line_macro.setSizePolicy(sizePolicy)
+        self.line_macro.setMinimumSize(QSize(100, 0))
 
-        self.horizontalLayout_4.addWidget(self.lineEdit_4)
+        self.horizontalLayout_4.addWidget(self.line_macro)
 
         self.btn_open_macro = QPushButton(Dialog)
         self.btn_open_macro.setObjectName(u"btn_open_macro")

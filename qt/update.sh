@@ -2,7 +2,7 @@
 
 folder=$( dirname -- "$0" )
 
-qtpkg=pyside2
+qtpkg=pyside6
 declare -A exe=( ["ui"]="$qtpkg-uic" ["qrc"]="$qtpkg-rcc")
 declare -A arg=( ["ui"]="--from-imports" ["qrc"]="")
 declare -A post=( ["ui"]="" ["qrc"]="_rc")

@@ -1,13 +1,13 @@
 
 import sys, csv
 import os
-from PySide2.QtGui import *
-from PySide2 import QtCore, QtGui
+from PySide6.QtGui import *
+from PySide6 import QtCore, QtGui
 from gui.core.StructureCode import MaterialProperties
 from gui.qt.py.Edit_Library import *
 from operator import itemgetter
 from copy import deepcopy
-from PySide2.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox, QApplication, QComboBox, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox, QApplication, QComboBox, QFileDialog
 
 class EditLibrary(QMainWindow, Ui_MDKWindow):
     def __init__(self, parent=None, MatLib=None):
@@ -152,7 +152,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         if not filename:
             return
 
-        with open(filename, 'w') as csvFile:
+        with open(filename, 'w', newline='') as csvFile:
             header = ["name", "thermal_cond", "thermal_cond_liq", "spec_heat_cap",
                     "spec_heat_cap_liq", "density", "density_liq", "electrical_res",
                     "rel_permit", "rel_permeab", "q3d_id", "young_modulus", "poissons_ratios",
@@ -186,7 +186,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.setIcon(QMessageBox.Information)
         msg.setText("Materials are saved to "+filename)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
 
     def explanation(self):
         msg = QMessageBox()
@@ -194,7 +194,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         msg.setText("Import : Import your file to the table")
         msg.setInformativeText("Export : Save materials to your own file")
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
 
     def ok(self):
         """
@@ -356,7 +356,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     message = item + " is found"
                     msg.setText(message)
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Thermal Conductivity' or text == 'Thermal Conductivity(Solid)':
@@ -371,7 +371,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Thermal Conductivity(Liquid)':
@@ -386,7 +386,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Specific Heat Capacity' or text == 'Specific Heat Capacity(Solid)':
@@ -401,7 +401,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Specific Heat Capacity(Liquid)':
@@ -416,7 +416,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Density' or text == 'Density(Solid)':
@@ -431,7 +431,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Density(Liquid)':
@@ -446,7 +446,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Electrical Resistivity':
@@ -461,7 +461,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Relative Permittivity':
@@ -476,7 +476,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Relative Permeability':
@@ -491,7 +491,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'Young Modulus':
@@ -506,7 +506,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == "Poisson's Ratio":
@@ -521,7 +521,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
         if text == 'CTE':
@@ -536,7 +536,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
                     msg.setIcon(QMessageBox.Information)
                     msg.setText("Material is found")
                     msg.setWindowTitle("Message")
-                    msg.exec_()
+                    msg.exec()
                     self.ok()
                 row_id += 1
 
@@ -613,7 +613,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = "Materials are sorted"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def add_material(self, type):
@@ -674,7 +674,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is cloned"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def update_all(self):
@@ -771,7 +771,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
         else:
             msg = QMessageBox()
@@ -779,7 +779,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = "Some values are inappropriate"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
 
     def remove_all(self):
@@ -803,7 +803,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is removed"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def clone_material(self,type):
@@ -863,7 +863,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is cloned"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def update_pcm(self):
@@ -945,7 +945,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
         else:
             msg = QMessageBox()
@@ -953,7 +953,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = "Some values are inappropriate"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
 
     def remove_pcm(self):
         """
@@ -979,7 +979,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is removed"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def add_conductor(self):
@@ -1017,7 +1017,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is cloned"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def update_conductor(self):
@@ -1096,7 +1096,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
         else:
             msg = QMessageBox()
@@ -1104,7 +1104,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = "Some values are inappropriate"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
 
     def remove_conductor(self):
@@ -1131,7 +1131,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is removed"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def add_insulator(self):
@@ -1170,7 +1170,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is cloned"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def update_insulator(self):
@@ -1249,7 +1249,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
         else:
             msg = QMessageBox()
@@ -1257,7 +1257,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = "Some values are inappropriate"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
 
     def remove_insulator(self):
@@ -1285,7 +1285,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is removed"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def add_semiconductor(self):
@@ -1324,7 +1324,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is cloned"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
     def update_semiconductor(self):
@@ -1403,7 +1403,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = name + " is updated"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
         else:
             msg = QMessageBox()
@@ -1411,7 +1411,7 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
             message = "Some values are inappropriate"
             msg.setText(message)
             msg.setWindowTitle("Message")
-            msg.exec_()
+            msg.exec()
             self.ok()
 
     def remove_semiconductor(self):
@@ -1438,12 +1438,12 @@ class EditLibrary(QMainWindow, Ui_MDKWindow):
         message = name + " is removed"
         msg.setText(message)
         msg.setWindowTitle("Message")
-        msg.exec_()
+        msg.exec()
         self.ok()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = self()
-    gui = app.exec_()
+    gui = app.exec()
     sys.exit(gui)
