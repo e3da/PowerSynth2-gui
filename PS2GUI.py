@@ -144,7 +144,8 @@ class PS2GUI():
                 print("Failed to open website! Please open e3da.csce.uark.edu in your browser.")
 
         def create_macro():
-            self.editLayout()
+            # New for PowerSynth2.2
+            self.desigType()
 
         def run_macro():
             self.runMacro()
@@ -226,7 +227,28 @@ class PS2GUI():
         ui.btn_open_macro.setToolTip("Open file explorer for macro_script.txt file.")
 
         runMacro.show()
-
+    
+    # New for PowerSynth2.2
+    def desigType(self):
+        '''Function to select the design type'''
+        desigType = QtWidgets.QDialog()
+        ui = UI_design_Type()
+        ui.setupUi(desigType)
+        self.setWindow(desigType)
+        
+        def module():
+            self.designType = 'Module'
+            self.editLayout()
+        
+        def converter():
+            self.designType = 'Converter'
+            self.editLayout()
+            
+        ui.pushButton_2.clicked.connect(module)
+        ui.pushButton.clicked.connect(converter)
+    
+        desigType.show()
+        
     def editLayout(self):
         '''User Enters the Paths to Layer Stack, Bondwire Setup, Layout Script with this window'''
         editLayout = QtWidgets.QDialog()
@@ -529,7 +551,96 @@ class PS2GUI():
         ui.btn_saveas.setToolTip("Click to save the macrofile.")
 
         optimizationSetup.show()
+    
+    # New for PowerSynth2.2
+    def optimizationSetupConverter(self):
+        optimizationSetupConverter = QtWidgets.QDialog()
+        ui = UI_optimization_setup_Converter()
+        ui.setupUi(optimizationSetupConverter)
+        self.setWindow(optimizationSetupConverter)
+        ui.seed.setText("10")
 
+        def show_optimization_setup():
+            if ui.combo_layout_mode.currentText() == "minimum-sized solutions" or ui.combo_optimization_algorithm.currentText() == "NG-RANDOM":
+                ui.optimization_setup.hide()
+            else:
+                ui.optimization_setup.show()
+        
+        def saveas():
+            # SAVE VALUES HERE
+            self.floorPlan[0] = ui.floor_plan_x.text()
+            self.floorPlan[1] = ui.floor_plan_y.text()
+            self.plotSolution = "1" if ui.checkbox_plot_solutions.isChecked() else "0"
+
+            if self.option !=1:
+                if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
+                    self.layoutMode = "0" 
+                elif ui.combo_layout_mode.currentText() == "variable-sized solutions":
+                    self.layoutMode = "1" 
+                elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
+                    self.layoutMode = "2" 
+                
+                self.seed = ui.seed.text()
+                self.optimizationAlgorithm = ui.combo_optimization_algorithm.currentText()
+                self.numLayouts = ui.num_layouts.text()
+                self.numGenerations = ui.num_gen.text()
+
+
+            self.macro_script_path = QtWidgets.QFileDialog.getSaveFileName(self.currentWindow, "Save Macro", "macro_script.txt","Text files (*.txt)")[0]
+            self.pathToWorkFolder = os.path.dirname(self.macro_script_path)
+
+            if not self.macro_script_path.endswith(".txt"):
+                self.macro_script_path += ".txt"
+
+            with open(self.macro_script_path, "w") as file:
+                createMacro(file, self)
+
+            print("INFO: MacroScript saved to "+self.macro_script_path)
+
+            self.currentWindow.close()
+            self.openingWindow()
+
+        def floorplan_assignment():
+            ui.floor_plan_x.setEnabled(False)
+            ui.floor_plan_y.setEnabled(False)
+            ui.num_layouts.setEnabled(True)
+            ui.combo_optimization_algorithm.setEnabled(self.option)
+
+            if ui.combo_layout_mode.currentText() == "minimum-sized solutions":
+                ui.num_layouts.setText("1")
+                ui.num_layouts.setEnabled(False)
+                ui.combo_optimization_algorithm.setEnabled(False)
+            elif ui.combo_layout_mode.currentText() == "fixed-sized solutions":
+                ui.floor_plan_x.setEnabled(True)
+                ui.floor_plan_y.setEnabled(True)
+
+        if self.option == 1:
+            ui.layout_synthesis_setup.hide()
+            ui.floor_plan_x.setText(self.floorPlan[0])
+            ui.floor_plan_y.setText(self.floorPlan[1])
+            ui.floor_plan_x.setEnabled(False)
+            ui.floor_plan_y.setEnabled(False)
+        elif self.option == 0:
+            ui.analysis_model_setup.hide()
+            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
+        elif self.option == 2:
+            ui.combo_layout_mode.currentIndexChanged.connect(floorplan_assignment)
+
+        floorplan_assignment()
+        ui.optimization_setup.hide()
+        ui.combo_optimization_algorithm.currentIndexChanged.connect(show_optimization_setup)
+        ui.combo_layout_mode.currentIndexChanged.connect(show_optimization_setup)
+        
+        ui.btn_electrical_setup.clicked.connect(self.modelSetup)
+     
+        #ui.btn_thermal_setup.clicked.connect(self.thermalSetup)
+        ui.btn_saveas.clicked.connect(saveas)
+
+        ui.btn_electrical_setup.setToolTip("Opens electrical setup in a separate window.")
+        #ui.btn_thermal_setup.setToolTip("Opens thermal setup in a separate window.")
+        ui.btn_saveas.setToolTip("Click to save the macrofile.")
+
+        optimizationSetupConverter.show()
 
     def electricalSetup(self):
         '''Creates window for the electrical setup'''
@@ -687,7 +798,58 @@ class PS2GUI():
         ui.btn_remove_device.setToolTip("Remove the last row of the device power table.")
 
         thermalSetup.show()
-
+    
+    # New for PowerSynth2.2
+    def modelSetup(self):
+        '''Creates window for the model setup (electrical & thermal models for converter'''
+        modelSetup = QtWidgets.QDialog(parent=self.currentWindow)
+        ui = UI_model_setup()
+        ui.setupUi(modelSetup)
+        
+        items = ['Input Voltage(V)', 'Output Voltage(V)', 'Output Current(A)', 'Switching Frequency(kHz)']
+        
+        ui.tableWidget.setRowCount(len(items)) 
+        for row in range(len(items)):
+            item = items[row]
+            line_edit = QtWidgets.QLineEdit()
+            line_edit.setReadOnly(True)
+            line_edit.setText(item)
+            #line_edit.setMaximumWidth(70)
+            ui.tableWidget.setCellWidget(row, 0, line_edit)
+            #ui.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(item))
+            spinbox = QtWidgets.QDoubleSpinBox()
+            spinbox.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons) # Removes buttons
+            spinbox.setValue(0)
+            spinbox.setMaximum(1000)
+            ui.tableWidget.setCellWidget(row, 1, spinbox)
+         
+        def continue_UI():
+            # SAVE VALUES HERE
+            self.converterType = ui.combo_model_type.currentText()
+            self.measureNameElectrical = ui.lineedit_measure_name.text()
+            
+            # Thermal
+            ui.combo_model_select_2.setEnabled(False)
+            self.modelSelect="2" #default to ParaPower
+            self.measureNameThermal = ui.lineedit_measure_name_3.text()
+            self.heatConvection = ui.heat_convection_2.text()
+            self.ambientTemperature = ui.ambient_temperature_2.text()
+            for key in self.device_dict.keys():
+                self.devicePower[key] = str(0)
+                  
+            for i in range(ui.tableWidget.rowCount()):
+                #print(ui.tableWidget.cellWidget(i, 0).text())
+                try:
+                    self.designInfo[ui.tableWidget.cellWidget(i, 0).text()] = ui.tableWidget.cellWidget(i, 1).text()
+                except AttributeError:
+                    print("Error: Please specify a name for each device.")
+            self.pathToTraceOri = " ./Trace_Ori.txt"
+            modelSetup.close()
+        
+        ui.btn_continue.clicked.connect(continue_UI)
+        
+        modelSetup.show()
+        
         #self.currentWindow.close()
         #self.currentWindow = None
 
