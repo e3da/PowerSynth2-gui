@@ -444,15 +444,24 @@ class PS2GUI():
 
         def option0():
             self.option = 0
-            self.optimizationSetup()
+            if self.designType == 'Module':
+                self.optimizationSetup()
+            elif self.designType == 'Converter':
+                self.optimizationSetupConverter()
         
         def option1():
             self.option = 1
-            self.optimizationSetup()
+            if self.designType == 'Module':
+                self.optimizationSetup()
+            elif self.designType == 'Converter':
+                self.optimizationSetupConverter()
 
         def option2():
             self.option = 2
-            self.optimizationSetup()
+            if self.designType == 'Module':
+                self.optimizationSetup()
+            elif self.designType == 'Converter':
+                self.optimizationSetupConverter()
 
         ui.pushButton.clicked.connect(option1)
         ui.pushButton_2.clicked.connect(option0)
