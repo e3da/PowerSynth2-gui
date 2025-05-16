@@ -25,6 +25,9 @@ from gui.qt.py.runOptions import Ui_Dialog as UI_run_options
 from gui.core.solutionBrowser import showSolutionBrowser
 from gui.core.createMacro import createMacro
 from gui.core.Terminal import SubProcessWindow
+from gui.qt.py.optimizationSetupConverter import Ui_Dialog as UI_optimization_setup_Converter   # New for PowerSynth2.2
+from gui.qt.py.modelsSetup import Ui_Dialog as UI_models_setup   # New for PowerSynth2.2
+from gui.qt.py.designType import Ui_Dialog as UI_design_Type    # New for PowerSynth2.2
 
 class PS2GUI():
     '''GUI Class -- Stores Important Information for the GUI'''
@@ -76,7 +79,13 @@ class PS2GUI():
         self.devicePower = dict()
         self.heatConvection = ""
         self.ambientTemperature = ""
-
+        
+        #New for PowerSynth2.2
+        # Variable for Design Type
+        self.designType = None # Module / Converter
+        self.converterType = None
+        self.designInfo = {} 
+        
     def PrintErr(self):
         traceback.print_exc(file=sys.stdout)
         QtWidgets.QMessageBox.critical(None, "ERROR","PowerSynth excution failed :(.\nPlesae check your macro file: "+self.macro_script_path)
