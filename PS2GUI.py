@@ -812,7 +812,7 @@ class PS2GUI():
     def modelSetup(self):
         '''Creates window for the model setup (electrical & thermal models for converter'''
         modelSetup = QtWidgets.QDialog(parent=self.currentWindow)
-        ui = UI_model_setup()
+        ui = UI_models_setup()
         ui.setupUi(modelSetup)
         
         items = ['Input Voltage(V)', 'Output Voltage(V)', 'Output Current(A)', 'Switching Frequency(kHz)']

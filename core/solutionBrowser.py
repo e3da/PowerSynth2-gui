@@ -115,14 +115,14 @@ def showSolutionBrowser(gui):
             if gui.designType == 'Module':
                 solution = gui.core.cmd.structure_3D.solutions[gui.solution_ind]
                 for feature in solution.features_list:
-                    print(feature.name, feature.width, feature.length)
+                    #print(feature.name, feature.width, feature.length)
                     if 'Ceramic' in feature.name:
                         ui.lineEdit_size_w.setText(str(feature.width))
                         ui.lineEdit_size_h.setText(str(feature.length))
                         break
             else:
                 size = list(gui.core.cmd.structure_3D.layers[0].layout_info.keys())[0]
-                print(size)
+                #print(size)
                 ui.lineEdit_size_w.setText(str(size[0]/1000))       
                 ui.lineEdit_size_h.setText(str(size[1]/1000))
 
