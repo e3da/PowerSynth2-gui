@@ -111,15 +111,21 @@ def showSolutionBrowser(gui):
                     scene.addItem(item)
                     ui.tabWidget.widget(i-1).setScene(scene)
 
-            solution = gui.core.cmd.structure_3D.solutions[gui.solution_ind]
-            
-            for feature in solution.features_list:
-                if 'Ceramic' in feature.name:
-                    ui.lineEdit_size_w.setText(str(feature.width))
-                    
-                    ui.lineEdit_size_h.setText(str(feature.length))
-                    
-                    break
+            # changed for PowerSynth2.2
+            if gui.designType == 'Module':
+                solution = gui.core.cmd.structure_3D.solutions[gui.solution_ind]
+                for feature in solution.features_list:
+                    #print(feature.name, feature.width, feature.length)
+                    if 'Ceramic' in feature.name:
+                        ui.lineEdit_size_w.setText(str(feature.width))
+                        ui.lineEdit_size_h.setText(str(feature.length))
+                        break
+            else:
+                size = list(gui.core.cmd.structure_3D.layers[0].layout_info.keys())[0]
+                #print(size)
+                ui.lineEdit_size_w.setText(str(size[0]/1000))       
+                ui.lineEdit_size_h.setText(str(size[1]/1000))
+
             ui.lineEdit_size_w.setEnabled(False)
             ui.lineEdit_size_h.setEnabled(False)
 
@@ -176,7 +182,12 @@ def showSolutionBrowser(gui):
                 ui.x_label.setText(perf_metrices[0])
 
             # FIXME Currently hardcoding the units.
-            ui.label_units1.setText("nH")
+            # changed for PowerSynth2.2
+            if gui.designType == 'Module':
+                ui.label_units1.setText("nH")
+            else:
+                ui.label_units1.setText("%")
+                
             ui.label_units2.setText("K")
         else:
             ui.x_label.hide()
