@@ -835,7 +835,8 @@ class PS2GUI():
         def continue_UI():
             # SAVE VALUES HERE
             self.converterType = ui.combo_model_type.currentText()
-            self.measureNameElectrical = ui.lineedit_measure_name.text()
+            self.modelType = ui.lineedit_measure_name.text()
+            self.measureNameElectrical = "Efficiency(%)"
             
             # Thermal
             ui.combo_model_select_2.setEnabled(False)
