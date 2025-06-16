@@ -36,6 +36,7 @@ def createMacro(file: TextIOWrapper, self):
 
     # Layout Generation
     file.write("# Layout Generation Set up:\n")
+    file.write("Design_Type: " + self.designType + "\n")    # New for PowerSynth2.2 
     file.write("Reliability-awareness: " + self.reliabilityAwareness + "\n")
     file.write("New: 0\n")
     file.write("Plot_Solution: " + self.plotSolution + "\n")
@@ -54,26 +55,40 @@ def createMacro(file: TextIOWrapper, self):
     file.write("\n")
 
     if self.option == 1 or self.option == 2:
-        # Electrical Setup
-        file.write("Electrical_Setup:\n")
-        file.write("Model_Type: " + self.modelType + "\n")
-        file.write("Measure_Name: " + self.measureNameElectrical + "\n")
-        file.write("Measure_Type: " + self.measureType + "\n")
-        file.write("# Device Connection Table\nDevice_Connection:\n")
-        for k, v in self.deviceConnection.items():
-            if v == "Drain to Source":
-                s = "1,0,0"
-            else:
-                s = "0,1,0" if v == "Drain to Gate" else "0,0,1"
-            file.write(k + " " + s + "\n")
-        file.write("End_Device_Connection.\n")
-        file.write("Source: " + self.source + "\n")
-        file.write("Sink: " + self.sink + "\n")
-        file.write("Frequency: " + self.frequency + "\n")
-        file.write("End_Electrical_Setup.\n")
+        if self.designType == 'Module': # New for PowerSynth2.2
+            # Electrical Setup
+            file.write("Electrical_Setup:\n")
+            file.write("Model_Type: " + self.modelType + "\n")
+            file.write("Measure_Name: " + self.measureNameElectrical + "\n")
+            file.write("Measure_Type: " + self.measureType + "\n")
+            file.write("# Device Connection Table\nDevice_Connection:\n")
+            for k, v in self.deviceConnection.items():
+                if v == "Drain to Source":
+                    s = "1,0,0"
+                else:
+                    s = "0,1,0" if v == "Drain to Gate" else "0,0,1"
+                file.write(k + " " + s + "\n")
+            file.write("End_Device_Connection.\n")
+            file.write("Source: " + self.source + "\n")
+            file.write("Sink: " + self.sink + "\n")
+            file.write("Frequency: " + self.frequency + "\n")
+            file.write("End_Electrical_Setup.\n")
 
-        file.write("\n")
+            file.write("\n")
+        elif self.designType == 'Converter': # New for PowerSynth2.2
+            # Electrical Setup
+            file.write("Electrical_Setup:\n")
+            file.write("Model_Type: " + self.modelType + "\n")
+            file.write("Measure_Name: " + self.measureNameElectrical + "\n")
+            file.write("Converter_Type: " + self.converterType + "\n")
+            file.write("Input_Voltage: " + self.designInfo['Input Voltage(V)'] + "\n")
+            file.write("Output_Voltage: " + self.designInfo['Output Voltage(V)'] + "\n")
+            file.write("Output_Current: " + self.designInfo['Output Current(A)'] + "\n")
+            file.write("Frequency: " + self.designInfo['Switching Frequency(kHz)'] + "\n")
+            file.write("End_Electrical_Setup.\n")
 
+            file.write("\n")
+            
         # Thermal Setup
         file.write("Thermal_Setup:\n")
         file.write("Model_Select: " + self.modelSelect + "\n")
